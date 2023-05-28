@@ -178,4 +178,3 @@ export default class troubleshooter_sheet extends ActorSheet {
         return await Item.create(itemData, {parent: this.actor});
     }
 }
-

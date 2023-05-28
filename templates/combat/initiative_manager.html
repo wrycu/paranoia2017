@@ -82,7 +82,15 @@
                 {{#if slot.actors }}
                     {{#each slot.actors as |actor|}}
                         {{ actor.player_name }}<br>
-                        {{ actor.challenged }}
+                        {{#if actor.challenged }} {{else}}
+                            {{#if (eq actor.player_id ../../this.my_id) }} {{else}}
+                            {{#if @../last}}
+                            <button type="button" class="challenge_initiative" data-player-id="{{ actor.player_id }}" data-slot="{{ @../index }}" title="Add Mod">
+                                <i class="fas fa-plus fa-fw"></i>challenge
+                            </button>
+                            {{/if}}
+                            {{/if}}
+                        {{/if}}
                     {{/each}}
                 {{else}}
                     (no one)

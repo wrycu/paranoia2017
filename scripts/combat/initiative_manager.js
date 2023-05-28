@@ -33,6 +33,10 @@ export class initiative_manager extends FormApplication {
                     console.log("got remote initiative next")
                     this._handle_initiative_next(data);
                 }
+                 else if (data.subtype === "challenge_start") {
+                    console.log("got remote challenge next")
+                    this._challenge(data);
+                }
             }
             this.render(true);
         });
@@ -88,6 +92,46 @@ export class initiative_manager extends FormApplication {
         html.find(".card_selection").on("change", this._handle_my_card_selection.bind(this));
         html.find(".initiative_next").click(this._initial_initiative_next.bind(this));
         html.find(".initiative_select").click(this._handle_initial_initiative_select.bind(this));
+        html.find(".challenge_initiative").click(this._initial_challenge.bind(this));
+    }
+
+    _initial_challenge(context) {
+        console.log("got local challenge")
+        let challenged_player = $(context.target).attr("data-player-id");
+        let challenged_index = parseInt($(context.target).attr("data-slot"));
+        console.log(challenged_player)
+        console.log(challenged_index)
+        let data = {
+            type: "initiative",
+            subtype: "challenge_start",
+            data: {
+                challenger_id: this.my_id,
+                challenged_id: challenged_player,
+                challenged_index: challenged_index,
+            }
+        }
+        this._challenge(data);
+        game.socket.emit("system.paranoia", data);
+    }
+
+    _challenge(data) {
+        console.log("got challenge notification")
+        console.log(data)
+        if (data.data.challenged_id === game.user.character.id) {
+            // I am the one who was challenged; perform specific steps
+            console.log("I was challenged")
+        } else {
+            // notify users that it's already been challenged by updating the slot
+            let updated_data = [];
+            this.slots[data.data.challenged_index].actors.forEach(function (actor) {
+                if (actor.player_id === data.data.challenged_id) {
+                    actor.challenged = true;
+                }
+                updated_data.push(actor);
+            });
+            this.slots[data.data.challenged_index].actors = updated_data;
+        }
+        this.render(true);
     }
 
     /**

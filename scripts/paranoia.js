@@ -57,6 +57,7 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
 });
 
 Hooks.on("combatRound", async function (combat_info, round_info, time_info) {
+    console.log("ComBAT ROUND")
     // TODO: remove, just here for easy access to opening
     let update_form = new initiative_manager(
         {},
@@ -68,5 +69,7 @@ Hooks.on("combatRound", async function (combat_info, round_info, time_info) {
         }
     );
     await update_form.render(true);
+    // TODO: remove, just here for easy access for _others_ to open
+    game.socket.emit("system.paranoia", {"type": "temp", "subtype": "open_manager"});
     return await initiative_start(combat_info, round_info, time_info);
 });
