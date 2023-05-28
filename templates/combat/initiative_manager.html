@@ -36,16 +36,18 @@
                     {{#select card.selected_card.id }}
                     <option value="not_selected">select a card...</option>
                     {{#each ../this.available_cards as |option|}}
-                    <option value="{{ option.id }}" data-action-order="{{ option.system.action_order }}">{{ option.name }} ({{ option.system.action_order }})</option>
+                    <option value="{{ option.id }}" data-action-order="{{ option.system.action_order }}">{{ option.name
+                        }} ({{ option.system.action_order }})
+                    </option>
                     {{/each}}
                     {{/select}}
                 </select>
                 {{ else }}
-                    {{#if card.is_selected}}
-                        {{ card.selected_card.name }}
-                    {{else}}
-                        (pending selection)
-                    {{/if}}
+                {{#if card.is_selected}}
+                {{ card.selected_card.name }}
+                {{else}}
+                (pending selection)
+                {{/if}}
                 {{/if}}
             </td>
         </tr>
@@ -71,49 +73,34 @@
         </tr>
         </thead>
         <tbody>
+        {{#each this.slots as |slot|}}
         <tr>
             <td>
-                10
+                {{ math 10 "-" @index }}
             </td>
-            <td class="initiative_selection" data-selection="10">
+            <td>
+                {{#if slot.actors }}
+                    {{#each slot.actors as |actor|}}
+                        {{ actor.player_name }}<br>
+                        {{ actor.challenged }}
+                    {{/each}}
+                {{else}}
+                    (no one)
+                {{/if}}
+                {{#if @last}}
+                {{#if slot.contains_me }}{{else}}{{#if ../this.gone_this_round}}{{else}}
                 <button type="button" class="initiative_select" title="Add Mod">
                     <i class="fas fa-plus fa-fw"></i>me!
                 </button>
+                {{/if}}
+                {{/if}}
+                {{/if}}
             </td>
         </tr>
-        <tr>
-            <td>
-                9
-            </td>
-            <td class="initiative_selection" data-selection="9">
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-                8
-            </td>
-            <td class="initiative_selection" data-selection="8">
-
-            </td>
-        </tr>
+        {{/each}}
         </tbody>
     </table>
-    <div class="form-group"> <!-- attachment name -->
-        <label>
-            Name
-        </label>
-        <div class="form-fields">
-            <input type="text" name="attachment_name" value="{{ this.object.object.name }}"
-                   placeholder="attachment name">
-        </div>
-    </div>
     <hr>
-    extra data: {{ this.extra_data }}
-    <button type="button" class="mod_control" data-action="create" data-type="image" data-target="" title="Add Mod"
-            tabindex="-1">
-        <i class="fas fa-plus fa-fw"></i>Add Mod
-    </button>
     <br><br>
     <button type="submit">Save Changes</button>
 </form>

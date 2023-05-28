@@ -20,6 +20,18 @@ Hooks.once("init", async function () {
     CONFIG.Dice.terms["x"] = negative_node_die;
 
     Handlebars.registerHelper("json", JSON.stringify);
+    Handlebars.registerHelper("math", function (lvalue, operator, rvalue, options) {
+        lvalue = parseFloat(lvalue);
+        rvalue = parseFloat(rvalue);
+
+        return {
+            "+": lvalue + rvalue,
+            "-": lvalue - rvalue,
+            "*": lvalue * rvalue,
+            "/": lvalue / rvalue,
+            "%": lvalue % rvalue,
+        }[operator];
+    });
 
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("paranoia", action_card_sheet, {makeDefault: true});
@@ -46,7 +58,7 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
 
 Hooks.on("combatRound", async function (combat_info, round_info, time_info) {
     // TODO: remove, just here for easy access to opening
-        let update_form = new initiative_manager(
+    let update_form = new initiative_manager(
         {},
         {
             width: "500",
