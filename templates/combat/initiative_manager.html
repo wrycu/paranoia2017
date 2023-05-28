@@ -1,0 +1,119 @@
+<form>
+    <b>Fixed header</b><br>
+    header stuff here
+    <hr>
+    Management<br>
+    <div>
+        <button type="button" class="countdown_control" data-action="start" title="Add Mod">
+            <i class="fas fa-plus fa-fw"></i>Start Countdown
+        </button>
+        <button type="button" class="countdown_control" data-action="stop" title="Add Mod">
+            <i class="fas fa-plus fa-fw"></i>Stop Countdown
+        </button>
+    </div>
+    <hr>
+    Card Selection<br>
+    <table>
+        <thead>
+        <tr>
+            <th>
+                Player
+            </th>
+            <th>
+                Card Selected
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each this.selected_cards as |card|}}
+        <tr>
+            <td>
+                {{ card.name }}
+            </td>
+            <td>
+                {{#if card.is_me }}
+                <select class="card_selection">
+                    {{#select card.selected_card.id }}
+                    <option value="not_selected">select a card...</option>
+                    {{#each ../this.available_cards as |option|}}
+                    <option value="{{ option.id }}" data-action-order="{{ option.system.action_order }}">{{ option.name }} ({{ option.system.action_order }})</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+                {{ else }}
+                    {{#if card.is_selected}}
+                        {{ card.selected_card.name }}
+                    {{else}}
+                        (pending selection)
+                    {{/if}}
+                {{/if}}
+            </td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    <hr>
+    Slot Selection<br>
+    {{#if this.is_gm }}
+    <button type="button" class="initiative_next" title="Add Mod">
+        <i class="fas fa-plus fa-fw"></i>next slot
+    </button>
+    {{/if}}
+    <table>
+        <thead>
+        <tr>
+            <th>
+                Initiative
+            </th>
+            <th>
+                Selection
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                10
+            </td>
+            <td class="initiative_selection" data-selection="10">
+                <button type="button" class="initiative_select" title="Add Mod">
+                    <i class="fas fa-plus fa-fw"></i>me!
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                9
+            </td>
+            <td class="initiative_selection" data-selection="9">
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                8
+            </td>
+            <td class="initiative_selection" data-selection="8">
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-group"> <!-- attachment name -->
+        <label>
+            Name
+        </label>
+        <div class="form-fields">
+            <input type="text" name="attachment_name" value="{{ this.object.object.name }}"
+                   placeholder="attachment name">
+        </div>
+    </div>
+    <hr>
+    extra data: {{ this.extra_data }}
+    <button type="button" class="mod_control" data-action="create" data-type="image" data-target="" title="Add Mod"
+            tabindex="-1">
+        <i class="fas fa-plus fa-fw"></i>Add Mod
+    </button>
+    <br><br>
+    <button type="submit">Save Changes</button>
+</form>

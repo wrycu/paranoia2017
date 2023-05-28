@@ -2,6 +2,9 @@ import {computer_die, mutant_die, negative_node_die, node_die} from "./dice/dice
 import {roll_paranoia} from "./dice/roll.js";
 import action_card_sheet from "./items/action_card.js";
 import troubleshooter_sheet from "./actors/troubleshooter.js";
+import {initiative_start} from "./combat/initiative.js";
+import {socket_listener} from "./socket.js";
+import {initiative_manager} from "./combat/initiative_manager.js";
 
 
 Hooks.once("init", async function () {
@@ -22,4 +25,36 @@ Hooks.once("init", async function () {
     Items.registerSheet("paranoia", action_card_sheet, {makeDefault: true});
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("paranoia", troubleshooter_sheet, {makeDefault: true});
+
+    //CONFIG.debug.hooks = true;
+    game.socket.on("system.paranoia", socket_listener);
+});
+
+Hooks.on("combatStart", async function (combat_info, round_info) {
+    let update_form = new initiative_manager(
+        {},
+        {
+            width: "500",
+            height: "auto",
+            resizable: true,
+            title: "Initiative Manager",
+        }
+    );
+    await update_form.render(true);
+    return await initiative_start(combat_info, round_info);
+});
+
+Hooks.on("combatRound", async function (combat_info, round_info, time_info) {
+    // TODO: remove, just here for easy access to opening
+        let update_form = new initiative_manager(
+        {},
+        {
+            width: "500",
+            height: "auto",
+            resizable: true,
+            title: "Initiative Manager",
+        }
+    );
+    await update_form.render(true);
+    return await initiative_start(combat_info, round_info, time_info);
 });
