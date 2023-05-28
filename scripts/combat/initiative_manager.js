@@ -120,6 +120,18 @@ export class initiative_manager extends FormApplication {
         if (data.data.challenged_id === game.user.character.id) {
             // I am the one who was challenged; perform specific steps
             console.log("I was challenged")
+            // determine: was I lying about the initiative?
+            // value I'm supposed to have
+            let target_value = 10 - data.data.challenged_index;
+            let actual_value = parseInt($(".card_selection option:selected").attr("data-action-order"));
+            console.log(`challenged in spot ${target_value}, real value ${actual_value}`)
+            if (target_value !== actual_value && actual_value < target_value) {
+                this.challenge_lied(data.data.challenger_id);
+            } else {
+                this.challenge_truth();
+            }
+            // if I was, go down challenge_lie
+            // if I wasn't, go down challenge_win
         } else {
             // notify users that it's already been challenged by updating the slot
             let updated_data = [];
@@ -132,6 +144,18 @@ export class initiative_manager extends FormApplication {
             this.slots[data.data.challenged_index].actors = updated_data;
         }
         this.render(true);
+    }
+
+    challenge_lied(challenger_id) {
+        console.log("I lost the challenge")
+    }
+
+    challenge_truth(challenger_id) {
+        console.log("I won the challenge")
+    }
+
+    challenge_wrong() {
+
     }
 
     /**
