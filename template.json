@@ -1,0 +1,222 @@
+{
+    "Actor": {
+        "types": [
+            "troubleshooter",
+            "npc"
+        ],
+        "templates": {
+            "core": {
+                "name": "",
+                "security_clearance": "red",
+                "home_sector": "",
+                "clone_number": 1,
+                "gender": "",
+                "personality": []
+            },
+            "development": {
+                "treason_stars": {
+                    "min": 0,
+                    "max": 5,
+                    "value": 0
+                },
+                "xp_points": {
+                    "min": 0,
+                    "value": 0
+                },
+                "stats": {
+                    "violence": {
+                        "min": 0,
+                        "value": 0
+                    },
+                    "brains": {
+                        "min": 0,
+                        "value": 0
+                    },
+                    "chutzpah": {
+                        "min": 0,
+                        "value": 0
+                    },
+                    "mechanics": {
+                        "min": 0,
+                        "value": 0
+                    }
+                }
+            },
+            "skills": {
+                "skills": {
+                    "athletics": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "guns": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "melee": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "throw": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "science": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "psychology": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "bureaucracy": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "alpha_complex": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "bluff": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "charm": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "intimidate": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "stealth": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "operate": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "engineer": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "program": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "demolitions": {
+                        "min": -5,
+                        "value": 0
+                    }
+                }
+            },
+            "wellbeing": {
+                "moxie": {
+                    "min": 0,
+                    "value": 0,
+                    "max": 8,
+                    "current_max": 8
+                },
+                "wounds": {
+                    "min": 0,
+                    "value": 0,
+                    "max": 5
+                },
+                "memory": {
+                    "min": 0,
+                    "value": 0
+                }
+            }
+        },
+        "troubleshooter": {
+            "templates": [
+                "core",
+                "development",
+                "skills",
+                "wellbeing"
+            ],
+            "treason_stars": {
+                "min": 0,
+                "value": 0,
+                "max": 5
+            },
+            "xp_points": {
+                "value": 0
+            },
+            "moxie": {
+                "min": 0,
+                "value": 0,
+                "max": 8,
+                "current_max": 8
+            },
+            "wounds": {
+                "min": 0,
+                "value": 0,
+                "max": 4
+            },
+            "memory": {
+                "min": 0,
+                "value": 0
+            }
+        },
+        "npc": {
+            "templates": [
+                "resources"
+            ]
+        }
+    },
+    "Item": {
+        "types": [
+            "action_card",
+            "mutant_power_card",
+            "equipment_card",
+            "secret_society_card",
+            "bonus_duty_card",
+            "number_one_card"
+        ],
+        "templates": {
+            "combat_card": {
+                "action_order": 0
+            }
+        },
+        "action_card": {
+            "templates": [
+                "combat_card"
+            ],
+            "quote": "",
+            "text": "<p></p>",
+            "reaction": false
+        },
+        "mutant_power_card": {
+            "templates": [
+                "combat_card"
+            ],
+            "text": ""
+        },
+        "equipment_card": {
+            "templates": [
+                "combat_card"
+            ],
+            "text": "",
+            "size": "medium",
+            "level": 0,
+            "skill": {
+                "name": "",
+                "bonus": ""
+            }
+        },
+        "secret_society_card": {
+            "templates": [],
+            "keywords": [],
+            "beliefs": "",
+            "goals": ""
+        },
+        "bonus_duty_card": {
+            "templates": [],
+            "responsibilities": []
+        },
+        "number_one_card": {
+            "templates": []
+        }
+    }
+}

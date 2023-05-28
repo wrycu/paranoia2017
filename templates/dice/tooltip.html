@@ -1,0 +1,13 @@
+<div class="dice-tooltip">
+    {{#each parts as |part|}}
+    <section class="tooltip-part">
+        <div class="dice">
+            <header class="part-header flexrow">
+                {{#each part.rolls as |roll|}}
+                    {{{ roll.result }}}
+                {{/each}}
+            </header>
+        </div>
+    </section>
+    {{/each}}
+</div>
