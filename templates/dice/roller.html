@@ -1,0 +1,65 @@
+<form>
+    <b>Fixed header</b><br>
+    header stuff here
+    <hr>
+    Management<br>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    stat
+                </th>
+                <th>
+                    skill
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <select class="attr_selection">
+                        {{#each this.attrs as |attr|}}
+                        <option value="{{ attr.value }}" {{#if (eq ../this.attr @key) }} selected{{/if}}>
+                        {{ @key }}
+                        </option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <select class="skill_selection">
+                        {{#each this.skills as |skill|}}
+                        <option value="{{ skill.value }}" {{#if (eq ../this.skill @key) }} selected{{/if}}>
+                        {{ @key }}
+                        </option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <section class="sheet-body">
+        <div class="node_container grid grid-2col">
+            <div class="node_details flexrow">
+                <label for="system.stats.{{ @key }}" class="node_details-label">NODE</label>
+                <div class="node_details-content flexrow flex-center flex-between">
+                    <input class="node_value" type="number" name="node"
+                           value="{{ this.dice.node }}"
+                           data-dtype="Number"/>
+                </div>
+            </div>
+            <div class="development_information_details flexrow">
+                <label for="system.stats.{{ @key }}" class="development_information_details-label">Computer</label>
+                <div class="development_information_details-content flexrow flex-center flex-between">
+                    <input type="number" name="computer"
+                           value="{{ this.dice.computer }}"
+                           data-dtype="Number"/>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br><br>
+    <button type="submit">Roll</button>
+</form>

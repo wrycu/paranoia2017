@@ -105,8 +105,8 @@
                     <div class="skill_information grid grid-4col">
                         {{#each actor.system.skills as |skill|}}
                         <div class="skill_information_details flexrow flex-group-center">
-                            <label for="system.skills.{{ @key }}.value" class="skill_information_details-label">{{ @key
-                                }}:</label>
+                            <label for="system.skills.{{ @key }}.value" class="skill_information_details-label"><a class="skill rollable" data-skill="{{ @key }}">{{ @key
+                                }}</a></label>
                             <div class="skill_information_details-content">
                                 <input type="number" name="system.skills.{{ @key }}.value"
                                        value="{{ skill.value }}"

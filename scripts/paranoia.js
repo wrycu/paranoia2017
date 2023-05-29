@@ -5,6 +5,7 @@ import troubleshooter_sheet from "./actors/troubleshooter.js";
 import {initiative_start} from "./combat/initiative.js";
 import {socket_listener} from "./socket.js";
 import {initiative_manager} from "./combat/initiative_manager.js";
+import roll_builder from "./dice/roller.js";
 
 
 Hooks.once("init", async function () {
@@ -18,6 +19,30 @@ Hooks.once("init", async function () {
     CONFIG.Dice.terms["m"] = mutant_die;
     CONFIG.Dice.terms["n"] = node_die;
     CONFIG.Dice.terms["x"] = negative_node_die;
+
+    // TODO: move this into a config setup or something
+    let paranoia = {
+        skill_map: {
+            "athletics": "violence",
+            "guns": "violence",
+            "melee": "violence",
+            "throw": "violence",
+            "science": "brains",
+            "psychology": "brains",
+            "bureaucracy": "brains",
+            "alpha_complex": "brains",
+            "bluff": "chutzpah",
+            "charm": "chutzpah",
+            "intimidate": "chutzpah",
+            "stealth": "chutzpah",
+            "operate": "mechanics",
+            "engineer": "mechanics",
+            "program": "mechanics",
+            "demolitions": "mechanics"
+        }
+    }
+
+    CONFIG.paranoia = paranoia;
 
     Handlebars.registerHelper("json", JSON.stringify);
     Handlebars.registerHelper("math", function (lvalue, operator, rvalue, options) {
@@ -40,6 +65,14 @@ Hooks.once("init", async function () {
 
     //CONFIG.debug.hooks = true;
     game.socket.on("system.paranoia", socket_listener);
+});
+
+Hooks.on("renderSidebarTab", (app, html, data) => {
+    html.find(".chat-control-icon").click(async (event) => {
+        console.log("clicked dice roller")
+        let builder = new roll_builder({test: 1});
+        await builder.display_roll_dialog();
+    });
 });
 
 Hooks.on("combatStart", async function (combat_info, round_info) {

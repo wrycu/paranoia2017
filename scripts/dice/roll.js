@@ -15,19 +15,20 @@ export class roll_paranoia extends Roll {
         return super.evaluate({minimize, maximize, async});
     }
 
-    async render(chatOptions = {}) {
-        console.log("render")
-        console.log(this)
-        console.log(chatOptions)
-        if (!this._evaluated) this.roll();
+    async get_roll_data() {
+        if (!this._evaluated) await this.roll();
         let evaluated = {
             successes: 0,
             computer: false,
-            contains_paranoia_dice: false
+            contains_paranoia_dice: false,
+            results: [],
         }
 
         this.dice.forEach(function (die_type) {
+            console.log(die_type.constructor.name)
             die_type.results.forEach(function (result) {
+                console.log(result.result)
+                evaluated.results.push(result.result);
                 if (die_type.constructor.name === 'node_die') {
                     evaluated.contains_paranoia_dice = true;
                     if ([5, 6].includes(result.result)) {
@@ -51,6 +52,15 @@ export class roll_paranoia extends Roll {
                 }
             });
         });
+        return evaluated;
+    }
+
+    async render(chatOptions = {}) {
+        console.log("render")
+        console.log(this)
+        console.log(chatOptions)
+        if (!this._evaluated) this.roll();
+        let evaluated = this.get_roll_data()
 
         const chatData = {
             test: "hello world",
@@ -67,35 +77,7 @@ export class roll_paranoia extends Roll {
             publicRoll: !chatOptions.isPrivate,
         };
 
-        let useful_results = [];
-        this.dice.forEach(function (die) {
-            //console.log(`found die type:`)
-            //console.log(die)
-            die.results.forEach(function (result) {
-                if (die instanceof computer_die) {
-                    //console.log("found computer die!")
-                    useful_results.push({
-                        "type": "computer",
-                        "result": result.result,
-                    });
-                } else {
-                    //console.log("found non-computer die!")
-                    if (die.faces === 6) {
-                        useful_results.push({
-                            "type": "node",
-                            "result": result.result,
-                        });
-                    } else {
-                        useful_results.push({
-                            "type": "generic",
-                            "result": result.result,
-                        });
-                    }
-                }
-                //console.log(`\tfound ${result.result}`)
-            })
-        });
-        chatData['useful_results'] = useful_results;
+        console.log(chatData)
 
         // Render the roll display template
         return renderTemplate(roll_paranoia.CHAT_TEMPLATE, chatData);

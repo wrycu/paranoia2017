@@ -1,4 +1,5 @@
 import {initiative_manager} from "../combat/initiative_manager.js";
+import roll_builder from "../dice/roller.js";
 
 export default class troubleshooter_sheet extends ActorSheet {
 
@@ -75,6 +76,21 @@ export default class troubleshooter_sheet extends ActorSheet {
         });
 
         html.find('.ui-button.window_open').click(this.open_window.bind(this));
+        html.find('.skill.rollable').click(this._roll_skill.bind(this));
+    }
+
+    async _roll_skill(context) {
+        console.log("got skill roll request")
+        console.log(context)
+        let skill = $(context.target).attr("data-skill");
+        console.log(skill)
+        console.log(this)
+        let skill_val = this.actor.system.skills[skill].value;
+        let attr_val = this.actor.system.stats[CONFIG.paranoia.skill_map[skill]].value;
+        let total = skill_val + attr_val;
+
+        let builder = new roll_builder();
+        await builder.display_roll_dialog(total, 1, this.actor.id, CONFIG.paranoia.skill_map[skill], skill);
     }
 
     async open_window(context) {

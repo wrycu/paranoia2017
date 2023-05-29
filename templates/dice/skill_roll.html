@@ -1,0 +1,15 @@
+<div class="dice-roll">
+    <div class="dice-result">
+        <div class="dice-formula">
+            Rolling <b>{{ this.attr }}</b> with <b>{{ this.skill }}</b>...
+            <hr>
+            NODE: {{ this.node }}
+        </div>
+        <div class="dice-tooltip">
+            {{ this.roll.results }}
+        </div>
+        <h4 class="dice-total">
+           {{ this.roll.successes }} successes{{#if this.roll.computer}},&nbsp;<img src=systems/paranoia/images/dice/computer.png>{{/if}}
+        </h4>
+    </div>
+</div>
