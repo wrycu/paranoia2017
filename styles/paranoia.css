@@ -1,3 +1,66 @@
+.troubleshooter_sheet {
+    background-color: aliceblue;
+}
+
+.troubleshooter_sheet header .tim_flexbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.troubleshooter_sheet header .core_information.tim_flexbox .troubleshooter_identity_form {
+    flex-grow: 1;
+    height: 275px;
+    border: none;
+}
+
+.troubleshooter_sheet header .core_information.tim_flexbox .troubleshooter_img {
+    flex-grow: 1;
+    height: 275px;
+}
+
+.troubleshooter_sheet .description .troubleshooter_section {
+    display: flex;
+    flex-direction: row;
+    background-color: #7DB8E1;
+    color: #244461;
+}
+
+.troubleshooter_sheet .description .troubleshooter_section .troubleshooter_section_header {
+    background-color: #244461;
+    color: white;
+    font-size: smaller;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+
+#triangle-right {
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-left: 15px solid #B44938;
+    border-bottom: 7px solid transparent;
+}
+
+.troubleshooter_sheet .troubleshooter_header {
+    color: #B44938;
+    font-size: larger;
+}
+
+/*
+.troubleshooter_sheet .troubleshooter_header {
+    color: #B44938;
+    text-align: justify;
+    font-size: larger;
+}
+.troubleshooter_sheet .troubleshooter_header span {
+    width: 100%;
+    height: 1em;
+    display: inline-block;
+}
+*/
 .card_image {
     height: 400px !important;
 }

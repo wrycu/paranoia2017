@@ -75,7 +75,6 @@ export default class troubleshooter_sheet extends ActorSheet {
             li.slideUp(200, () => this.render(false));
         });
 
-        html.find('.ui-button.window_open').click(this.open_window.bind(this));
         html.find('.skill.rollable').click(this._roll_skill.bind(this));
     }
 
@@ -91,20 +90,6 @@ export default class troubleshooter_sheet extends ActorSheet {
 
         let builder = new roll_builder();
         await builder.display_roll_dialog(total, 1, this.actor.id, CONFIG.paranoia.skill_map[skill], skill);
-    }
-
-    async open_window(context) {
-        console.log("click")
-        let update_form = new initiative_manager(
-            {},
-            {
-                width: "500",
-                height: "auto",
-                resizable: true,
-                title: "Initiative Manager",
-            }
-        );
-        await update_form.render(true);
     }
 
     /**

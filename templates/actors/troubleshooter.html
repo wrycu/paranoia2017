@@ -1,12 +1,15 @@
-<form class="{{ cssClass }} flexcol" autocomplete="off">
+<form class="{{ cssClass }} flexcol troubleshooter_sheet" autocomplete="off">
     {{!-- Sheet Header --}}
     <header class="sheet-header">
-        {{!-- Header stuff goes here --}}
-        <img class="profile-img" src="{{ actor.img }}" data-edit="img" title="{{ actor.name }}" height="100"
-             width="100"/>
-        <div class="ui-button window_open">open window</div>
+        <div class="core_information tim_flexbox">
+            <img class="troubleshooter_identity_form" src=systems/paranoia/images/character_sheet/identity_form.png>
+            <img class="troubleshooter_img" src="{{ actor.img }}" data-edit="img" title="{{ actor.name }}"/>
+        </div>
     </header>
-
+    <div id="triangle-right">
+        <div class="troubleshooter_header">&nbsp;T&nbsp;H&nbsp;I&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;D&nbsp;O&nbsp;C&nbsp;U&nbsp;M&nbsp;E&nbsp;N&nbsp;T&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;<b>M&nbsp;A&nbsp;N&nbsp;D&nbsp;A&nbsp;T&nbsp;O&nbsp;R&nbsp;Y</b>
+        </div>
+    </div>
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
@@ -18,12 +21,18 @@
         {{!-- Tab content goes here --}}
         <div class="tab description" data-group="primary" data-tab="description">
             <div class="core_information">
-                <b>CORE INFORMATION >>></b>
-                <hr>
+                <div class="troubleshooter_section">
+                    <div class="troubleshooter_section_header">
+                        <i>///&nbsp;PART ONE&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    </div>
+                    <div class="troubleshooter_section_name">
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;CORE INFORMATION >>></b><!-- TODO: missing gender, personality -->
+                    </div>
+                </div>
                 <section class="sheet-body">
                     <div class="core_information grid grid-4col">
                         <div class="core_information_details">
-                            <label for="system.name" class="core_information_details-label">NAME:</label>
+                            <label for="system.name" class="core_information_details-label">NAME</label>
                             <div class="core_information_details-content flexrow flex-center flex-between">
                                 <input type="text" name="name" value="{{ actor.name }}"
                                        data-dtype="Text"/>
@@ -31,7 +40,7 @@
                         </div>
                         <div class="core_information_details">
                             <label for="system.security_clearance" class="core_information_details-label">SECURITY
-                                CLEARANCE:</label>
+                                CLEARANCE</label>
                             <div class="core_information_details-content flexrow flex-center flex-between">
                                 <input type="text" name="system.security_clearance"
                                        value="{{ actor.system.security_clearance }}"
@@ -56,8 +65,14 @@
                 </section>
             </div>
             <div class="development_information">
-                <b>DEVELOPMENT >>></b>
-                <hr>
+                <div class="troubleshooter_section">
+                    <div class="troubleshooter_section_header">
+                        <i>///&nbsp;PART TWO&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    </div>
+                    <div class="troubleshooter_section_name">
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;DEVELOPMENT >>></b>
+                    </div>
+                </div>
                 <section class="sheet-body">
                     <div class="development_information grid grid-2col">
                         <div class="development_information_details flexrow">
@@ -99,13 +114,20 @@
                 </section>
             </div>
             <div class="skill_information">
-                <b>SKILLS >>></b>
-                <hr>
+                <div class="troubleshooter_section">
+                    <div class="troubleshooter_section_header">
+                        <i>///&nbsp;PART THREE&nbsp;&nbsp;</i>
+                    </div>
+                    <div class="troubleshooter_section_name">
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;SKILLS >>></b>
+                    </div>
+                </div>
                 <section class="sheet-body">
                     <div class="skill_information grid grid-4col">
                         {{#each actor.system.skills as |skill|}}
                         <div class="skill_information_details flexrow flex-group-center">
-                            <label for="system.skills.{{ @key }}.value" class="skill_information_details-label"><a class="skill rollable" data-skill="{{ @key }}">{{ @key
+                            <label for="system.skills.{{ @key }}.value" class="skill_information_details-label"><a
+                                    class="skill rollable" data-skill="{{ @key }}">{{ @key
                                 }}</a></label>
                             <div class="skill_information_details-content">
                                 <input type="number" name="system.skills.{{ @key }}.value"
@@ -118,8 +140,14 @@
                 </section>
             </div>
             <div class="wb_information">
-                <b>WELLBEING >>></b>
-                <hr>
+                <div class="troubleshooter_section">
+                    <div class="troubleshooter_section_header">
+                        <i>///&nbsp;PART FOUR&nbsp;&nbsp;&nbsp;</i>
+                    </div>
+                    <div class="troubleshooter_section_name">
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;WELLBEING >>></b>
+                    </div>
+                </div>
                 <section class="sheet-body">
                     <div class="wb_information grid grid-2col">
                         <div class="wb_information_details flexrow flex-group-center">
