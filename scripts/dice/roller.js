@@ -28,12 +28,13 @@ export default class roll_builder extends FormApplication {
     _handle_attr_change(context) {
         let node = parseInt($(context.target).val()) + parseInt($(".skill_selection").val());
         $(".node_value").val(node);
-
+        this.attr = context.target.options[context.target.options.selectedIndex].text
     }
 
     _handle_skill_change(context) {
         let node = parseInt($(".attr_selection").val()) + parseInt($(context.target).val());
         $(".node_value").val(node);
+        this.skill = context.target.options[context.target.options.selectedIndex].text
     }
 
     getData() {
