@@ -1,3 +1,5 @@
+import {card_discarder} from "./card_discarder.js";
+
 export class initiative_manager extends FormApplication {
     constructor(object, options) {
         super(object, options)
@@ -21,7 +23,6 @@ export class initiative_manager extends FormApplication {
         game.socket.on("system.paranoia", (data) => {
             console.log("got event in window ;)")
             console.log(data)
-            console.log(data)
             if (data.type === "initiative") {
                 if (data.subtype === "player_card_selection") {
                     console.log("got remote card selection")
@@ -32,10 +33,12 @@ export class initiative_manager extends FormApplication {
                 } else if (data.subtype === "initiative_forward") {
                     console.log("got remote initiative next")
                     this._handle_initiative_next(data);
-                }
-                 else if (data.subtype === "challenge_start") {
-                    console.log("got remote challenge next")
+                } else if (data.subtype === "challenge_start") {
+                    console.log("got remote challenge start")
                     this._challenge(data);
+                } else if (data.subtype === "challenge_loss") {
+                    console.log("got remote challenge loss")
+                    this._challenge_wrong(data);
                 }
             }
             this.render(true);
@@ -105,7 +108,7 @@ export class initiative_manager extends FormApplication {
             type: "initiative",
             subtype: "challenge_start",
             data: {
-                challenger_id: this.my_id,
+                challenger_id: game.user.character.id,
                 challenged_id: challenged_player,
                 challenged_index: challenged_index,
             }
@@ -128,7 +131,7 @@ export class initiative_manager extends FormApplication {
             if (target_value !== actual_value && actual_value < target_value) {
                 this.challenge_lied(data.data.challenger_id);
             } else {
-                this.challenge_truth();
+                this.challenge_truth(data.data.challenger_id);
             }
             // if I was, go down challenge_lie
             // if I wasn't, go down challenge_win
@@ -148,14 +151,51 @@ export class initiative_manager extends FormApplication {
 
     challenge_lied(challenger_id) {
         console.log("I lost the challenge")
+        // TODO: send a chat message?
+        this.discard_card(game.user.character.id, $(".card_selection").val());
+        // TODO: insert the challenger in the initiative
     }
 
     challenge_truth(challenger_id) {
         console.log("I won the challenge")
+        let data = {
+            type: "initiative",
+            subtype: "challenge_loss",
+            data: {
+                challenger_id: challenger_id,
+            }
+        };
+        console.log(data)
+        game.socket.emit("system.paranoia", data);
     }
 
-    challenge_wrong() {
+    _challenge_wrong(data) {
+        console.log("got challenge wrong")
+        console.log(data)
+        if (data.data.challenger_id === game.user.character.id) {
+            console.log("I was the challenger")
+            let my_actor = game.actors.get(game.user.character.id);
+            let possible_cards = my_actor.items.filter(i => i.type === "action_card");
+            let buttons = {};
+            possible_cards.forEach(function (card, index) {
+                buttons[`button${index}`] = {
+                    label: card.name,
+                    callback: () => card_discarder(game.user.character.id, card.id),
+                    icon: `<i class="fas fa-check"></i>`,
+                }
+            });
+            new Dialog({
+                title: "Select an action card to discard",
+                content: `Incorrect challengers must choose and discard an action card`,
+                buttons: buttons,
+            }).render(true);
+        }
+    }
 
+    discard_card(actor_id, card_id) {
+        let actor = game.actors.get(actor_id);
+        // TODO: this is an async call which we are not awaiting. do we care?
+        actor.deleteEmbeddedDocuments("Item", [card_id]);
     }
 
     /**
