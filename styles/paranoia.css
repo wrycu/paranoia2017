@@ -71,8 +71,8 @@
 
 .card_image_container {
     display: flex;
-    height: 300px;
-    flex-basis: 300px;
+    height: 250px;
+    flex-basis: 250px;
     align-items: stretch;
 }
 
@@ -80,6 +80,7 @@
     flex-grow: 1;
     border: none;
     height: 300px;
+    margin-right: 0px;
 }
 
 .paranoia_card .card_header .card_name_container {
@@ -96,6 +97,83 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.paranoia_card .secret_society_header {
+    height: 60px;
+    width: 100%;
+    background-image: url("../images/secret_society/bg.png");
+    background-repeat: repeat-x;
+}
+
+.paranoia_card .secret_society_body {
+    border-top: 30px solid black;
+    border-left: 15px solid black;
+    border-bottom: 30px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.paranoia_card .secret_society_top {
+    background-color: black;
+    color: white;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.paranoia_card .secret_society_middle {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.paranoia_card .secret_society_bottom {
+    background-color: black;
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.paranoia_card .white_input {
+    color: white;
+}
+
+.paranoia_card .secret_society_body .secret_society_details {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+.paranoia_card .secret_society_body .secret_society_beliefs_container {
+    margin-left: 15px;
+}
+
+.paranoia_card .secret_society_body .secret_society_beliefs_container .tall {
+    height: 300px;
+}
+
+.paranoia_card .secret_society_body .secret_society_goals {
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    align-self: stretch;
+}
+
+.paranoia_card .secret_society_body .card_image_container {
+    display: flex;
+    height: 220px;
+    flex-basis: 220px;
+    justify-content: center;
+}
+
+.paranoia_card .secret_society_body .card_image_container .card_image {
+    border: none;
+    align-self: center;
 }
 
 /* TODO: remove this import and include it locally */

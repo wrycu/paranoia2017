@@ -191,13 +191,13 @@
             "templates": [
                 "combat_card"
             ],
-            "text": ""
+            "text": "<p></p>"
         },
         "equipment_card": {
             "templates": [
                 "combat_card"
             ],
-            "text": "",
+            "text": "<p></p>",
             "size": "medium",
             "level": 0,
             "skill": {
@@ -207,9 +207,9 @@
         },
         "secret_society_card": {
             "templates": [],
-            "keywords": [],
-            "beliefs": "",
-            "goals": ""
+            "keywords": "",
+            "beliefs": "<p></p>",
+            "goals": "<p></p>"
         },
         "bonus_duty_card": {
             "templates": [],
