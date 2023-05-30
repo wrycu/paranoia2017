@@ -41,6 +41,7 @@ export default class troubleshooter_sheet extends ActorSheet {
 
         // Add roll data for TinyMCE editors.
         context.rollData = context.actor.getRollData();
+        context.config = CONFIG.paranoia;
 
         // Prepare active effects
         //context.effects = prepareActiveEffectCategories(this.actor.effects);

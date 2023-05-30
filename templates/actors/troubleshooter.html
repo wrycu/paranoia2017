@@ -12,7 +12,7 @@
     </div>
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="description">Overview</a>
         <a class="item" data-tab="items">Items</a>
     </nav>
 
@@ -29,36 +29,51 @@
                         <b>&nbsp;&nbsp;&nbsp;&nbsp;CORE INFORMATION >>></b><!-- TODO: missing gender, personality -->
                     </div>
                 </div>
-                <section class="sheet-body">
-                    <div class="core_information grid grid-4col">
+                <section class="sheet-body ">
+                    <div class="core_information flexbox">
                         <div class="core_information_details">
-                            <label for="system.name" class="core_information_details-label">NAME</label>
-                            <div class="core_information_details-content flexrow flex-center flex-between">
-                                <input type="text" name="name" value="{{ actor.name }}"
+                            <label for="system.name" class="core_information_details-label troubleshooter_label">NAME:</label>
+                            <div class="core_information_details-content">
+                                <input type="text" class="troubleshooter_input" name="name" value="{{ actor.name }}"
                                        data-dtype="Text"/>
                             </div>
                         </div>
                         <div class="core_information_details">
-                            <label for="system.security_clearance" class="core_information_details-label">SECURITY
-                                CLEARANCE</label>
-                            <div class="core_information_details-content flexrow flex-center flex-between">
-                                <input type="text" name="system.security_clearance"
+                            <label for="system.security_clearance" class="core_information_details-label troubleshooter_label">CLEARANCE LVL:</label>
+                            <div class="core_information_details-content">
+                                <input type="text" class="troubleshooter_input" name="system.security_clearance"
                                        value="{{ actor.system.security_clearance }}"
                                        data-dtype="Text"/>
                             </div>
                         </div>
                         <div class="core_information_details">
-                            <label for="system.home_sector" class="core_information_details-label">HOME SECTOR:</label>
-                            <div class="core_information_details-content flexrow flex-center flex-between">
-                                <input type="text" name="system.home_sector" value="{{ actor.system.home_sector }}"
+                            <label for="system.home_sector" class="core_information_details-label troubleshooter_label">HOME SECTOR:</label>
+                            <div class="core_information_details-content">
+                                <input type="text" class="troubleshooter_input" name="system.home_sector" value="{{ actor.system.home_sector }}"
                                        data-dtype="Text"/>
                             </div>
                         </div>
                         <div class="core_information_details">
-                            <label for="system.clone_number" class="core_information_details-label">CLONE #:</label>
-                            <div class="core_information_details-content flexrow flex-center flex-between">
-                                <input type="number" name="system.clone_number" value="{{ actor.system.clone_number }}"
+                            <label for="system.clone_number" class="core_information_details-label troubleshooter_label">CLONE #:</label>
+                            <div class="core_information_details-content">
+                                <input type="number" class="troubleshooter_input" name="system.clone_number" value="{{ actor.system.clone_number }}"
                                        data-dtype="Number"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="core_information flexbox">
+                        <div class="core_information_details">
+                            <label for="system.gender" class="core_information_details-label troubleshooter_label">GENDER:</label>
+                            <div class="core_information_details-content">
+                                <input type="text" class="troubleshooter_input" name="system.gender" value="{{ actor.system.gender }}"
+                                       data-dtype="Text"/>
+                            </div>
+                        </div>
+                        <div class="core_information_details" style="flex-grow: 1;">
+                            <label for="system.personality" class="core_information_details-label troubleshooter_label">PERSONALITY:</label>
+                            <div class="core_information_details-content">
+                                <input type="text" class="troubleshooter_input" name="system.personality" value="{{ actor.system.personality }}"
+                                       data-dtype="Text" />
                             </div>
                         </div>
                     </div>
@@ -82,7 +97,7 @@
                                 <!-- TODO: this removes from the actor data the "min" and "max" values for treason stars -->
                                 <input type="number" name="system.treason_stars.value"
                                        value="{{ actor.system.treason_stars.value }}"
-                                       data-dtype="Number"/>
+                                       data-dtype="Number" min="0" max="5"/>
                             </div>
                         </div>
                         <div class="development_information_details flexrow">
@@ -91,7 +106,7 @@
                             <div class="development_information_details-content flexrow flex-center flex-between">
                                 <input type="number" name="system.xp_points.value"
                                        value="{{ actor.system.xp_points.value }}"
-                                       data-dtype="Number"/>
+                                       data-dtype="Number" min="0"/>
                             </div>
                         </div>
                     </div>
@@ -106,7 +121,7 @@
                             <div class="development_information_details-content flexrow flex-center flex-between">
                                 <input type="number" name="system.stats.{{ @key }}.value"
                                        value="{{ stat.value }}"
-                                       data-dtype="Number"/>
+                                       data-dtype="Number" min="0" max="4"/>
                             </div>
                         </div>
                         {{/each}}
@@ -132,7 +147,7 @@
                             <div class="skill_information_details-content">
                                 <input type="number" name="system.skills.{{ @key }}.value"
                                        value="{{ skill.value }}"
-                                       data-dtype="Number"/>
+                                       data-dtype="Number" min="-5" max="5"/>
                             </div>
                         </div>
                         {{/each}}
@@ -151,19 +166,23 @@
                 <section class="sheet-body">
                     <div class="wb_information grid grid-2col">
                         <div class="wb_information_details flexrow flex-group-center">
-                            <label for="system.moxie.value" class="wb_information_details-label">MOXIE >>></label>
+                            <label for="system.moxie.value" class="wb_information_details-label">MOXIE:</label>
                             <div class="wb_information_details-content">
                                 <input type="number" name="system.moxie.value"
                                        value="{{ actor.system.moxie.value }}"
-                                       data-dtype="Number"/>
+                                       data-dtype="Number" min="0" max="8"/>
                             </div>
                         </div>
                         <div class="wb_information_details flexrow flex-group-center">
-                            <label for="system.wounds.value" class="wb_information_details-label">WOUNDS >>></label>
+                            <label for="system.wounds.value" class="wb_information_details-label">WOUNDS:</label>
                             <div class="wb_information_details-content">
-                                <input type="number" name="system.wounds.value"
-                                       value="{{ actor.system.wounds.value }}"
-                                       data-dtype="Number"/>
+                                <select name="system.wounds.value">
+                                    {{#select actor.system.wounds.value}}
+                                    {{#each config.wound_map as |state|}}
+                                        <option value="{{ @key }}">{{ state }}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
                             </div>
                         </div>
                     </div>

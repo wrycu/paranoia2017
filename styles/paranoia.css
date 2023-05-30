@@ -1,10 +1,17 @@
 .troubleshooter_sheet {
     background-color: aliceblue;
+    color: #244461;
 }
 
 .troubleshooter_sheet header .tim_flexbox {
     display: flex;
     flex-direction: row;
+}
+
+.troubleshooter_sheet .flexbox {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
 }
 
 .troubleshooter_sheet header .core_information.tim_flexbox .troubleshooter_identity_form {
@@ -29,10 +36,10 @@
     background-color: #244461;
     color: white;
     font-size: smaller;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
 }
 
 #triangle-right {

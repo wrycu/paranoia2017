@@ -39,7 +39,14 @@ Hooks.once("init", async function () {
             "engineer": "mechanics",
             "program": "mechanics",
             "demolitions": "mechanics"
-        }
+        },
+        wound_map: {
+            0: "healthy",
+            1: "hurt",
+            2: "injured",
+            3: "maimed",
+            4: "dead",
+        },
     }
 
     CONFIG.paranoia = paranoia;
