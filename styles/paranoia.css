@@ -3,6 +3,11 @@
     color: #244461;
 }
 
+.paranoia_roller_window {
+    background-color: aliceblue;
+    color: #244461;
+}
+
 .troubleshooter_sheet header .tim_flexbox {
     display: flex;
     flex-direction: row;
@@ -354,8 +359,6 @@
 .bonus_duty_card .sheet-body .bonus_duty_card_responsibilities_header {
     font-size: larger;
 }
-
-
 
 /* TODO: remove this import and include it locally */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
