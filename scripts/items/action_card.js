@@ -20,6 +20,7 @@ export default class action_card_sheet extends ItemSheet {
         // Values created here would only be available within this class or on the sheet's HTML template;
         // it would not be available through returning the item entity elsewhere.
         const data = super.getData();
+        data.config = CONFIG.paranoia;
         return data;
     }
 

@@ -1,0 +1,60 @@
+<form class="{{cssClass}} paranoia_card" autocomplete="off">
+    <header class="sheet-header">
+        <div class="equipment_card_header">
+            <div class="equipment_card_image_container">
+                <img src="{{item.img}}" data-edit="img" title="{{item.name}}" class="card_image"/>
+            </div>
+            <div class="equipment_card_name_container">
+                <h1><input class="no_border_input" name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+                </h1>
+            </div>
+        </div>
+    </header>
+    <section class="sheet-body">
+        <div class="equipment_card_body">
+            <div class="equipment_card_action_order_container">
+                <div class="equipment_card_action_order_dropdown_container">
+                    <label class="action_order_details-label"><b>ACTION ORDER</b></label>
+                    <div class="equipment_card_action_order_details">
+                        <select name="system.skill.name" class="equipment_card_action_order_dropdown">
+                            {{#select item.system.skill.name}}
+                            {{#each config.stats as |stat|}}
+                            <option value="{{ stat }}">{{ stat }}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        &nbsp;+&nbsp;<input class="shrink_input" type="number" name="system.skill.bonus"
+                                            value="{{item.system.skill.bonus}}" min="-10"
+                                            max="10" data-dtype="Number"/>
+                    </div>
+                </div>
+                <div class="equipment_card_detail_container">
+                    <div class="action_order_details-content flexrow flex-center flex-between">
+                        <select name="system.weight" class="white_input">
+                            {{#select item.system.weight}}
+                            {{#each config.weights as |weight|}}
+                            <option value="{{ weight }}">{{ weight }}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    <div class="action_order_details-content flexrow flex-center flex-between">
+                        <select name="system.size" class="white_input">
+                            {{#select item.system.size}}
+                            {{#each config.levels as |level|}}
+                            <option value="{{ level }}">{{ level }}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="equipment_card_description_container">
+                <div class="text" data-group="primary">
+                    {{editor item.system.text target="system.text" button=true owner=owner editable=editable}}
+                </div>
+            </div>
+        </div>
+
+    </section>
+</form>

@@ -38,7 +38,7 @@ Hooks.once("init", async function () {
             "operate": "mechanics",
             "engineer": "mechanics",
             "program": "mechanics",
-            "demolitions": "mechanics"
+            "demolitions": "mechanics",
         },
         wound_map: {
             0: "healthy",
@@ -47,6 +47,26 @@ Hooks.once("init", async function () {
             3: "maimed",
             4: "dead",
         },
+        stats: [
+            "violence",
+            "brains",
+            "chutzpah",
+            "mechanics",
+        ],
+        levels: [
+            "alpha",
+            "level 1",
+            "level 2",
+            "level 3",
+            "level 4",
+            "level 5",
+        ],
+        weights: [
+            "small",
+            "medium",
+            "large",
+            "oversize",
+        ],
     }
 
     CONFIG.paranoia = paranoia;
