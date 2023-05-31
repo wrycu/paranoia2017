@@ -1,3 +1,63 @@
+.npc_sheet {
+    background-color: #b2dabf;
+    color: white;
+}
+
+.npc_sheet .npc_basic_info {
+    display: flex;
+    flex-direction: row;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.npc_sheet .npc_basic_info .npc_img {
+    height: 200px;
+    border: none;
+}
+
+.npc_sheet .npc_basic_info .npc_name_input {
+    color: white;
+}
+
+.npc_sheet .npc_right_column_container {
+    flex-grow: 1;
+    margin-right: 30px;
+}
+
+.npc_sheet .npc_notes_container {
+    display: flex;
+    flex-direction: column;
+    border-left: 5px #3d3c40 solid;
+    border-right: 5px #3d3c40 solid;
+    border-bottom: 5px #3d3c40 solid;
+    height: 160px;
+}
+
+.npc_sheet .npc_section_header {
+    background-color: #3d3c40;
+}
+
+.npc_sheet .npc_health_input {
+    margin-top: 15px;
+    margin-left: 30px;
+    margin-bottom: 15px;
+}
+
+.npc_sheet .npc_health_container {
+    border-left: 5px #3d3c40 solid;
+    border-right: 5px #3d3c40 solid;
+    border-bottom: 5px #3d3c40 solid;
+}
+
+.npc_sheet .sheet-body {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.npc_sheet .npc_equipment_container {
+    margin-top: 15px;
+}
+
 .troubleshooter_sheet {
     background-color: aliceblue;
     color: #244461;
@@ -41,7 +101,7 @@
     color: #244461;
 }
 
-.troubleshooter_sheet  .troubleshooter_section_header {
+.troubleshooter_sheet .troubleshooter_section_header {
     background-color: #244461;
     color: white;
     font-size: smaller;
@@ -63,6 +123,7 @@
     flex-grow: 5;
     margin-left: 30px;
 }
+
 .item-controls {
     flex-grow: 1;
 }

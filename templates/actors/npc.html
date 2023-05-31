@@ -1,0 +1,64 @@
+<form class="{{ cssClass }} npc_sheet" autocomplete="off">
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+        <div class="npc_basic_info">
+            <img class="npc_img" src="{{ actor.img }}" data-edit="img" title="{{ actor.name }}"/>
+            <div class="npc_right_column_container">
+                <h2 class="npc_name_container">
+                    <input type="text" class="npc_name_input" name="name" value="{{ actor.name }}" data-dtype="Text"/>
+                </h2>
+                <div class="npc_notes_container">
+                    <div class="npc_section_header npc_notes_header">
+                        <i>///&nbsp;<b>NOTES</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    </div>
+                    <div class="npc_notes_editor">
+                        {{editor actor.system.notes target="system.notes" button=true owner=owner
+                        editable=editable}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+        <div class="npc_health_container">
+            <div class="npc_section_header npc_health_header">
+                <i>///&nbsp;<b>HEALTH</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+            </div>
+            <select name="system.wounds.value" class="npc_health_input">
+                {{#select actor.system.wounds.value}}
+                {{#each config.wound_map as |state|}}
+                <option value="{{ @key }}">{{ state }}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        <div class="npc_equipment_container">
+            <div class="npc_section_header npc_equipment_container">
+                <i>///&nbsp;<b>EQUIPMENT</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+            </div>
+            {{#each items as |item id|}}
+            {{#if (eq item.type "equipment_card")}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+                <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="64" height="64"/>
+                </div>
+                <h4 class="item-name mutant_power" data-item-id="{{ item._id }}">{{item.name}}</h4>
+                <div class="item-controls">
+                    <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                </div>
+            </li>
+            {{/if}}
+            {{/each}}
+        </div>
+        <div class="npc_special_skills_container">
+            <div class="npc_section_header npc_special_skills_container">
+                <i>///&nbsp;<b>SPECIAL SKILLS</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+            </div>
+            <div class="npc_special_skills_editor">
+                {{editor actor.system.special_skills target="system.special_skills" button=true owner=owner
+                editable=editable}}
+            </div>
+        </div>
+    </section>
+</form>

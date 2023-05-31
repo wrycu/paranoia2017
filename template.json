@@ -160,9 +160,16 @@
             }
         },
         "npc": {
-            "templates": [
-                "resources"
-            ]
+            "templates": [],
+            "name": "",
+            "notes": "<p></p>",
+            "wounds": {
+                "min": 0,
+                "value": 0,
+                "max": 4
+            },
+            "equipment": "<p></p>",
+            "special_skills": "<p></p>"
         }
     },
     "Item": {

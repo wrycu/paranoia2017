@@ -7,6 +7,7 @@ import {socket_listener} from "./socket.js";
 import {initiative_manager} from "./combat/initiative_manager.js";
 import roll_builder from "./dice/roller.js";
 import paranoia_item from "./items/item.js";
+import paranoia_actor from "./actors/actor.js";
 
 
 Hooks.once("init", async function () {
@@ -71,6 +72,7 @@ Hooks.once("init", async function () {
     }
 
     CONFIG.paranoia = paranoia;
+    CONFIG.Actor.documentClass = paranoia_actor;
     CONFIG.Item.documentClass = paranoia_item;
 
     Handlebars.registerHelper("json", JSON.stringify);
