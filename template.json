@@ -213,7 +213,7 @@
         },
         "bonus_duty_card": {
             "templates": [],
-            "responsibilities": []
+            "responsibilities": "<p></p>"
         },
         "number_one_card": {
             "templates": []
