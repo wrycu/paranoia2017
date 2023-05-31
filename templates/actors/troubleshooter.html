@@ -1,4 +1,4 @@
-<form class="{{ cssClass }} flexcol troubleshooter_sheet" autocomplete="off">
+<form class="{{ cssClass }} troubleshooter_sheet" autocomplete="off">
     {{!-- Sheet Header --}}
     <header class="sheet-header">
         <div class="core_information tim_flexbox">
@@ -32,14 +32,16 @@
                 <section class="sheet-body ">
                     <div class="core_information flexbox">
                         <div class="core_information_details">
-                            <label for="system.name" class="core_information_details-label troubleshooter_label">NAME:</label>
+                            <label for="system.name"
+                                   class="core_information_details-label troubleshooter_label">NAME:</label>
                             <div class="core_information_details-content">
                                 <input type="text" class="troubleshooter_input" name="name" value="{{ actor.name }}"
                                        data-dtype="Text"/>
                             </div>
                         </div>
                         <div class="core_information_details">
-                            <label for="system.security_clearance" class="core_information_details-label troubleshooter_label">CLEARANCE LVL:</label>
+                            <label for="system.security_clearance"
+                                   class="core_information_details-label troubleshooter_label">CLEARANCE LVL:</label>
                             <div class="core_information_details-content">
                                 <input type="text" class="troubleshooter_input" name="system.security_clearance"
                                        value="{{ actor.system.security_clearance }}"
@@ -47,16 +49,20 @@
                             </div>
                         </div>
                         <div class="core_information_details">
-                            <label for="system.home_sector" class="core_information_details-label troubleshooter_label">HOME SECTOR:</label>
+                            <label for="system.home_sector" class="core_information_details-label troubleshooter_label">HOME
+                                SECTOR:</label>
                             <div class="core_information_details-content">
-                                <input type="text" class="troubleshooter_input" name="system.home_sector" value="{{ actor.system.home_sector }}"
+                                <input type="text" class="troubleshooter_input" name="system.home_sector"
+                                       value="{{ actor.system.home_sector }}"
                                        data-dtype="Text"/>
                             </div>
                         </div>
                         <div class="core_information_details">
-                            <label for="system.clone_number" class="core_information_details-label troubleshooter_label">CLONE #:</label>
+                            <label for="system.clone_number"
+                                   class="core_information_details-label troubleshooter_label">CLONE #:</label>
                             <div class="core_information_details-content">
-                                <input type="number" class="troubleshooter_input" name="system.clone_number" value="{{ actor.system.clone_number }}"
+                                <input type="number" class="troubleshooter_input" name="system.clone_number"
+                                       value="{{ actor.system.clone_number }}"
                                        data-dtype="Number"/>
                             </div>
                         </div>
@@ -65,15 +71,17 @@
                         <div class="core_information_details">
                             <label for="system.gender" class="core_information_details-label troubleshooter_label">GENDER:</label>
                             <div class="core_information_details-content">
-                                <input type="text" class="troubleshooter_input" name="system.gender" value="{{ actor.system.gender }}"
+                                <input type="text" class="troubleshooter_input" name="system.gender"
+                                       value="{{ actor.system.gender }}"
                                        data-dtype="Text"/>
                             </div>
                         </div>
                         <div class="core_information_details" style="flex-grow: 1;">
                             <label for="system.personality" class="core_information_details-label troubleshooter_label">PERSONALITY:</label>
                             <div class="core_information_details-content">
-                                <input type="text" class="troubleshooter_input" name="system.personality" value="{{ actor.system.personality }}"
-                                       data-dtype="Text" />
+                                <input type="text" class="troubleshooter_input" name="system.personality"
+                                       value="{{ actor.system.personality }}"
+                                       data-dtype="Text"/>
                             </div>
                         </div>
                     </div>
@@ -179,7 +187,7 @@
                                 <select name="system.wounds.value">
                                     {{#select actor.system.wounds.value}}
                                     {{#each config.wound_map as |state|}}
-                                        <option value="{{ @key }}">{{ state }}</option>
+                                    <option value="{{ @key }}">{{ state }}</option>
                                     {{/each}}
                                     {{/select}}
                                 </select>
@@ -200,26 +208,123 @@
             </div>
         </div>
         <div class="tab items" data-group="primary" data-tab="items">
-            <ol class="items-list">
-                <li class="item flexrow item-header">
-                    <div class="item-image"></div>
-                    <div class="item-name">Name</div>
-                    <div class="item-controls">
-                        <a class="item-control item-create" title="Create item" data-type="item"><i
-                                class="fas fa-plus"></i> Add item</a>
+            <div class="troubleshooter_items">
+                <div class="troubleshooter_bonus_duties">
+                    <div class="troubleshooter_section">
+                        <div class="troubleshooter_section_header">
+                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                        </div>
+                        <div class="troubleshooter_section_name">
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;BONUS DUTY >>></b>
+                        </div>
                     </div>
-                </li>
-                {{#each items as |item id|}}
-                <li class="item flexrow" data-item-id="{{item._id}}">
-                    <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
-                    <h4 class="item-name">{{item.name}}</h4>
-                    <div class="item-controls">
-                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    {{#each items as |item id|}}
+                    {{#if (eq item.type "bonus_duty_card")}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                        <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="64" height="64"/>
+                        </div>
+                        <h4 class="item-name">{{item.name}}</h4>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div class="troubleshooter_mutant_powers">
+                    <div class="troubleshooter_section">
+                        <div class="troubleshooter_section_header">
+                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                        </div>
+                        <div class="troubleshooter_section_name">
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;MUTANT POWERS >>></b>
+                        </div>
                     </div>
-                </li>
-                {{/each}}
-            </ol>
+                    {{#each items as |item id|}}
+                    {{#if (eq item.type "mutant_power_card")}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                        <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="64" height="64"/>
+                        </div>
+                        <h4 class="item-name">{{item.name}}</h4>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div class="troubleshooter_secret_societies">
+                    <div class="troubleshooter_section">
+                        <div class="troubleshooter_section_header">
+                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                        </div>
+                        <div class="troubleshooter_section_name">
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;SECRET SOCIETIES >>></b>
+                        </div>
+                    </div>
+                    {{#each items as |item id|}}
+                    {{#if (eq item.type "secret_society_card")}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                        <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="64" height="64"/>
+                        </div>
+                        <h4 class="item-name">{{item.name}}</h4>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div class="troubleshooter_secret_societies">
+                    <div class="troubleshooter_section">
+                        <div class="troubleshooter_section_header">
+                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                        </div>
+                        <div class="troubleshooter_section_name">
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;ACTION CARDS >>></b>
+                        </div>
+                    </div>
+                    {{#each items as |item id|}}
+                    {{#if (eq item.type "action_card")}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                        <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="64" height="64"/>
+                        </div>
+                        <h4 class="item-name">(AO: {{ item.system.action_order }})&nbsp;{{item.name}}</h4>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div class="troubleshooter_secret_societies">
+                    <div class="troubleshooter_section">
+                        <div class="troubleshooter_section_header">
+                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                        </div>
+                        <div class="troubleshooter_section_name">
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;EQUIPMENT >>></b>
+                        </div>
+                    </div>
+                    {{#each items as |item id|}}
+                    {{#if (eq item.type "equipment_card")}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                        <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="64" height="64"/>
+                        </div>
+                        <h4 class="item-name">{{item.name}}</h4>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+                </div>
+            </div>
         </div>
     </section>
 </form>

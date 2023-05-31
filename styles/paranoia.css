@@ -25,19 +25,23 @@
     border: none;
 }
 
+.paranoia_card .troubleshooter_items {
+    height: 500px;
+}
+
 .troubleshooter_sheet header .core_information.tim_flexbox .troubleshooter_img {
     flex-grow: 1;
     height: 275px;
 }
 
-.troubleshooter_sheet .description .troubleshooter_section {
+.troubleshooter_sheet .troubleshooter_section {
     display: flex;
     flex-direction: row;
     background-color: #7DB8E1;
     color: #244461;
 }
 
-.troubleshooter_sheet .description .troubleshooter_section .troubleshooter_section_header {
+.troubleshooter_sheet  .troubleshooter_section_header {
     background-color: #244461;
     color: white;
     font-size: smaller;
@@ -47,10 +51,24 @@
     flex-direction: column;
 }
 
+.troubleshooter_sheet nav.sheet-tabs {
+    border: none;
+}
+
+.item-image {
+    flex-grow: 1;
+}
+
+.item-name {
+    flex-grow: 5;
+    margin-left: 30px;
+}
+.item-controls {
+    flex-grow: 1;
+}
+
 #triangle-right {
     display: block;
-    width: 0;
-    height: 0;
     border-top: 7px solid transparent;
     border-left: 15px solid #B44938;
     border-bottom: 7px solid transparent;
