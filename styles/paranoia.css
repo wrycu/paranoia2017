@@ -176,6 +176,82 @@
     align-self: center;
 }
 
+.paranoia_card .mutant_card_header .mutant_card_image_container {
+    display: flex;
+    height: 300px;
+    flex-basis: 250px;
+    align-items: stretch;
+}
+
+.paranoia_card .mutant_card_header .mutant_card_image_container .card_image {
+    flex-grow: 1;
+    border: none;
+    height: 300px;
+    margin-right: 0px;
+}
+
+.paranoia_card .mutant_card_header {
+    display: flex;
+    flex-direction: column;
+}
+
+.paranoia_card .mutant_card_header .mutant_card_name_container {
+    border-top: 3px solid black;
+    background-color: #13a455;
+    border-bottom: 3px solid black;
+}
+
+.paranoia_card .sheet-body .mutant_card_details_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.paranoia_card .sheet-body .mutant_card_action_order_number {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 1;
+    justify-content: center;
+}
+
+.paranoia_card .sheet-body .mutant_card_details {
+    align-self: stretch;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.paranoia_card .sheet-body .action_order_details-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+.paranoia_card .sheet-body .mutant_card_action_input {
+    margin-top: 10px;
+}
+
+.paranoia_card .sheet-body .mutant_card_action_order_container {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    font-size: smaller;
+}
+
+#triangle-up {
+    margin-top: 5px;
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 50px solid #13a455;
+}
+
+
 /* TODO: remove this import and include it locally */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 /* Global styles */

@@ -1,0 +1,33 @@
+<form class="{{cssClass}} paranoia_card" autocomplete="off">
+    <header class="sheet-header">
+        <div class="mutant_card_header">
+            <div class="mutant_card_image_container">
+                <img src="{{item.img}}" data-edit="img" title="{{item.name}}" class="card_image"/>
+            </div>
+            <div class="mutant_card_name_container">
+                <h1><input class="no_border_input" name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+                </h1>
+            </div>
+        </div>
+    </header>
+    <section class="sheet-body">
+        <div class="mutant_card_details_container">
+            <div class="mutant_card_action_order_number">
+                <div class="action_order_details-content" id="triangle-up">
+                    <div class="spacer">&nbsp;</div>
+                    <input type="number" class="mutant_card_action_input" name="system.action_order"
+                           value="{{item.system.action_order}}" min="0"
+                           max="10" data-dtype="Number"/>
+                </div>
+            </div>
+            <div class="mutant_card_action_order_container">
+                <b>ACTION ORDER</b>
+            </div>
+            <div class="mutant_card_details">
+                <div class="text" data-group="primary">
+                    {{editor item.system.text target="system.text" button=true owner=owner editable=editable}}
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
