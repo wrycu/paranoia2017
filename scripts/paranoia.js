@@ -1,11 +1,12 @@
 import {computer_die, mutant_die, negative_node_die, node_die} from "./dice/dice.js";
 import {roll_paranoia} from "./dice/roll.js";
-import action_card_sheet from "./items/action_card.js";
+import item_sheet_v1 from "./items/item_sheet_v1.js";
 import troubleshooter_sheet from "./actors/troubleshooter.js";
 import {initiative_start} from "./combat/initiative.js";
 import {socket_listener} from "./socket.js";
 import {initiative_manager} from "./combat/initiative_manager.js";
 import roll_builder from "./dice/roller.js";
+import paranoia_item from "./items/item.js";
 
 
 Hooks.once("init", async function () {
@@ -70,6 +71,7 @@ Hooks.once("init", async function () {
     }
 
     CONFIG.paranoia = paranoia;
+    CONFIG.Item.documentClass = paranoia_item;
 
     Handlebars.registerHelper("json", JSON.stringify);
     Handlebars.registerHelper("math", function (lvalue, operator, rvalue, options) {
@@ -86,7 +88,7 @@ Hooks.once("init", async function () {
     });
 
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("paranoia", action_card_sheet, {makeDefault: true});
+    Items.registerSheet("paranoia", item_sheet_v1, {makeDefault: true});
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("paranoia", troubleshooter_sheet, {makeDefault: true});
 

@@ -1,5 +1,6 @@
 import {initiative_manager} from "../combat/initiative_manager.js";
 import roll_builder from "../dice/roller.js";
+import mutant_power_use from "../items/mutant_power_popup.js";
 
 export default class troubleshooter_sheet extends ActorSheet {
 
@@ -77,6 +78,76 @@ export default class troubleshooter_sheet extends ActorSheet {
         });
 
         html.find('.skill.rollable').click(this._roll_skill.bind(this));
+
+        const send_to_chat_menu = {
+            name: "Send To Chat",
+            icon: '<i class="far fa-comment"></i>',
+            callback: (el) => {
+                let item_id = el.attr("data-item-id");
+                this._send_item_to_chat(item_id);
+            },
+        };
+        const use_mutant_power = {
+            name: "Activate",
+            icon: '<i class="far fa-comment"></i>',
+            callback: (el) => {
+                let item_id = el.attr("data-item-id");
+                this._use_mutant_power(item_id);
+            },
+        };
+
+        new ContextMenu(html, ".item .item-name:not(.mutant_power)", [send_to_chat_menu]);
+        new ContextMenu(html, ".item .item-name.mutant_power", [use_mutant_power]);
+    }
+
+    async _use_mutant_power(item_id) {
+        let item = this.actor.items.get(item_id);
+        console.log(item)
+        // TODO: prompt for moxie points spent and what you'd like to do
+
+        const item_details = item.get_item_details();
+        const template = "systems/paranoia/templates/chat/item.html";
+        const html = await renderTemplate(template, {item_details, item});
+
+        let dialog = new mutant_power_use(
+            this.actor,
+            item_details,
+        ).render(true);
+
+        return;
+
+        const message_data = {
+            user: game.user.id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            content: html,
+            speaker: {
+                actor: this.actor.id,
+                token: this.actor.token,
+                alias: this.actor.name,
+            },
+        };
+        ChatMessage.create(message_data);
+    }
+
+    async _send_item_to_chat(item_id) {
+        let item = this.actor.items.get(item_id);
+        console.log(item)
+
+        const item_details = item.get_item_details();
+        const template = "systems/paranoia/templates/chat/item.html";
+        const html = await renderTemplate(template, {item_details, item});
+
+        const message_data = {
+            user: game.user.id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            content: html,
+            speaker: {
+                actor: this.actor.id,
+                token: this.actor.token,
+                alias: this.actor.name,
+            },
+        };
+        ChatMessage.create(message_data);
     }
 
     async _roll_skill(context) {

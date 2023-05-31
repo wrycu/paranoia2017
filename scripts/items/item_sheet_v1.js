@@ -1,4 +1,4 @@
-export default class action_card_sheet extends ItemSheet {
+export default class item_sheet_v1 extends ItemSheet {
 
     /** @override */
     static get defaultOptions() {
