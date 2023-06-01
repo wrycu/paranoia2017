@@ -172,6 +172,7 @@ export default class troubleshooter_sheet extends ActorSheet {
      * @return {undefined}
      */
     _prepareItems(context) {
+        console.log(context)
         // Initialize containers.
         const gear = [];
         const features = [];
@@ -187,6 +188,16 @@ export default class troubleshooter_sheet extends ActorSheet {
             8: [],
             9: []
         };
+
+        let actor = context.actor.system;
+
+        // Calculate derived action order values for equipment
+        for (let item of context.items) {
+            if (item.type === "equipment_card") {
+                item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
+            }
+        }
+        console.log(context)
 
         // Iterate through items, allocating to containers
         for (let i of context.items) {

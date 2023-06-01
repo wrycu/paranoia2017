@@ -208,8 +208,8 @@
             "size": "medium",
             "level": 0,
             "skill": {
-                "name": "",
-                "bonus": ""
+                "name": "violence",
+                "bonus": "0"
             }
         },
         "secret_society_card": {
