@@ -2,7 +2,6 @@
     {{#if (eq this.stage "stage_1") }}
     <!-- card selection -->
     <h2>Card Selection</h2>
-    <font color="green"><b>5.62</b></font> seconds left to select a card...
     {{#if this.is_gm }}
     <div>
         <button type="button" class="countdown_control" data-action="start" title="Add Mod">
@@ -11,6 +10,19 @@
         <button type="button" class="countdown_control" data-action="stop" title="Add Mod">
             <i class="fas fa-plus fa-fw"></i>Stop Countdown
         </button>
+    </div>
+    {{else}}
+    <div>
+        <h3>Available Cards</h3>
+        <div class="combat_available_cards_container">
+            {{#each this.available_cards as |card|}}
+            <div class="combat_available_card">
+                {{{ card.html }}}
+                <br>
+                <b>Action Order: {{ card.system.action_order }}</b>
+            </div>
+            {{/each}}
+        </div>
     </div>
     {{/if}}
     <table>
@@ -63,7 +75,7 @@
     <button type="button" class="initiative_next" title="Add Mod">
         <i class="fas fa-plus fa-fw"></i>Progress Initiative
     </button>
-        <button type="button" class="next_round" title="Add Mod">
+    <button type="button" class="next_round" title="Add Mod">
         <i class="fas fa-plus fa-fw"></i>Next Round
     </button>
     {{else}}

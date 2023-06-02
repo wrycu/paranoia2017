@@ -439,6 +439,11 @@
     font-size: larger;
 }
 
+.combat_available_cards_container {
+    display: flex;
+    flex-direction: row;
+}
+
 /* TODO: remove this import and include it locally */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 /* Global styles */

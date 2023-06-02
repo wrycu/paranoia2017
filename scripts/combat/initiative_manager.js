@@ -88,13 +88,19 @@ export class initiative_manager extends FormApplication {
         data.available_cards = [];
         game.user.character.items.filter(i => ["action_card", "equipment_card", "mutant_power_card"].includes(i.type));
         let actor = game.user.character.system;
-        game.user.character.items.filter(i => ["action_card", "equipment_card", "mutant_power_card"].includes(i.type)).forEach(function (item) {
-            // derived values on items are not calculated when accessing outside a sheet
-            if (item.type === "equipment_card") {
-                item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
+        let items = game.user.character.items.filter(i => ["action_card", "equipment_card", "mutant_power_card"].includes(i.type));
+        if (items.length > 0) {
+            for (let item of items) {
+                // derived values on items are not calculated when accessing outside a sheet
+                if (item.type === "equipment_card") {
+                    item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
+                }
+                const item_details = item.get_item_details();
+                const template = "systems/paranoia/templates/chat/item.html";
+                item.html = await renderTemplate(template, {item_details, item});
+                data.available_cards.push(item);
             }
-            data.available_cards.push(item);
-        });
+        }
         data.initiative_slot = this.initiative_slot;
         data.slots = this.slots;
         data.gone_this_round = this.gone_this_round;
