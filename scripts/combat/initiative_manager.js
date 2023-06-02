@@ -40,6 +40,9 @@ export class initiative_manager extends FormApplication {
                 } else if (data.subtype === "challenge_loss") {
                     console.log("got remote challenge loss")
                     this._challenge_wrong(data);
+                } else if (data.subtype === "stage_transition") {
+                    console.log("changing stage")
+                    this._stage_transition(data);
                 }
             }
             this.render(true);
@@ -55,19 +58,22 @@ export class initiative_manager extends FormApplication {
         // can't access "this" in the foreach
         let selected_cards = {}
         game.users.filter(i => i.active).forEach(function (user) {
-            selected_cards[user.character.id] = {
-                name: user.name,
-                is_selected: false,
-                selected_card: {
-                    name: null,
-                    id: null,
-                    action_order: null,
-                },
-                is_me: user.character.id === game.user.character.id,
-            };
+            if (!user.isGM) {
+                selected_cards[user.character.id] = {
+                    name: user.name,
+                    is_selected: false,
+                    selected_card: {
+                        name: null,
+                        id: null,
+                        action_order: null,
+                    },
+                    is_me: user.character.id === game.user.character.id,
+                };
+            }
         });
         this.selected_cards = selected_cards;
         this.slots = [];
+        this.stage = "stage_1";
     }
 
     async getData(options = {}) {
@@ -93,6 +99,7 @@ export class initiative_manager extends FormApplication {
         data.slots = this.slots;
         data.gone_this_round = this.gone_this_round;
         data.challenged_this_round = this.challenged_this_round;
+        data.stage = this.stage;
         console.log(data)
         return data;
     }
@@ -102,10 +109,40 @@ export class initiative_manager extends FormApplication {
         console.log("activating listeners")
 
         // TODO: refactor to use initial / real handlers
+        html.find(".countdown_control").click(this.initial_stage_transition.bind(this));
+        html.find(".next_round").click(this.initial_stage_transition.bind(this));
         html.find(".card_selection").on("change", this._handle_my_card_selection.bind(this));
         html.find(".initiative_next").click(this._initial_initiative_next.bind(this));
         html.find(".initiative_select").click(this._handle_initial_initiative_select.bind(this));
         html.find(".challenge_initiative").click(this._initial_challenge.bind(this));
+    }
+
+    initial_stage_transition(context) {
+        let new_stage;
+        if (this.stage === "stage_1") {
+            new_stage = "stage_2";
+        } else {
+            new_stage = "stage_1";
+        }
+
+        let data = {
+            type: "initiative",
+            subtype: "stage_transition",
+            data: {
+                new_stage
+            }
+        };
+
+        game.socket.emit("system.paranoia", data);
+        this._stage_transition(data);
+    }
+
+    _stage_transition(data) {
+        this.stage = data.data.new_stage;
+        if (this.stage === "stage_1") {
+            this.setup_initiative();
+        }
+        this.render(true);
     }
 
     async _initial_challenge(context) {
