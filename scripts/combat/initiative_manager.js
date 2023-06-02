@@ -1,4 +1,5 @@
 import {card_discarder} from "./card_discarder.js";
+import mutant_power_use from "../items/mutant_power_popup.js";
 
 export class initiative_manager extends FormApplication {
     constructor(object, options) {
@@ -78,7 +79,16 @@ export class initiative_manager extends FormApplication {
         data.my_id = game.user.character.id;
         data.selected_cards = this.selected_cards;
         data.selection_disabled = false;
-        data.available_cards = game.user.character.items.filter(i => i.type === "action_card");
+        data.available_cards = [];
+        game.user.character.items.filter(i => ["action_card", "equipment_card", "mutant_power_card"].includes(i.type));
+        let actor = game.user.character.system;
+        game.user.character.items.filter(i => ["action_card", "equipment_card", "mutant_power_card"].includes(i.type)).forEach(function (item) {
+            // derived values on items are not calculated when accessing outside a sheet
+            if (item.type === "equipment_card") {
+                item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
+            }
+            data.available_cards.push(item);
+        });
         data.initiative_slot = this.initiative_slot;
         data.slots = this.slots;
         data.gone_this_round = this.gone_this_round;
@@ -98,7 +108,7 @@ export class initiative_manager extends FormApplication {
         html.find(".challenge_initiative").click(this._initial_challenge.bind(this));
     }
 
-    _initial_challenge(context) {
+    async _initial_challenge(context) {
         console.log("got local challenge")
         let challenged_player = $(context.target).attr("data-player-id");
         let challenged_index = parseInt($(context.target).attr("data-slot"));
@@ -113,6 +123,24 @@ export class initiative_manager extends FormApplication {
                 challenged_index: challenged_index,
             }
         }
+
+        const html = await renderTemplate(
+            "systems/paranoia/templates/combat/initiative_challenge_start.html",
+            {
+                other_person: game.actors.get(challenged_player).name,
+            },
+        );
+
+        const message_data = {
+            user: game.user.id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            content: html,
+            speaker: {
+                actor: game.user.character.id,
+            },
+        };
+        ChatMessage.create(message_data);
+
         this._challenge(data);
         game.socket.emit("system.paranoia", data);
     }
@@ -149,11 +177,27 @@ export class initiative_manager extends FormApplication {
         this.render(true);
     }
 
-    challenge_lied(challenger_id) {
+    async challenge_lied(challenger_id) {
         console.log("I lost the challenge")
-        // TODO: send a chat message?
-        this.discard_card(game.user.character.id, $(".card_selection").val());
         // TODO: insert the challenger in the initiative
+        const html = await renderTemplate(
+            "systems/paranoia/templates/combat/initiative_challenge_correct.html",
+            {
+                challenger: game.actors.get(challenger_id).name,
+            },
+        );
+
+        const message_data = {
+            user: game.user.id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            content: html,
+            speaker: {
+                actor: game.user.character.id,
+            },
+        };
+        ChatMessage.create(message_data);
+
+        this.discard_card(game.user.character.id, $(".card_selection").val());
     }
 
     challenge_truth(challenger_id) {
@@ -166,10 +210,11 @@ export class initiative_manager extends FormApplication {
             }
         };
         console.log(data)
+        // TODO: send "player Y was not lying about initiative, player X is discarding a card" message
         game.socket.emit("system.paranoia", data);
     }
 
-    _challenge_wrong(data) {
+    async _challenge_wrong(data) {
         console.log("got challenge wrong")
         console.log(data)
         if (data.data.challenger_id === game.user.character.id) {
@@ -189,13 +234,28 @@ export class initiative_manager extends FormApplication {
                 content: `Incorrect challengers must choose and discard an action card`,
                 buttons: buttons,
             }).render(true);
+
+            const html = await renderTemplate(
+                "systems/paranoia/templates/combat/initiative_challenge_incorrect.html",
+            );
+            const message_data = {
+                user: game.user.id,
+                type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+                content: html,
+                speaker: {
+                    actor: game.user.character.id,
+                },
+            };
+            ChatMessage.create(message_data);
         }
     }
 
     discard_card(actor_id, card_id) {
         let actor = game.actors.get(actor_id);
-        // TODO: this is an async call which we are not awaiting. do we care?
-        actor.deleteEmbeddedDocuments("Item", [card_id]);
+        if (actor.items.get(card_id)?.type !== "mutant_power_card") {
+            // TODO: this is an async call which we are not awaiting. do we care?
+            actor.deleteEmbeddedDocuments("Item", [card_id]);
+        }
     }
 
     /**

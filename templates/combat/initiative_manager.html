@@ -1,8 +1,5 @@
 <form>
-    <b>Fixed header</b><br>
-    header stuff here
-    <hr>
-    Management<br>
+    {{#if this.is_gm }}
     <div>
         <button type="button" class="countdown_control" data-action="start" title="Add Mod">
             <i class="fas fa-plus fa-fw"></i>Start Countdown
@@ -12,7 +9,8 @@
         </button>
     </div>
     <hr>
-    Card Selection<br>
+    {{/if}}
+    <h2>Card Selection</h2>
     <table>
         <thead>
         <tr>
@@ -36,8 +34,8 @@
                     {{#select card.selected_card.id }}
                     <option value="not_selected">select a card...</option>
                     {{#each ../this.available_cards as |option|}}
-                    <option value="{{ option.id }}" data-action-order="{{ option.system.action_order }}">{{ option.name
-                        }} ({{ option.system.action_order }})
+                    <option value="{{ option.id }}" data-action-order="{{ option.system.action_order }}">
+                        {{ option.name }} ({{ option.system.action_order }})
                     </option>
                     {{/each}}
                     {{/select}}
@@ -55,7 +53,7 @@
         </tbody>
     </table>
     <hr>
-    Slot Selection<br>
+    <h2>Slot Selection</h2>
     {{#if this.is_gm }}
     <button type="button" class="initiative_next" title="Add Mod">
         <i class="fas fa-plus fa-fw"></i>next slot
@@ -108,7 +106,4 @@
         {{/each}}
         </tbody>
     </table>
-    <hr>
-    <br><br>
-    <button type="submit">Save Changes</button>
 </form>
