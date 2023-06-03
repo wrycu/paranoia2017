@@ -115,8 +115,7 @@ export class initiative_manager extends FormApplication {
         console.log("activating listeners")
 
         // TODO: refactor to use initial / real handlers
-        html.find(".countdown_control").click(this.initial_stage_transition.bind(this));
-        html.find(".next_round").click(this.initial_stage_transition.bind(this));
+        html.find(".progress_combat").click(this.initial_stage_transition.bind(this));
         html.find(".card_selection").on("change", this._handle_my_card_selection.bind(this));
         html.find(".initiative_next").click(this._initial_initiative_next.bind(this));
         html.find(".initiative_select").click(this._handle_initial_initiative_select.bind(this));
@@ -346,14 +345,16 @@ export class initiative_manager extends FormApplication {
         console.log("initial initiative next")
         console.log(context)
         console.log(this)
-        let data = {
-            type: "initiative",
-            subtype: "initiative_forward",
-            data: {},
-        };
-        this._handle_initiative_next(data);
-        game.socket.emit("system.paranoia", data);
-        console.log("emitting event")
+        if (this.initiative_slot >= 0) {
+            let data = {
+                type: "initiative",
+                subtype: "initiative_forward",
+                data: {},
+            };
+            this._handle_initiative_next(data);
+            game.socket.emit("system.paranoia", data);
+            console.log("emitting event")
+        }
     }
 
     _handle_initiative_next(data) {

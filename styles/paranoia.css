@@ -444,6 +444,27 @@
     flex-direction: row;
 }
 
+.initiative_slot {
+    display: flex;
+    flex-direction: row;
+}
+
+.initiative_slot .initiative_select {
+    width: 70px;
+}
+
+.initiative_slot .initiative_no_one {
+    align-self: center;
+}
+
+.initiative_slot .initiative_someone {
+    align-self: center;
+}
+
+.initiative_slot .challenge_initiative {
+    width: 100px;
+}
+
 /* TODO: remove this import and include it locally */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 /* Global styles */

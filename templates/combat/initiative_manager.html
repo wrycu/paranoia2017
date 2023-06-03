@@ -2,16 +2,7 @@
     {{#if (eq this.stage "stage_1") }}
     <!-- card selection -->
     <h2>Card Selection</h2>
-    {{#if this.is_gm }}
-    <div>
-        <button type="button" class="countdown_control" data-action="start" title="Add Mod">
-            <i class="fas fa-plus fa-fw"></i>Start Countdown
-        </button>
-        <button type="button" class="countdown_control" data-action="stop" title="Add Mod">
-            <i class="fas fa-plus fa-fw"></i>Stop Countdown
-        </button>
-    </div>
-    {{else}}
+    {{#if this.is_gm }}{{else}}
     <div>
         <h3>Available Cards</h3>
         <div class="combat_available_cards_container">
@@ -66,20 +57,22 @@
         {{/each}}
         </tbody>
     </table>
-    <hr>
     {{/if}}
     {{#if (eq this.stage "stage_2") }}
     <!-- actions / slot selection-->
     <h2>Slot Selection</h2>
     {{#if this.is_gm }}
-    <button type="button" class="initiative_next" title="Add Mod">
-        <i class="fas fa-plus fa-fw"></i>Progress Initiative
+    {{#if (lt this.slots.length 11)}}
+    <button type="button" class="initiative_next" title="Allow Troubleshooters to claim the next initiative slot">
+        <i class="fas fa-plus fa-fw"></i>Next Slot
     </button>
-    <button type="button" class="next_round" title="Add Mod">
-        <i class="fas fa-plus fa-fw"></i>Next Round
-    </button>
+    {{/if}}
     {{else}}
-    TODO: print the selected card (and initiative value) here
+    {{#each this.selected_cards as |card|}}
+    {{#if card.is_me }}{{#if card.is_selected }}
+    Selected card: {{ card.selected_card.name }}
+    {{/if}}{{/if}}
+    {{/each}}
     {{/if}}
     <table>
         <thead>
@@ -98,15 +91,15 @@
             <td>
                 {{ math 10 "-" @index }}
             </td>
-            <td>
+            <td class="initiative_slot">
                 {{#if slot.actors }}
                 {{#each slot.actors as |actor|}}
-                {{ actor.player_name }}<br>
+                <div class="initiative_someone">{{ actor.player_name }}</div>
                 {{#if actor.challenged }} {{else}}
                 {{#if (eq actor.player_id ../../this.my_id) }} {{else}}
                 {{#if @../last}}
                 {{#if ../../this.is_gm }} {{ else }}
-                <button type="button" class="challenge_initiative" data-player-id="{{ actor.player_id }}"
+                &nbsp;<button type="button" class="challenge_initiative" data-player-id="{{ actor.player_id }}"
                         data-slot="{{ @../index }}" title="Add Mod">
                     <i class="fas fa-plus fa-fw"></i>challenge
                 </button>
@@ -116,13 +109,17 @@
                 {{/if}}
                 {{/each}}
                 {{else}}
-                (no one)
+                <div class="initiative_no_one">(no one)</div>
                 {{/if}}
+
                 {{#if @last}}
-                {{#if slot.contains_me }}{{else}}{{#if ../this.gone_this_round}}{{else}}
-                <button type="button" class="initiative_select" title="Add Mod">
+                {{#if slot.contains_me }}{{else}}
+                {{#if ../this.gone_this_round}}{{else}}
+                {{#if ../this.is_gm }}{{else}}
+                &nbsp;<button type="button" class="initiative_select" title="Add Mod">
                     <i class="fas fa-plus fa-fw"></i>me!
                 </button>
+                {{/if}}
                 {{/if}}
                 {{/if}}
                 {{/if}}
@@ -131,5 +128,12 @@
         {{/each}}
         </tbody>
     </table>
+    {{/if}}
+    {{#if this.is_gm }}
+    <div class="initiative_button_container">
+        <button type="button" class="progress_combat" data-action="progress" title="Move Troubleshooters to the next combat phase">
+            <i class="fas fa-plus fa-fw"></i>Next Combat Phase
+        </button>
+    </div>
     {{/if}}
 </form>
