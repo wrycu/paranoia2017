@@ -16,10 +16,8 @@ export default class mutant_power_use extends FormApplication {
     }
 
     getData() {
-        // Send data to the template
         return {
-            msg: this.exampleOption,
-            color: 'red',
+            moxie_points: this.actor.system.moxie.value,
         };
     }
 
@@ -30,6 +28,11 @@ export default class mutant_power_use extends FormApplication {
     async _updateObject(event, formData) {
         console.log("got submit")
         console.log(formData);
+
+        await this.actor.update(
+            {system: {moxie: {value: this.actor.system.moxie.value - parseInt(formData.moxie_usage)}}}
+        );
+
 
         const template = "systems/paranoia/templates/chat/mutant_power.html";
         const html = await renderTemplate(

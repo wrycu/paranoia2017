@@ -125,7 +125,7 @@
                 },
                 "memory": {
                     "min": 0,
-                    "value": 0
+                    "value": "<p></p>"
                 }
             }
         },
@@ -157,8 +157,9 @@
             },
             "memory": {
                 "min": 0,
-                "value": 0
-            }
+                "value": "<p>Nothing in memory</p>"
+            },
+            "background": "<p>Just a poor clone roped into being a Troubleshooter on behalf of my best friend the Computer</p>"
         },
         "npc": {
             "templates": [],

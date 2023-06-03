@@ -19,6 +19,15 @@ export default class troubleshooter_sheet extends ActorSheet {
         return `systems/paranoia/templates/actors/${this.actor.type}.html`;
     }
 
+    async _updateObject(event, formData) {
+        // wow, the editor is dumb. if someone empties the field and saves it, the editor simply no longer renders
+        // so stop people from accidentally making it empty and screwing themselves
+        if (formData["system.memory.value"] === "") {
+            formData["system.memory.value"] = "<p>Nothing in memory</p>";
+        }
+        await super._updateObject(event, formData);
+    }
+
     /** @override */
     getData() {
         // Retrieve the data structure from the base sheet. You can inspect or log
@@ -78,6 +87,7 @@ export default class troubleshooter_sheet extends ActorSheet {
         });
 
         html.find('.skill.rollable').click(this._roll_skill.bind(this));
+        html.find(".security_level").on("change", this.tattle.bind(this));
 
         const send_to_chat_menu = {
             name: "Send To Chat",
@@ -100,21 +110,11 @@ export default class troubleshooter_sheet extends ActorSheet {
         new ContextMenu(html, ".item .item-name.mutant_power", [use_mutant_power]);
     }
 
-    async _use_mutant_power(item_id) {
-        let item = this.actor.items.get(item_id);
-        console.log(item)
-        // TODO: prompt for moxie points spent and what you'd like to do
-
-        const item_details = item.get_item_details();
-        const template = "systems/paranoia/templates/chat/item.html";
-        const html = await renderTemplate(template, {item_details, item});
-
-        let dialog = new mutant_power_use(
-            this.actor,
-            item_details,
-        ).render(true);
-
-        return;
+    async tattle(context) {
+        console.log("tattling")
+        console.log(context)
+        const template = "systems/paranoia/templates/chat/tattle.html";
+        const html = await renderTemplate(template, {level: $(".security_level").find(":selected").val()});
 
         const message_data = {
             user: game.user.id,
@@ -125,8 +125,24 @@ export default class troubleshooter_sheet extends ActorSheet {
                 token: this.actor.token,
                 alias: this.actor.name,
             },
+            whisper: game.users.filter(i => i.isGM && i.active).map(i => i.id),
         };
         ChatMessage.create(message_data);
+    }
+
+    async _use_mutant_power(item_id) {
+        let item = this.actor.items.get(item_id);
+        console.log(item)
+        // TODO: prompt for moxie points spent and what you'd like to do
+
+        const item_details = item.get_item_details();
+        const template = "systems/paranoia/templates/chat/item.html";
+        const html = await renderTemplate(template, {item_details, item});
+
+        new mutant_power_use(
+            this.actor,
+            item_details,
+        ).render(true);
     }
 
     async _send_item_to_chat(item_id) {

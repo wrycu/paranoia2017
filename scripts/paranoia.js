@@ -69,6 +69,17 @@ Hooks.once("init", async function () {
             "large",
             "oversize",
         ],
+        security_levels: [
+            "ultraviolet",
+            "orange",
+            "infrared",
+            "red",
+            "violet",
+            "yellow",
+            "indigo",
+            "green",
+            "blue",
+        ],
     }
 
     CONFIG.paranoia = paranoia;

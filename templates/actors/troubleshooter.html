@@ -14,6 +14,7 @@
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Overview</a>
         <a class="item" data-tab="items">Items</a>
+        <a class="item" data-tab="background">Background</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -26,7 +27,7 @@
                         <i>///&nbsp;PART ONE&nbsp;&nbsp;&nbsp;&nbsp;</i>
                     </div>
                     <div class="troubleshooter_section_name">
-                        <b>&nbsp;&nbsp;&nbsp;&nbsp;CORE INFORMATION >>></b><!-- TODO: missing gender, personality -->
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;CORE INFORMATION >>></b>
                     </div>
                 </div>
                 <section class="sheet-body ">
@@ -41,11 +42,17 @@
                         </div>
                         <div class="core_information_details">
                             <label for="system.security_clearance"
-                                   class="core_information_details-label troubleshooter_label">CLEARANCE LVL:</label>
+                                   class="core_information_details-label troubleshooter_label">CLEARANCE:</label>
                             <div class="core_information_details-content">
-                                <input type="text" class="troubleshooter_input" name="system.security_clearance"
-                                       value="{{ actor.system.security_clearance }}"
-                                       data-dtype="Text"/>
+                                <select class="security_level" name="system.security_clearance">
+                                    {{#each config.security_levels as |lvl|}}
+                                    {{#if (eq ../actor.system.security_clearance lvl)}}
+                                    <option value="{{ lvl }}" selected>{{ lvl }}</option>
+                                    {{else}}
+                                    <option value="{{ lvl }}">[REDACTED]</option>
+                                    {{/if}}
+                                    {{/each}}
+                                </select>
                             </div>
                         </div>
                         <div class="core_information_details">
@@ -65,7 +72,7 @@
                                        value="{{ actor.system.clone_number }}"
                                        data-dtype="Number"/>
                                 &nbsp;<div class="of">of</div>&nbsp;
-                                 <input type="number" class="troubleshooter_input clone_input" name="system.clone_max"
+                                <input type="number" class="troubleshooter_input clone_input" name="system.clone_max"
                                        value="{{ actor.system.clone_max }}"
                                        data-dtype="Number"/>
                             </div>
@@ -335,6 +342,20 @@
                     {{/if}}
                     {{/each}}
                 </div>
+            </div>
+        </div>
+        <div class="tab background" data-group="primary" data-tab="background">
+            <div class="troubleshooter_section">
+                <div class="troubleshooter_section_header">
+                    <i>///&nbsp;STORY&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                </div>
+                <div class="troubleshooter_section_name">
+                    <b>&nbsp;&nbsp;&nbsp;&nbsp;BACKGROUND >>></b>
+                </div>
+            </div>
+            <div class="wb_information_details-content">
+                {{editor actor.system.background target="system.background" button=true owner=owner
+                editable=editable}}
             </div>
         </div>
     </section>
