@@ -10,6 +10,7 @@
                 "security_clearance": "red",
                 "home_sector": "",
                 "clone_number": 1,
+                "clone_max": 6,
                 "gender": "",
                 "personality": ""
             },

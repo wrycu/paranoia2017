@@ -115,6 +115,24 @@
     border: none;
 }
 
+.troubleshooter_sheet .wb_information_details-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.troubleshooter_sheet .core_information_details-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.troubleshooter_sheet .clone_input {
+    width: 35px;
+}
+
+.of {
+    align-self: center;
+}
+
 .item-image {
     flex-grow: 1;
 }

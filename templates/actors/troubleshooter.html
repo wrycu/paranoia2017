@@ -61,8 +61,12 @@
                             <label for="system.clone_number"
                                    class="core_information_details-label troubleshooter_label">CLONE #:</label>
                             <div class="core_information_details-content">
-                                <input type="number" class="troubleshooter_input" name="system.clone_number"
+                                <input type="number" class="troubleshooter_input clone_input" name="system.clone_number"
                                        value="{{ actor.system.clone_number }}"
+                                       data-dtype="Number"/>
+                                &nbsp;<div class="of">of</div>&nbsp;
+                                 <input type="number" class="troubleshooter_input clone_input" name="system.clone_max"
+                                       value="{{ actor.system.clone_max }}"
                                        data-dtype="Number"/>
                             </div>
                         </div>
@@ -175,10 +179,16 @@
                     <div class="wb_information grid grid-2col">
                         <div class="wb_information_details flexrow flex-group-center">
                             <label for="system.moxie.value" class="wb_information_details-label">MOXIE:</label>
-                            <div class="wb_information_details-content">
-                                <input type="number" name="system.moxie.value"
-                                       value="{{ actor.system.moxie.value }}"
-                                       data-dtype="Number" min="0" max="8"/>
+                            <div class="moxie_container">
+                                <div class="wb_information_details-content">
+                                    <input type="number" name="system.moxie.value"
+                                           value="{{ actor.system.moxie.value }}"
+                                           data-dtype="Number" min="0" max="8"/>
+                                    &nbsp;<div class="of">of</div>&nbsp;
+                                    <input type="number" name="system.moxie.current_max"
+                                           value="{{ actor.system.moxie.current_max }}"
+                                           data-dtype="Number" min="0" max="8"/>
+                                </div>
                             </div>
                         </div>
                         <div class="wb_information_details flexrow flex-group-center">
@@ -246,7 +256,8 @@
                     <li class="item flexrow" data-item-id="{{item._id}}">
                         <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="64" height="64"/>
                         </div>
-                        <h4 class="item-name mutant_power" data-item-id="{{ item._id }}">(AO: {{ item.system.action_order }})&nbsp;{{item.name}}</h4>
+                        <h4 class="item-name mutant_power" data-item-id="{{ item._id }}">(AO: {{
+                            item.system.action_order }})&nbsp;{{item.name}}</h4>
                         <div class="item-controls">
                             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
