@@ -115,6 +115,11 @@
     border: none;
 }
 
+.troubleshooter_sheet .sheet-body .skill_information_layout {
+    display: flex;
+    flex-direction: row;
+}
+
 .troubleshooter_sheet .wb_information_details-content {
     display: flex;
     flex-direction: row;

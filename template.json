@@ -49,31 +49,7 @@
                         "min": -5,
                         "value": 0
                     },
-                    "guns": {
-                        "min": -5,
-                        "value": 0
-                    },
-                    "melee": {
-                        "min": -5,
-                        "value": 0
-                    },
-                    "throw": {
-                        "min": -5,
-                        "value": 0
-                    },
                     "science": {
-                        "min": -5,
-                        "value": 0
-                    },
-                    "psychology": {
-                        "min": -5,
-                        "value": 0
-                    },
-                    "bureaucracy": {
-                        "min": -5,
-                        "value": 0
-                    },
-                    "alpha_complex": {
                         "min": -5,
                         "value": 0
                     },
@@ -81,19 +57,19 @@
                         "min": -5,
                         "value": 0
                     },
-                    "charm": {
-                        "min": -5,
-                        "value": 0
-                    },
-                    "intimidate": {
-                        "min": -5,
-                        "value": 0
-                    },
-                    "stealth": {
-                        "min": -5,
-                        "value": 0
-                    },
                     "operate": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "guns": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "psychology": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "charm": {
                         "min": -5,
                         "value": 0
                     },
@@ -101,7 +77,31 @@
                         "min": -5,
                         "value": 0
                     },
+                    "melee": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "bureaucracy": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "intimidate": {
+                        "min": -5,
+                        "value": 0
+                    },
                     "program": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "throw": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "alpha_complex": {
+                        "min": -5,
+                        "value": 0
+                    },
+                    "stealth": {
                         "min": -5,
                         "value": 0
                     },
@@ -159,7 +159,8 @@
                 "min": 0,
                 "value": "<p>Nothing in memory</p>"
             },
-            "background": "<p>Just a poor clone roped into being a Troubleshooter on behalf of my best friend the Computer</p>"
+            "background": "<p>Just a poor clone roped into being a Troubleshooter on behalf of my best friend the Computer</p>",
+            "extra_skills": []
         },
         "npc": {
             "templates": [],
