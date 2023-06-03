@@ -8,9 +8,9 @@ export class initiative_manager extends FormApplication {
         this.initiative_slot = 10;
         this.gone_this_round = false;
         this.challenged_this_round = false;
+        this.setup_hooks();
         this.setup_socket();
         this.setup_initiative();
-
     }
 
 
@@ -18,6 +18,10 @@ export class initiative_manager extends FormApplication {
         return mergeObject(super.defaultOptions, {
             template: "systems/paranoia/templates/combat/initiative_manager.html"
         });
+    }
+
+    setup_hooks() {
+        Hooks.once("deleteCombat", this.close.bind(this));
     }
 
     setup_socket() {
