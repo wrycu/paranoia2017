@@ -8,6 +8,7 @@ import {initiative_manager} from "./combat/initiative_manager.js";
 import roll_builder from "./dice/roller.js";
 import paranoia_item from "./items/item.js";
 import paranoia_actor from "./actors/actor.js";
+import {create_macro} from "./macros/macro.js";
 
 
 Hooks.once("init", async function () {
@@ -131,4 +132,11 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
     // get other clients to open their manager as well
     game.socket.emit("system.paranoia", {"type": "initiative", "subtype": "open_manager"});
     return await initiative_start(combat_info, round_info);
+});
+
+Hooks.once("ready", async function () {
+    Hooks.on("createMacro", async function (...args) {
+        args[0] = await create_macro(args[0])
+        return args;
+    });
 });
