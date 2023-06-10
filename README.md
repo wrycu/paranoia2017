@@ -3,5 +3,4 @@ This is an unofficial implementation of the [Red Clearance Starter Set of Parano
 
 It's made by me, for my gaming group and is not officially sanctioned in any way, shape, or form.
 
-The system contains no proprietary content and requires the usage of physical or digital rule books to use.
-
+The system aspires to contain no proprietary content and requires the usage of physical or digital rule books to use.
