@@ -43,6 +43,10 @@
     margin-bottom: 15px;
 }
 
+.npc_sheet .npc_stats_block {
+    display: flex;
+}
+
 .npc_sheet .npc_health_container {
     border-left: 5px #3d3c40 solid;
     border-right: 5px #3d3c40 solid;
@@ -247,6 +251,10 @@
 }
 
 .paranoia_card .white_input {
+    color: white;
+}
+
+.npc_sheet .white_input {
     color: white;
 }
 
@@ -486,6 +494,19 @@
 
 .initiative_slot .challenge_initiative {
     width: 100px;
+}
+
+.paranoia-tooltip-container {
+    pointer-events: none;
+    background: white;
+
+    position: absolute;
+    width: auto;
+
+    padding: 5px;
+
+    border: 2px solid;
+    border-radius: 5px;
 }
 
 /* TODO: remove this import and include it locally */

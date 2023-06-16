@@ -23,8 +23,9 @@
     <section class="sheet-body">
         <div class="npc_health_container">
             <div class="npc_section_header npc_health_header">
-                <i>///&nbsp;<b>HEALTH</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <i>///&nbsp;<b>STATS</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
             </div>
+            <div class="npc_stats_block">
             <select name="system.wounds.value" class="npc_health_input">
                 {{#select actor.system.wounds.value}}
                 {{#each config.wound_map as |state|}}
@@ -32,6 +33,23 @@
                 {{/each}}
                 {{/select}}
             </select>
+            <div class="core_information_details">
+                <label for="system.name"
+                       class="core_information_details-label troubleshooter_label">XP POINTS:</label>
+                <div class="core_information_details-content">
+                    <input type="text" class="npc_name_input white_input" name="system.xp_points.value"
+                           value="{{ actor.system.xp_points.value }}" data-dtype="Number"/>
+                </div>
+            </div>
+            <div class="core_information_details">
+                <label for="system.name"
+                       class="core_information_details-label troubleshooter_label">TREASON STARS:</label>
+                <div class="core_information_details-content">
+                    <input type="text" class="npc_name_input white_input" name="system.treason_stars.value"
+                   value="{{ actor.system.treason_stars.value }}" data-dtype="Number"/>
+                </div>
+            </div>
+                </div>
         </div>
         <div class="npc_equipment_container">
             <div class="npc_section_header npc_equipment_container">

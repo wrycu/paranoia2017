@@ -1,0 +1,16 @@
+<div class="paranoia-tooltip-content">
+    {{#if dead_zone }}
+    <h1 class="paranoia-tooltip-item title"><span>????</span></h1>
+    <div class="paranoia-tooltip-items">
+        WARNING: NO SIGNAL<br>
+        XP Points: ?<br>
+        Treason Stars: ?
+    </div>
+    {{ else }}
+    <h1 class="paranoia-tooltip-item title"><span>{{name}}</span></h1>
+    <div class="paranoia-tooltip-items">
+        XP Points: {{ xp }}<br>
+        Treason Stars: {{ treason_stars }}
+    </div>
+    {{/if}}
+</div>

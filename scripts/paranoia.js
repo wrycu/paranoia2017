@@ -9,6 +9,7 @@ import roll_builder from "./dice/roller.js";
 import paranoia_item from "./items/item.js";
 import paranoia_actor from "./actors/actor.js";
 import {create_macro} from "./macros/macro.js";
+import {token_HUD} from "./tokens/hud.js";
 
 
 Hooks.once("init", async function () {
@@ -106,6 +107,18 @@ Hooks.once("init", async function () {
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("paranoia", troubleshooter_sheet, {makeDefault: true});
 
+    game.settings.register(
+        "paranoia",
+        "wifi_dead_zone",
+        {
+            name: "Wifi Dead Zone",
+            hint: "Is the party currently in a Wifi Dead zone? (disables names, XP, treason star count)",
+            scope: "world",
+            type: Boolean,
+            default: false,
+        },
+    );
+
     //CONFIG.debug.hooks = true;
     game.socket.on("system.paranoia", socket_listener);
 });
@@ -138,5 +151,13 @@ Hooks.once("ready", async function () {
     Hooks.on("createMacro", async function (...args) {
         args[0] = await create_macro(args[0])
         return args;
+    });
+
+    Hooks.on("hoverToken", (token, mouse_in) => {
+        if (mouse_in) {
+            token_HUD.add_hud(token);
+        } else {
+            token_HUD.remove_hud(token);
+        }
     });
 });

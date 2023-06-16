@@ -172,7 +172,15 @@
                 "max": 4
             },
             "equipment": "<p></p>",
-            "special_skills": "<p></p>"
+            "special_skills": "<p></p>",
+            "treason_stars": {
+                "min": 0,
+                "value": 0,
+                "max": 5
+            },
+            "xp_points": {
+                "value": 0
+            }
         }
     },
     "Item": {
