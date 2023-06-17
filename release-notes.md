@@ -1,3 +1,6 @@
+`1.1.0` - 2023-06-16
+* Show health bar as full when in the "healthy" state
+
 `1.0.1` - 2023-06-15
 * Add HUD info on token mouseover
 * Add Wifi dead zone support
