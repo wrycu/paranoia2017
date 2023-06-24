@@ -1,3 +1,6 @@
+`1.2.0` - 2023-06-23
+* Add card management for all items 
+
 `1.1.0` - 2023-06-16
 * Show health bar as full when in the "healthy" state
 
