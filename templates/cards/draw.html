@@ -1,0 +1,36 @@
+<form class="paranoia card_draw">
+    <h2>Card Selection</h2>
+    <div class="paranoia deck_selection_container">
+        <label for="deck" class="paranoia deck_selection_label">Select a Deck</label>
+        <div class="paranoia deck_selection">
+            <select name="deck">
+                {{#select this.decks}}
+                {{#each this.decks as |deck|}}
+                <option value="{{ deck }}">{{ @key }}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+    </div>
+    <div class="paranoia draw_amount_container">
+        <label for="draw_amount" class="paranoia draw_amount_label"># of cards</label>
+        <div class="paranoia_draw_amount_input">
+            <input type="number" name="draw_amount" value="1" data-dtype="Number" min="1"/>
+        </div>
+    </div>
+    {{#if this.is_gm}}
+    <div class="paranoia draw_actor_container">
+        <label for="draw_amount" class="paranoia draw_actor_label">Deal To</label>
+        <div class="paranoia_draw_actor_input">
+            {{#each this.actors as |actor|}}
+            <input type="checkbox" name="actors" value="{{ @key }}">{{ actor }}<br>
+            {{/each}}
+        </div>
+    </div>
+    {{else}}
+                {{#each this.actors as |actor|}}
+            <input type="checkbox" checked name="actors" value="{{ @key }}" style="visibility: hidden;">
+            {{/each}}
+    {{/if}}
+    <button class="paranoia card_draw submit">{{#if this.is_gm}}Deal!{{else}}Draw!{{/if}}</button>
+</form>

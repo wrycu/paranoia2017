@@ -10,6 +10,7 @@ import paranoia_item from "./items/item.js";
 import paranoia_actor from "./actors/actor.js";
 import {create_macro} from "./macros/macro.js";
 import {token_HUD} from "./tokens/hud.js";
+import {CardManager, init_decks} from "./items/cards.js";
 
 
 Hooks.once("init", async function () {
@@ -148,6 +149,15 @@ Hooks.once("init", async function () {
 
     //CONFIG.debug.hooks = true;
     game.socket.on("system.paranoia", socket_listener);
+
+    Hooks.on("renderSidebar", async function (sidebar, context, tabs)  {
+        if (!game.user.isGM) {
+            // since we have to make players owners of the card stacks for them to be able to interact with them,
+            // hide the tab, so they can't view info about it
+            $('[data-tab="cards"]', context).hide();
+        }
+        return [sidebar, context, tabs];
+    });
 });
 
 Hooks.on("renderSidebarTab", (app, html, data) => {
@@ -187,4 +197,37 @@ Hooks.once("ready", async function () {
             token_HUD.remove_hud(token);
         }
     });
+
+    await init_decks();
+    const defaultDestinyMenu = [
+        {
+            name: "menu 1",
+            icon: '<i class="fas fa-users"></i>',
+            callback: () => {
+                new GroupManager().render(true);
+            },
+            minimumRole: CONST.USER_ROLES.GAMEMASTER,
+        },
+        {
+            name: "menu 2",
+            icon: '<i class="fas fa-dice-d20"></i>',
+            callback: (li) => {
+                const messageText = `<button class="ffg-destiny-roll">${game.i18n.localize("SWFFG.DestinyPoolRoll")}</button>`;
+
+                new Map([...game.settings.settings].filter(([k, v]) => v.key.includes("destinyrollers"))).forEach((i) => {
+                    game.settings.set(i.namespace, i.key, undefined);
+                });
+
+                CONFIG.FFG.DestinyGM = game.user.id;
+
+                ChatMessage.create({
+                    user: game.user.id,
+                    content: messageText,
+                });
+            },
+            minimumRole: CONST.USER_ROLES.GAMEMASTER,
+        },
+    ];
+    const card_manager = new CardManager(undefined, {menu: defaultDestinyMenu});
+    await card_manager.render(true);
 });

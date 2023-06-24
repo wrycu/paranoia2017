@@ -85,6 +85,7 @@ export default class troubleshooter_sheet extends ActorSheet {
             const item = this.actor.items.get(li.data("itemId"));
             item.delete();
             li.slideUp(200, () => this.render(false));
+            item.discard_card();
         });
 
         html.find('.skill.rollable').click(this._roll_skill.bind(this));
@@ -98,6 +99,22 @@ export default class troubleshooter_sheet extends ActorSheet {
                 this._send_item_to_chat(item_id);
             },
         };
+        const play_menu = {
+            name: "Play Card",
+            icon: '<i class="far fa-comment"></i>',
+            callback: (el) => {
+                let item_id = el.attr("data-item-id");
+                this.play_card(item_id);
+            },
+        };
+        const bottom_of_deck_menu = {
+            name: "Place On Bottom Of Deck",
+            icon: '<i class="far fa-comment"></i>',
+            callback: (el) => {
+                let item_id = el.attr("data-item-id");
+                this.bottom_deck(item_id);
+            },
+        };
         const use_mutant_power = {
             name: "Activate",
             icon: '<i class="far fa-comment"></i>',
@@ -107,8 +124,20 @@ export default class troubleshooter_sheet extends ActorSheet {
             },
         };
 
-        new ContextMenu(html, ".item .item-name:not(.mutant_power)", [send_to_chat_menu]);
+        new ContextMenu(html, ".item .item-name:not(.mutant_power)", [send_to_chat_menu, play_menu, bottom_of_deck_menu]);
         new ContextMenu(html, ".item .item-name.mutant_power", [use_mutant_power]);
+    }
+
+    async bottom_deck(card_id) {
+        let item = this.actor.items.get(card_id);
+        await item.to_bottom_of_deck();
+        item.delete();
+    }
+
+    async play_card(card_id) {
+        let item = this.actor.items.get(card_id);
+        await item.play_card();
+        item.delete();
     }
 
     async tattle(context) {

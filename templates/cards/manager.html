@@ -1,0 +1,11 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+    <div class="paranoia_card_manager_container">
+        <div class="paranoia" title="Card Manager">
+            {{# if is_gm }}
+            <a class="paranoia card_manager" title="Deal Card"><i class="fas fa-edit"></i>Deal Card</a>
+            {{ else }}
+            <a class="paranoia card_manager" title="Draw Card"><i class="fas fa-edit"></i>Draw Card</a>
+            {{/ if }}
+        </div>
+    </div>
+</form>
