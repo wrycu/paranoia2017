@@ -228,6 +228,6 @@ Hooks.once("ready", async function () {
             minimumRole: CONST.USER_ROLES.GAMEMASTER,
         },
     ];
-    const card_manager = new CardManager(undefined, {menu: defaultDestinyMenu});
+    const card_manager = new CardManager(undefined, {menu: defaultDestinyMenu, top: "100%", left: "100%"});
     await card_manager.render(true);
 });

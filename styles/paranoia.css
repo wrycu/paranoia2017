@@ -3,6 +3,10 @@
     color: white;
 }
 
+#card_manager .close {
+    visibility: hidden;
+}
+
 .npc_sheet .npc_basic_info {
     display: flex;
     flex-direction: row;

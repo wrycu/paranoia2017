@@ -92,6 +92,11 @@ export class CardManager extends FormApplication {
 
     /** @override */
     getData() {
+        const x = $(window).width();
+        const y = $(window).height();
+        this.position.left = x - 505;
+        this.position.top = y - 80;
+        this.width = 2000;
         let is_gm = game.user.isGM;
         return {
             is_gm: is_gm,
