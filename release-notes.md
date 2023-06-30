@@ -1,3 +1,7 @@
+`1.3.0` - ?
+* Show reaction cards in inventory
+* Improve action card "send to chat" functionality
+
 `1.2.0` - 2023-06-23
 * Add card management for all items 
 
