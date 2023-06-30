@@ -1,7 +1,8 @@
 <div class="chat-item">
     <div class="chat-item-header">
         <img src="{{ item_details.img }}">
-        <h3>{{ item_details.name }}</h3>
+        <h3>{{ item_details.name }}{{# if (eq item_details.type "action card")}}{{# if item_details.reaction}}&nbsp;<img src=systems/paranoia/images/character_sheet/reaction.png title="Reaction" style="border: none;" width="16" height="16">{{/if}}{{/if}}</h3>
+        {{# if (eq item_details.type "action_card")}}<h4><i>{{ item_details.quote }}</i></h4>{{/if}}
     </div>
     <div class="chat-item-body">
         {{{ item_details.description }}}

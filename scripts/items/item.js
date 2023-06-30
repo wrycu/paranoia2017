@@ -8,6 +8,7 @@ export default class paranoia_item extends Item {
             type: this.type,
             action_order: this?.system.action_order,
             reaction: this?.system.reaction,
+            quote: this.system.quote,
         };
 
         if (["action_card", "mutant_power_card", "equipment_card"].includes(this.type)) {
