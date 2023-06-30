@@ -3,6 +3,10 @@
     color: white;
 }
 
+.paranoia .i_reaction::before {
+    content:url("../images/dice/computer.png");
+}
+
 #card_manager .close {
     visibility: hidden;
 }
