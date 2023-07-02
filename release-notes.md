@@ -1,4 +1,4 @@
-`1.3.0` - ?
+`1.3.0` - 2023-07-01
 * Show reaction cards in inventory
 * Improve action card "send to chat" functionality
 * Notify GM when cards are played
