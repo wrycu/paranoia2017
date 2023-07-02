@@ -136,6 +136,23 @@ export default class troubleshooter_sheet extends ActorSheet {
 
     async play_card(card_id) {
         let item = this.actor.items.get(card_id);
+        const item_details = item.get_item_details();
+        const template = "systems/paranoia/templates/chat/tattle_play.html";
+        const html = await renderTemplate(template, {item_details, item});
+
+        const message_data = {
+            user: game.user.id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            content: html,
+            speaker: {
+                actor: this.actor.id,
+                token: this.actor.token,
+                alias: this.actor.name,
+            },
+            whisper: game.users.filter(i => i.isGM && i.active).map(i => i.id),
+        };
+        ChatMessage.create(message_data);
+
         await item.play_card();
         item.delete();
     }

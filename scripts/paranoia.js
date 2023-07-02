@@ -158,6 +158,11 @@ Hooks.once("init", async function () {
         }
         return [sidebar, context, tabs];
     });
+
+    const partial_templates = [
+        "systems/paranoia/templates/chat/item.html",
+    ];
+    await loadTemplates(partial_templates);
 });
 
 Hooks.on("renderSidebarTab", (app, html, data) => {
