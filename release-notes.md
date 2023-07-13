@@ -1,3 +1,6 @@
+`1.4.1` - ?
+* NPC notes are now scrollable instead of overflowing into the rest of the sheet
+
 `1.4.0` - 2023-07-12
 * Improve card support (now handles drag-and-drop items)
 

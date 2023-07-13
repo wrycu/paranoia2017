@@ -32,6 +32,10 @@
     margin-right: 30px;
 }
 
+.npc_sheet .npc_notes_editor {
+    overflow: scroll;
+}
+
 .npc_sheet .npc_notes_container {
     display: flex;
     flex-direction: column;
