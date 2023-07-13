@@ -10,7 +10,7 @@ import paranoia_item from "./items/item.js";
 import paranoia_actor from "./actors/actor.js";
 import {create_macro} from "./macros/macro.js";
 import {token_HUD} from "./tokens/hud.js";
-import {CardManager, init_decks} from "./items/cards.js";
+import {CardManager, deal_card, init_decks} from "./items/cards.js";
 
 
 Hooks.once("init", async function () {
@@ -150,7 +150,15 @@ Hooks.once("init", async function () {
     //CONFIG.debug.hooks = true;
     game.socket.on("system.paranoia", socket_listener);
 
-    Hooks.on("renderSidebar", async function (sidebar, context, tabs)  {
+    Hooks.on("dropActorSheetData", async function (actor, actor_sheet, item_data) {
+        console.log("dropped")
+        const item = await fromUuid(item_data.uuid);
+        console.log(actor)
+        console.log(item)
+        await deal_card(actor.id, item);
+    });
+
+    Hooks.on("renderSidebar", async function (sidebar, context, tabs) {
         if (!game.user.isGM) {
             // since we have to make players owners of the card stacks for them to be able to interact with them,
             // hide the tab, so they can't view info about it

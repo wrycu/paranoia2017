@@ -82,6 +82,74 @@ async function populate_deck(deck_name, item_type) {
     }
 }
 
+export async function deal_card(actor_id, card_data) {
+    console.log("dealing card")
+    console.log(actor_id)
+    console.log(card_data)
+    const card_name = card_data.name;
+    const card_type = card_data.type;
+    let deck_map = {
+        "action_card": "Action Card",
+        "equipment_card": "Equipment",
+        "mutant_power_card": "Mutant Power",
+        "bonus_duty_card": "Bonus Duty",
+        "secret_society_card": "Secret Society",
+    }
+    let draw_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Deck`);
+    let discard_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Discard`);
+    let held_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Held`);
+
+    let found_card = draw_deck.cards.filter(i => i.name === card_name);
+    let found_discard_card = discard_deck.cards.filter(i => i.name === card_name);
+
+    if (found_card.length === 0) {
+        found_card = await draw_deck.createEmbeddedDocuments(
+            "Card",
+            [{
+                name: card_data.name,
+                type: "base",
+                face: 0,
+                faces: [{
+                    name: card_data.name,
+                    text: card_data.system.text,
+                    img: card_data.img,
+                }],
+            }],
+        );
+    } else if (found_card.filter(i => i.drawn === false).length === 0) {
+        if (found_discard_card.length === 0) {
+            // nothing available in the discard, create it
+            found_card = await draw_deck.createEmbeddedDocuments(
+                "Card",
+                [{
+                    name: card_data.name,
+                    type: "base",
+                    face: 0,
+                    faces: [{
+                        name: card_data.name,
+                        text: card_data.system.text,
+                        img: card_data.img,
+                    }],
+                }],
+            );
+        } else {
+            // shuffle the discard into the deck
+            for (const card of discard_deck.cards) {
+                await discard_deck.pass(draw_deck, [card.id], {chatNotification: false});
+            }
+            await draw_deck.shuffle({chatNotification: false});
+            found_card = draw_deck.cards.filter(i => i.name === card_name);
+        }
+    }
+    if (found_card.length === 0) {
+        console.log("could not find card; bad game state");
+    }
+    // at this point the card exists and has not yet been drawn
+    // need to draw the specific card
+    //await held_deck.draw(draw_deck, 1, {chatNotification: false});
+    await draw_deck.pass(held_deck, [found_card[0].id], {chatNotification: false});
+}
+
 export class CardManager extends FormApplication {
     constructor(object = {}, options = {}) {
         super(object, options);

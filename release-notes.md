@@ -1,3 +1,6 @@
+`1.4.0` - 2023-07-12
+* Improve card support (now handles drag-and-drop items)
+
 `1.3.0` - 2023-07-01
 * Show reaction cards in inventory
 * Improve action card "send to chat" functionality
