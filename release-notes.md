@@ -1,4 +1,4 @@
-`1.4.1` - ?
+`1.4.1` - 2023-07-13
 * NPC notes are now scrollable instead of overflowing into the rest of the sheet
 
 `1.4.0` - 2023-07-12
