@@ -1,12 +1,22 @@
 export class token_HUD {
     static async add_hud(token) {
         // create the container
-        let tooltip =  $(`<div class="paranoia-tooltip-container ${token.id}"></div>`);
+        let tooltip = $(`<div class="paranoia-tooltip-container ${token.id}"></div>`);
+        let xp = Math.floor(Math.random() * 999);
+        if (token?.actor?.system?.xp_points?.value !== -1) {
+            // -1 can be used as a placeholder value by the GM
+            xp = token?.actor?.system?.xp_points?.value;
+        }
+        let treason_stars = Math.floor(Math.random() * 5);
+        if (token?.actor?.system?.treason_stars?.value !== -1) {
+            // -1 can be used as a placeholder value by the GM
+            treason_stars = token?.actor?.system?.treason_stars?.value;
+        }
         // populate data
         let data = {
             name: token.name || "<COULD NOT LOCATE IDENTITY RECORD>",
-            xp: token?.actor?.system?.xp_points?.value || Math.floor(Math.random() * 999),
-            treason_stars: token?.actor?.system?.treason_stars?.value || Math.floor(Math.random() * 5),
+            xp: xp,
+            treason_stars: treason_stars,
             dead_zone: game.settings.get("paranoia", "wifi_dead_zone"),
         };
         // render the data into an HTML object for insertion
@@ -21,7 +31,7 @@ export class token_HUD {
         let position = {
             zIndex: Math.max(token.zIndex, 0),
             color: "#000000",
-            top: token_wt.ty + (token.h *  token_wt.a) + padding,
+            top: token_wt.ty + (token.h * token_wt.a) + padding,
             left: token_wt.tx - padding,
         };
 

@@ -1,3 +1,6 @@
+`1.4.2` - ?
+* Fix HUD bug when XP points / treason stars are 0
+
 `1.4.1` - 2023-07-13
 * NPC notes are now scrollable instead of overflowing into the rest of the sheet
 
