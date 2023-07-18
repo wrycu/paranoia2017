@@ -1,3 +1,6 @@
+`1.5.0` - ?
+* Roll details now include colors to indicate success or failure of individual dice and rolls are split by dice type
+
 `1.4.1` - 2023-07-13
 * NPC notes are now scrollable instead of overflowing into the rest of the sheet
 

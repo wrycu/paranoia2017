@@ -6,7 +6,34 @@
             NODE: {{ this.node }}
         </div>
         <div class="dice-tooltip">
-            {{ this.roll.results }}
+            Skill
+            {{#each this.roll.pretty as |result|}}
+            {{#if (eq result.type "node")}}
+            {{#if (eq result.class "success") }}
+            <span style="color: green;">{{ result.result }}</span>,
+            {{ else }}
+            <span>{{ result.result }}</span>,
+            {{/if }}
+            {{/if}}
+            {{#if (eq result.type "negative_node")}}
+            {{#if (eq result.class "success") }}
+            <span style="color: green;">{{ result.result }}</span>,
+            {{ else }}
+            <span style="color: red;">{{ result.result }}</span>,
+            {{/if}}
+            {{/if}}
+            {{/each}}
+            <hr>
+            Computer:
+            {{#each this.roll.pretty as |result|}}
+            {{#if (eq result.type "computer")}}
+            {{#if (eq result.class "result") }}
+            <span style="color: red;">{{ result.result }}</span>,
+            {{ else }}
+            <span style="color: green;">{{ result.result }}</span>,
+            {{/if}}
+            {{/if}}
+            {{/each}}
         </div>
         <h4 class="dice-total">
            {{ this.roll.successes }} successes{{#if this.roll.computer}},&nbsp;<img src=systems/paranoia/images/dice/computer.png>{{/if}}

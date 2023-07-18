@@ -22,6 +22,7 @@ export class roll_paranoia extends Roll {
             computer: false,
             contains_paranoia_dice: false,
             results: [],
+            pretty: [],
         }
 
         this.dice.forEach(function (die_type) {
@@ -33,6 +34,17 @@ export class roll_paranoia extends Roll {
                     evaluated.contains_paranoia_dice = true;
                     if ([5, 6].includes(result.result)) {
                         evaluated.successes++;
+                        evaluated.pretty.push({
+                            'type': 'node',
+                            'class': 'success',
+                            'result': result.result,
+                        });
+                    } else {
+                        evaluated.pretty.push({
+                            'type': 'node',
+                            'class': 'failure',
+                            'result': result.result,
+                        });
                     }
                 } else if (die_type.constructor.name === 'mutant_die') {
                     evaluated.contains_paranoia_dice = true;
@@ -41,13 +53,34 @@ export class roll_paranoia extends Roll {
                     evaluated.contains_paranoia_dice = true;
                     if ([5, 6].includes(result.result)) {
                         evaluated.successes++;
+                        evaluated.pretty.push({
+                            'type': 'negative_node',
+                            'class': 'success',
+                            'result': result.result,
+                        });
                     } else {
                         evaluated.successes--;
+                        evaluated.pretty.push({
+                            'type': 'negative_node',
+                            'class': 'failure',
+                            'result': result.result,
+                        });
                     }
                 } else if (die_type.constructor.name === 'computer_die') {
                     evaluated.contains_paranoia_dice = true;
                     if (result.result === 6) {
                         evaluated.computer = true;
+                        evaluated.pretty.push({
+                            'type': 'computer',
+                            'class': 'result',
+                            'result': result.result,
+                        });
+                    } else {
+                        evaluated.pretty.push({
+                            'type': 'computer',
+                            'class': 'blank',
+                            'result': result.result,
+                        });
                     }
                 }
             });
