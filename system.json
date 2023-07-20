@@ -2,7 +2,7 @@
     "id": "paranoia",
     "title": "Paranoia (2017)",
     "description": "Paranoia for FVTT",
-    "version": "1.4.1",
+    "version": "1.5.0",
     "compatibility": {
         "minimum": "11",
         "verified": "11",
@@ -35,5 +35,5 @@
     "secondaryTokenAttribute": "resources.power",
     "url": "https://github.com/wrycu/paranoia",
     "manifest": "https://github.com/wrycu/paranoia/releases/latest/download/system.json",
-    "download": "https://github.com/wrycu/paranoia/releases/download/1.4.1/system.zip"
+    "download": "https://github.com/wrycu/paranoia/releases/download/1.5.0/system.zip"
 }
