@@ -5,6 +5,10 @@
  * @returns {Promise<void>}
  */
 export async function init_decks() {
+    if (!game.user.isGM) {
+        return;
+    }
+
     let expected_deck_bases = [
         "Action Card",
         "Mutant Power",

@@ -1,3 +1,6 @@
+`1.5.1` - ?
+* Setting up decks now only runs for GMs
+
 `1.5.0` - 2023-07-20
 * Roll details now include colors to indicate success or failure of individual dice and rolls are split by dice type
 * Fix HUD bug when XP points / treason stars are 0
