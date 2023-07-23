@@ -2,6 +2,8 @@
 * Setting up decks now only runs for GMs
 * Fixed Initiative manager when GM does not have a configured/selected user
 * Fix generic dice rolling chat template
+* Make "challenge" button in combat appear _after_ "me" to avoid accidental clicking
+* Correct alt text for combat initiative buttons
 
 `1.5.0` - 2023-07-20
 * Roll details now include colors to indicate success or failure of individual dice and rolls are split by dice type

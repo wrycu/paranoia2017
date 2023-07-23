@@ -92,36 +92,35 @@
                 {{ math 10 "-" @index }}
             </td>
             <td class="initiative_slot">
-                {{#if slot.actors }}
-                {{#each slot.actors as |actor|}}
-                <div class="initiative_someone">{{ actor.player_name }}</div>
-                {{#if actor.challenged }} {{else}}
-                {{#if (eq actor.player_id ../../this.my_id) }} {{else}}
-                {{#if @../last}}
-                {{#if ../../this.is_gm }} {{ else }}
-                &nbsp;<button type="button" class="challenge_initiative" data-player-id="{{ actor.player_id }}"
-                        data-slot="{{ @../index }}" title="Add Mod">
-                    <i class="fas fa-plus fa-fw"></i>challenge
-                </button>
-                {{/if}}
-                {{/if}}
-                {{/if}}
-                {{/if}}
-                {{/each}}
-                {{else}}
-                <div class="initiative_no_one">(no one)</div>
-                {{/if}}
-
                 {{#if @last}}
-                {{#if slot.contains_me }}{{else}}
-                {{#if ../this.gone_this_round}}{{else}}
-                {{#if ../this.is_gm }}{{else}}
-                &nbsp;<button type="button" class="initiative_select" title="Add Mod">
-                    <i class="fas fa-plus fa-fw"></i>me!
-                </button>
+                    {{#if slot.contains_me }}{{else}}
+                        {{#if ../this.gone_this_round}}{{else}}
+                            {{#if ../this.is_gm }}{{else}}
+                                &nbsp;<button type="button" class="initiative_select" title="Select this slot for your initiative">
+                                    <i class="fas fa-plus fa-fw"></i>me!
+                                </button>
+                            {{/if}}
+                        {{/if}}
+                    {{/if}}
                 {{/if}}
-                {{/if}}
-                {{/if}}
+                {{#if slot.actors }}
+                    {{#each slot.actors as |actor|}}
+                        <div class="initiative_someone">{{ actor.player_name }}</div>
+                        {{#if actor.challenged }} {{else}}
+                            {{#if (eq actor.player_id ../../this.my_id) }} {{else}}
+                                {{#if @../last}}
+                                    {{#if ../../this.is_gm }} {{ else }}
+                                        &nbsp;<button type="button" class="challenge_initiative" data-player-id="{{ actor.player_id }}"
+                                                data-slot="{{ @../index }}" title="Challenge this player's initiative. Usable once per round.">
+                                            <i class="fas fa-plus fa-fw"></i>challenge
+                                        </button>
+                                    {{/if}}
+                                {{/if}}
+                            {{/if}}
+                        {{/if}}
+                    {{/each}}
+                {{else}}
+                    <div class="initiative_no_one">(no one)</div>
                 {{/if}}
             </td>
         </tr>
