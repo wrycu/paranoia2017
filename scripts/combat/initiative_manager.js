@@ -63,6 +63,12 @@ export class initiative_manager extends FormApplication {
         let selected_cards = {}
         game.users.filter(i => i.active).forEach(function (user) {
             if (!user.isGM) {
+                let is_me;
+                if (game.user.isGM) {
+                    is_me = false;
+                } else {
+                    is_me = user.character.id === game.user.character.id;
+                }
                 selected_cards[user.character.id] = {
                     name: user.name,
                     is_selected: false,
@@ -71,7 +77,7 @@ export class initiative_manager extends FormApplication {
                         id: null,
                         action_order: null,
                     },
-                    is_me: user.character.id === game.user.character.id,
+                    is_me: is_me,
                 };
             }
         });
@@ -82,35 +88,42 @@ export class initiative_manager extends FormApplication {
 
     async getData(options = {}) {
         let data = await super.getData();
-        console.log("getData")
-        console.log(data)
         data.is_gm = game.user.isGM;
         data.users = game.users.filter(i => i.active).map(i => i.name);
-        data.my_id = game.user.character.id;
         data.selected_cards = this.selected_cards;
         data.selection_disabled = false;
         data.available_cards = [];
-        game.user.character.items.filter(i => ["action_card", "equipment_card", "mutant_power_card"].includes(i.type));
-        let actor = game.user.character.system;
-        let items = game.user.character.items.filter(i => ["action_card", "equipment_card", "mutant_power_card"].includes(i.type));
-        if (items.length > 0) {
-            for (let item of items) {
-                // derived values on items are not calculated when accessing outside a sheet
-                if (item.type === "equipment_card") {
-                    item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
-                }
-                const item_details = item.get_item_details();
-                const template = "systems/paranoia/templates/chat/item.html";
-                item.html = await renderTemplate(template, {item_details, item});
-                data.available_cards.push(item);
-            }
-        }
-        data.initiative_slot = this.initiative_slot;
         data.slots = this.slots;
-        data.gone_this_round = this.gone_this_round;
-        data.challenged_this_round = this.challenged_this_round;
         data.stage = this.stage;
-        console.log(data)
+
+        if (game.user.isGM) {
+            data.my_id = null;
+            data.initiative_slot = this.initiative_slot;
+            data.gone_this_round = true;
+            data.challenged_this_round = true;
+        } else {
+            console.log("getData")
+            console.log(data)
+            data.my_id = game.user.character.id;
+            let actor = game.user.character.system;
+            let items = game.user.character.items.filter(i => ["action_card", "equipment_card", "mutant_power_card"].includes(i.type));
+            if (items.length > 0) {
+                for (let item of items) {
+                    // derived values on items are not calculated when accessing outside a sheet
+                    if (item.type === "equipment_card") {
+                        item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
+                    }
+                    const item_details = item.get_item_details();
+                    const template = "systems/paranoia/templates/chat/item.html";
+                    item.html = await renderTemplate(template, {item_details, item});
+                    data.available_cards.push(item);
+                }
+            }
+            data.initiative_slot = this.initiative_slot;
+            data.gone_this_round = this.gone_this_round;
+            data.challenged_this_round = this.challenged_this_round;
+            console.log(data)
+        }
         return data;
     }
 
