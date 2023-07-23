@@ -276,7 +276,7 @@ export class initiative_manager extends FormApplication {
     async _challenge_wrong(data) {
         console.log("got challenge wrong")
         console.log(data)
-        if (data.data.challenger_id === game.user.character.id) {
+        if (!game.user.isGM && data.data.challenger_id === game.user.character.id) {
             console.log("I was the challenger")
             let my_actor = game.actors.get(game.user.character.id);
             let possible_cards = my_actor.items.filter(i => i.type === "action_card");
