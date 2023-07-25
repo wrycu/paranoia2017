@@ -487,9 +487,17 @@
     flex-direction: row;
 }
 
+.initiative_row > * {
+  width: 50%;
+}
+
 .initiative_slot {
-    display: flex;
-    flex-direction: row;
+    white-space: nowrap;
+    width: 50%;
+}
+
+.initiative_slot > div {
+    display: inline-block;
 }
 
 .initiative_slot .initiative_select {

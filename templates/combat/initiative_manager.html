@@ -70,7 +70,7 @@
     {{else}}
     {{#each this.selected_cards as |card|}}
     {{#if card.is_me }}{{#if card.is_selected }}
-    Selected card: {{ card.selected_card.name }}
+    Selected card: <span class="stage_2_selected_card" data-action-order="{{ card.selected_card.action_order }}" data-card-id="{{ card.selected_card.id }}">{{ card.selected_card.name }}</span>
     {{/if}}{{/if}}
     {{/each}}
     {{/if}}
@@ -107,13 +107,15 @@
                     {{#each slot.actors as |actor|}}
                         <div class="initiative_someone">{{ actor.player_name }}</div>
                         {{#if actor.challenged }} {{else}}
-                            {{#if (eq actor.player_id ../../this.my_id) }} {{else}}
-                                {{#if @../last}}
-                                    {{#if ../../this.is_gm }} {{ else }}
-                                        &nbsp;<button type="button" class="challenge_initiative" data-player-id="{{ actor.player_id }}"
-                                                data-slot="{{ @../index }}" title="Challenge this player's initiative. Usable once per round.">
-                                            <i class="fas fa-plus fa-fw"></i>challenge
-                                        </button>
+                            {{#if../../this.challenged_this_round }} {{else}}
+                                {{#if (eq actor.player_id ../../this.my_id) }} {{else}}
+                                    {{#if @../last}}
+                                        {{#if ../../this.is_gm }} {{ else }}
+                                            &nbsp;<button type="button" class="challenge_initiative" data-player-id="{{ actor.player_id }}"
+                                                    data-slot="{{ @../index }}" title="Challenge this player's initiative. Usable once per round.">
+                                                <i class="fas fa-plus fa-fw"></i>challenge
+                                            </button>
+                                        {{/if}}
                                     {{/if}}
                                 {{/if}}
                             {{/if}}

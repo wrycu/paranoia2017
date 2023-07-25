@@ -168,9 +168,10 @@ export class initiative_manager extends FormApplication {
     }
 
     async _initial_challenge(context) {
-        console.log("got local challenge")
+        console.log("got local challenge start")
         let challenged_player = $(context.target).attr("data-player-id");
         let challenged_index = parseInt($(context.target).attr("data-slot"));
+        this.challenged_this_round = true;
         console.log(challenged_player)
         console.log(challenged_index)
         let data = {
@@ -207,13 +208,13 @@ export class initiative_manager extends FormApplication {
     _challenge(data) {
         console.log("got challenge notification")
         console.log(data)
-        if (data.data.challenged_id === game.user.character.id) {
+        if (!game.user.isGM && data.data.challenged_id === game.user.character.id) {
             // I am the one who was challenged; perform specific steps
             console.log("I was challenged")
             // determine: was I lying about the initiative?
             // value I'm supposed to have
             let target_value = 10 - data.data.challenged_index;
-            let actual_value = parseInt($(".card_selection option:selected").attr("data-action-order"));
+            let actual_value = parseInt($(".stage_2_selected_card").attr("data-action-order"));
             console.log(`challenged in spot ${target_value}, real value ${actual_value}`)
             if (target_value !== actual_value && actual_value < target_value) {
                 this.challenge_lied(data.data.challenger_id);
@@ -256,7 +257,7 @@ export class initiative_manager extends FormApplication {
         };
         ChatMessage.create(message_data);
 
-        this.discard_card(game.user.character.id, $(".card_selection").val());
+        this.discard_card(game.user.character.id, $(".stage_2_selected_card").attr("data-card-id"));
     }
 
     challenge_truth(challenger_id) {
@@ -390,7 +391,7 @@ export class initiative_manager extends FormApplication {
         // update the local record
         let card_name = context.target.selectedOptions[0].text;
         let card_id = context.target.value;
-        let card_action_order = $(context).attr("data-action-order");
+        let card_action_order = parseInt($(context.target.selectedOptions[0]).attr('data-action-order'));
         this.selected_cards[game.user.character.id] = {
             name: game.user.name,
             is_selected: true,

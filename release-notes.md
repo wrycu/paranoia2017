@@ -1,9 +1,12 @@
 `1.5.1` - ?
 * Setting up decks now only runs for GMs
-* Fixed Initiative manager when GM does not have a configured/selected user
-* Fix generic dice rolling chat template
-* Make "challenge" button in combat appear _after_ "me" to avoid accidental clicking
+* Fixed Initiative manager when GM does not have a configured/selected user ([#18](https://github.com/wrycu/paranoia/issues/18))
+* Fix generic dice rolling chat template ([#22](https://github.com/wrycu/paranoia/issues/22))
+* Make "challenge" button in combat appear _after_ "me" to avoid accidental clicking ([#24](https://github.com/wrycu/paranoia/issues/24))
 * Correct alt text for combat initiative buttons
+* Fix bug in challenging player initiative ([#20](https://github.com/wrycu/paranoia/issues/20))
+* Limit ability to challenge to once per round ([#19](https://github.com/wrycu/paranoia/issues/19))
+* NODE is now lowered by injuries ([#21](https://github.com/wrycu/paranoia/issues/21))
 
 `1.5.0` - 2023-07-20
 * Roll details now include colors to indicate success or failure of individual dice and rolls are split by dice type
