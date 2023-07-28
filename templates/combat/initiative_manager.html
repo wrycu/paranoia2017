@@ -124,6 +124,12 @@
                 {{else}}
                     <div class="initiative_no_one">(no one)</div>
                 {{/if}}
+                {{#if (eq @index 9)}}
+                    <br>Basic Action:
+                    {{#each ../this.lost_challenge as |lost|}}
+                        {{ lost }}
+                    {{/each}}
+                {{/if}}
             </td>
         </tr>
         {{/each}}
@@ -132,7 +138,7 @@
     {{/if}}
     {{#if this.is_gm }}
     <div class="initiative_button_container">
-        <button type="button" class="progress_combat" data-action="progress" title="Move Troubleshooters to the next combat phase">
+        <button type="button" class="progress_combat" {{#if (eq this.lost_challenge.length 0)}}{{else}}{{#if (eq this.initiative_slot 0)}}{{else}} disabled {{/if}}{{/if}} data-action="progress" title="Move Troubleshooters to the next combat phase">
             <i class="fas fa-plus fa-fw"></i>Next Combat Phase
         </button>
     </div>

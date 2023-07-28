@@ -22,6 +22,7 @@ export class initiative_manager extends FormApplication {
 
     setup_hooks() {
         Hooks.once("deleteCombat", this.close.bind(this));
+        this.destroy
     }
 
     setup_socket() {
@@ -47,9 +48,12 @@ export class initiative_manager extends FormApplication {
                 } else if (data.subtype === "stage_transition") {
                     console.log("changing stage")
                     this._stage_transition(data);
+                } else if (data.subtype === "lost_challenge") {
+                    console.log("caught player losing challenge")
+                    this._lost_challenge(data);
                 }
+                this.render(true);
             }
-            this.render(true);
         });
     }
 
@@ -83,6 +87,7 @@ export class initiative_manager extends FormApplication {
         });
         this.selected_cards = selected_cards;
         this.slots = [];
+        this.lost_challenge = [];
         this.stage = "stage_1";
     }
 
@@ -95,6 +100,7 @@ export class initiative_manager extends FormApplication {
         data.available_cards = [];
         data.slots = this.slots;
         data.stage = this.stage;
+        data.lost_challenge = this.lost_challenge;
 
         if (game.user.isGM) {
             data.my_id = null;
@@ -164,6 +170,22 @@ export class initiative_manager extends FormApplication {
         if (this.stage === "stage_1") {
             this.setup_initiative();
         }
+        this.render(true);
+    }
+
+    _lost_challenge(data) {
+        console.log("caught challenge lose")
+        this.lost_challenge.push(data.data.player_name);
+        let tmp_array = [];
+        this.slots[9 - this.initiative_slot].actors.forEach(function (slot_data) {
+            if (slot_data.player_id !== data.data.player_id) {
+                tmp_array.push(slot_data);
+            } else {
+                console.log("found match")
+            }
+        });
+        this.slots[9 - this.initiative_slot].actors = tmp_array;
+        console.log(this)
         this.render(true);
     }
 
@@ -256,8 +278,19 @@ export class initiative_manager extends FormApplication {
             },
         };
         ChatMessage.create(message_data);
-
         this.discard_card(game.user.character.id, $(".stage_2_selected_card").attr("data-card-id"));
+
+        let data = {
+            "type": "initiative",
+            "subtype": "lost_challenge",
+            "data": {
+                "player_name": game.user.character.name,
+                "player_id": game.user.character.id,
+            },
+        };
+        game.socket.emit("system.paranoia", data);
+
+        this._lost_challenge(data);
     }
 
     challenge_truth(challenger_id) {

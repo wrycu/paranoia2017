@@ -1,3 +1,6 @@
+`1.5.2` - 2023-07-27
+* Move people who fail a challenge to the bottom of the initiative
+
 `1.5.1` - 2023-07-27
 * Setting up decks now only runs for GMs
 * Fixed Initiative manager when GM does not have a configured/selected user ([#18](https://github.com/wrycu/paranoia/issues/18))
