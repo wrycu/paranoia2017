@@ -149,7 +149,6 @@ export default class troubleshooter_sheet extends ActorSheet {
                 token: this.actor.token,
                 alias: this.actor.name,
             },
-            whisper: game.users.filter(i => i.isGM && i.active).map(i => i.id),
         };
         ChatMessage.create(message_data);
 
