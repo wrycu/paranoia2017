@@ -1,5 +1,6 @@
 `1.5.3` - ?
 * Playing cards is now public ([#28](https://github.com/wrycu/paranoia/issues/28))
+* Send message when LOSING it ([#31](https://github.com/wrycu/paranoia/issues/31))
 
 `1.5.2` - 2023-07-27
 * Move people who fail a challenge to the bottom of the initiative

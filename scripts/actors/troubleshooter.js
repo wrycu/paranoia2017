@@ -25,6 +25,13 @@ export default class troubleshooter_sheet extends ActorSheet {
         if (formData["system.memory.value"] === "") {
             formData["system.memory.value"] = "<p>Nothing in memory</p>";
         }
+        console.log(event)
+        console.log(formData)
+        console.log(this.actor.system.moxie.value)
+        // validate that the moxie was changed and that the new value is the max
+        if (this.actor.system.moxie.value !== formData["system.moxie.value"] && formData["system.moxie.value"] >= formData["system.moxie.current_max"]) {
+            await this.losing_it();
+        }
         await super._updateObject(event, formData);
     }
 
@@ -126,6 +133,23 @@ export default class troubleshooter_sheet extends ActorSheet {
 
         new ContextMenu(html, ".item .item-name:not(.mutant_power)", [send_to_chat_menu, play_menu, bottom_of_deck_menu]);
         new ContextMenu(html, ".item .item-name.mutant_power", [use_mutant_power]);
+    }
+
+    async losing_it() {
+        const template = "systems/paranoia/templates/chat/losing_it.html";
+        const html = await renderTemplate(template);
+
+        const message_data = {
+            user: game.user.id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            content: html,
+            speaker: {
+                actor: this.actor.id,
+                token: this.actor.token,
+                alias: this.actor.name,
+            },
+        };
+        ChatMessage.create(message_data);
     }
 
     async bottom_deck(card_id) {
