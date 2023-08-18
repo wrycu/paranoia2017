@@ -1,3 +1,6 @@
+`1.5.4` - ?
+* Fix for LOSING it triggering when full on MOXIE (instead of empty)
+
 `1.5.3` - 2023-08-17
 * Playing cards is now public ([#28](https://github.com/wrycu/paranoia/issues/28))
 * Send message when LOSING it ([#31](https://github.com/wrycu/paranoia/issues/31))
