@@ -146,7 +146,7 @@
             },
             "moxie": {
                 "min": 0,
-                "value": 0,
+                "value": 8,
                 "max": 8,
                 "current_max": 8
             },
