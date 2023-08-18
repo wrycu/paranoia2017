@@ -1,4 +1,4 @@
-`1.5.3` - ?
+`1.5.3` - 2023-08-17
 * Playing cards is now public ([#28](https://github.com/wrycu/paranoia/issues/28))
 * Send message when LOSING it ([#31](https://github.com/wrycu/paranoia/issues/31))
 
