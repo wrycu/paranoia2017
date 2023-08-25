@@ -1,6 +1,8 @@
-`1.5.4` - ?
+`1.5.4` - 2023-08-24
 * Fix for LOSING it triggering when full on MOXIE (instead of empty)
 * Fix for MOXIE starting at 0 instead of 8
+* Disable "Next Combat Phase" button until end of initiative ([#33](https://github.com/wrycu/paranoia/issues/33))
+* Move "Next Slot" button next to "Next Combat Phase" button ([#33](https://github.com/wrycu/paranoia/issues/33))
 
 `1.5.3` - 2023-08-17
 * Playing cards is now public ([#28](https://github.com/wrycu/paranoia/issues/28))
