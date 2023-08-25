@@ -1,3 +1,6 @@
+`1.5.5` - 2023-08-24
+* Fix for inability to update NPCs
+
 `1.5.4` - 2023-08-24
 * Fix for LOSING it triggering when full on MOXIE (instead of empty)
 * Fix for MOXIE starting at 0 instead of 8

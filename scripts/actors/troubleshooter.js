@@ -26,7 +26,7 @@ export default class troubleshooter_sheet extends ActorSheet {
             formData["system.memory.value"] = "<p>Nothing in memory</p>";
         }
         // validate that the moxie was changed and that the new value is the max
-        if (this.actor.system.moxie.value !== formData["system.moxie.value"] && formData["system.moxie.value"] <= 0) {
+        if (this?.actor?.system?.moxie?.value !== formData["system.moxie.value"] && formData["system.moxie.value"] <= 0) {
             await this.losing_it();
         }
         await super._updateObject(event, formData);
