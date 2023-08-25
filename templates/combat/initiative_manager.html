@@ -62,11 +62,6 @@
     <!-- actions / slot selection-->
     <h2>Slot Selection</h2>
     {{#if this.is_gm }}
-    {{#if (lt this.slots.length 11)}}
-    <button type="button" class="initiative_next" title="Allow Troubleshooters to claim the next initiative slot">
-        <i class="fas fa-plus fa-fw"></i>Next Slot
-    </button>
-    {{/if}}
     {{else}}
     {{#each this.selected_cards as |card|}}
     {{#if card.is_me }}{{#if card.is_selected }}
@@ -124,7 +119,7 @@
                 {{else}}
                     <div class="initiative_no_one">(no one)</div>
                 {{/if}}
-                {{#if (eq @index 9)}}
+                {{#if (eq @index 10)}}
                     <br>Basic Action:
                     {{#each ../this.lost_challenge as |lost|}}
                         {{ lost }}
@@ -138,9 +133,18 @@
     {{/if}}
     {{#if this.is_gm }}
     <div class="initiative_button_container">
-        <button type="button" class="progress_combat" {{#if (eq this.lost_challenge.length 0)}}{{else}}{{#if (eq this.initiative_slot 0)}}{{else}} disabled {{/if}}{{/if}} data-action="progress" title="Move Troubleshooters to the next combat phase">
+        <button type="button" class="progress_combat" {{#if (eq this.stage "stage_2") }}{{#if (eq this.initiative_slot -1)}}{{else}} disabled {{/if}}{{/if}} data-action="progress" title="Move Troubleshooters to the next combat phase">
             <i class="fas fa-plus fa-fw"></i>Next Combat Phase
         </button>
+        {{#if this.is_gm }}
+            {{#if (eq this.stage "stage_2") }}
+                {{#if (lt this.slots.length 11)}}
+                    <button type="button" class="initiative_next" title="Allow Troubleshooters to claim the next initiative slot">
+                        <i class="fas fa-plus fa-fw"></i>Next Slot
+                    </button>
+                {{/if}}
+            {{/if}}
+        {{/if}}
     </div>
     {{/if}}
 </form>

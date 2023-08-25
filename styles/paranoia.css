@@ -516,6 +516,10 @@
     width: 100px;
 }
 
+.initiative_button_container {
+    display: flex;
+}
+
 .paranoia-tooltip-container {
     pointer-events: none;
     background: white;
