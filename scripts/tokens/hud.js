@@ -13,8 +13,19 @@ export class token_HUD {
             treason_stars = token?.actor?.system?.treason_stars?.value;
         }
         // populate data
+        let name;
+        try {
+            if (token.actor.type === "troubleshooter") {
+                name = `${token.actor.name.toUpperCase()}-${token.actor.system.security_clearance.substring(0, 1).toUpperCase()}-${token.actor.system.home_sector.toUpperCase()}-${token.actor.system.clone_number}`;
+            } else {
+                name = token.name;
+            }
+        } catch (error) {
+            name = "<COULD NOT LOCATE IDENTITY RECORD>";
+        }
+
         let data = {
-            name: token.name || "<COULD NOT LOCATE IDENTITY RECORD>",
+            name: name,
             xp: xp,
             treason_stars: treason_stars,
             dead_zone: game.settings.get("paranoia", "wifi_dead_zone"),
