@@ -4,6 +4,7 @@
 * Activating a mutant power sends an initial notification to let the GM know more is coming ([#42](https://github.com/wrycu/paranoia/issues/42))
 * Fix for multiple combat managers opening after >1 combat
 * Set default bars for tokens ([#10](https://github.com/wrycu/paranoia/issues/10))
+* Update computer dice result ([#9](https://github.com/wrycu/paranoia/issues/9))
 
 `1.5.5` - 2023-08-24
 * Fix for inability to update NPCs
