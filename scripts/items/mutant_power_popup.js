@@ -3,6 +3,8 @@ export default class mutant_power_use extends FormApplication {
         super();
         this.actor = actor;
         this.item_details = item_details;
+        this.initial_message = null;
+        this.send_initial_message();
     }
 
     static get defaultOptions() {
@@ -15,10 +17,33 @@ export default class mutant_power_use extends FormApplication {
         });
     }
 
+    async send_initial_message() {
+        let html = "I'm activating a mutant power...";
+
+        const message_data = {
+            user: game.user.id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            content: html,
+            speaker: {
+                actor: this.actor.id,
+                token: this.actor.token,
+                alias: this.actor.name,
+            },
+            whisper: game.users.filter(i => i.isGM && i.active).map(i => i.id),
+            sound: game.settings.get('paranoia', 'mutant_power_audio_cue'),
+        };
+        this.initial_message = await ChatMessage.create(message_data);
+    }
+
     getData() {
         return {
             moxie_points: this.actor.system.moxie.value,
         };
+    }
+
+    close() {
+        this.initial_message.delete();
+        super.close();
     }
 
     activateListeners(html) {
@@ -45,17 +70,6 @@ export default class mutant_power_use extends FormApplication {
             }
         );
 
-        const message_data = {
-            user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-            content: html,
-            speaker: {
-                actor: this.actor.id,
-                token: this.actor.token,
-                alias: this.actor.name,
-            },
-            whisper: game.users.filter(i => i.isGM && i.active).map(i => i.id),
-        };
-        ChatMessage.create(message_data);
+        this.initial_message.update({content: html})
     }
 }

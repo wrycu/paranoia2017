@@ -147,6 +147,20 @@ Hooks.once("init", async function () {
         },
     );
 
+    game.settings.register(
+        "paranoia",
+        "mutant_power_audio_cue",
+        {
+            name: "Mutant Power Audio Cue",
+            hint: "Audio cue to play for the GM when activating mutant powers",
+            config: true,
+            scope: "world",
+            type: String,
+            filePicker: 'audio',
+            default: 'sounds/combat/epic-next-horn.ogg',
+        },
+    );
+
     //CONFIG.debug.hooks = true;
     game.socket.on("system.paranoia", socket_listener);
 
