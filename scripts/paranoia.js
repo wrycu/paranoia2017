@@ -196,6 +196,7 @@ Hooks.on("renderSidebarTab", (app, html, data) => {
 });
 
 Hooks.on("combatStart", async function (combat_info, round_info) {
+    if (!game.user.isGM) { return; }
     let update_form = new initiative_manager(
         {},
         {

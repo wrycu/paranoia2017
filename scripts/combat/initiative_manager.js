@@ -21,8 +21,12 @@ export class initiative_manager extends FormApplication {
     }
 
     setup_hooks() {
-        Hooks.once("deleteCombat", this.close.bind(this));
-        this.destroy
+        Hooks.on("deleteCombat", this.close.bind(this));
+        delete this;
+    }
+
+    close() {
+        super.close();
     }
 
     setup_socket() {
@@ -51,8 +55,10 @@ export class initiative_manager extends FormApplication {
                 } else if (data.subtype === "lost_challenge") {
                     console.log("caught player losing challenge")
                     this._lost_challenge(data);
+                } else {
+                    return;
                 }
-                this.render(true);
+                this.render();
             }
         });
     }
@@ -170,7 +176,7 @@ export class initiative_manager extends FormApplication {
         if (this.stage === "stage_1") {
             this.setup_initiative();
         }
-        this.render(true);
+        this.render();
     }
 
     _lost_challenge(data) {
@@ -186,7 +192,7 @@ export class initiative_manager extends FormApplication {
         });
         this.slots[9 - this.initiative_slot].actors = tmp_array;
         console.log(this)
-        this.render(true);
+        this.render();
     }
 
     async _initial_challenge(context) {
@@ -256,7 +262,7 @@ export class initiative_manager extends FormApplication {
             });
             this.slots[data.data.challenged_index].actors = updated_data;
         }
-        this.render(true);
+        this.render();
     }
 
     async challenge_lied(challenger_id) {
@@ -389,7 +395,7 @@ export class initiative_manager extends FormApplication {
             challenged: data.data.challenged,
         });
         this.slots[9 - this.initiative_slot].contains_me = data.data.contains_me;
-        this.render(true);
+        this.render();
     }
 
     _initial_initiative_next(context) {
@@ -415,7 +421,7 @@ export class initiative_manager extends FormApplication {
             contains_me: false,
         });
         this.initiative_slot--;
-        this.render(true);
+        this.render();
     }
 
     _handle_my_card_selection(context) {
