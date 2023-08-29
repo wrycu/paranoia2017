@@ -226,35 +226,7 @@ Hooks.once("ready", async function () {
     });
 
     await init_decks();
-    const defaultDestinyMenu = [
-        {
-            name: "menu 1",
-            icon: '<i class="fas fa-users"></i>',
-            callback: () => {
-                new GroupManager().render(true);
-            },
-            minimumRole: CONST.USER_ROLES.GAMEMASTER,
-        },
-        {
-            name: "menu 2",
-            icon: '<i class="fas fa-dice-d20"></i>',
-            callback: (li) => {
-                const messageText = `<button class="ffg-destiny-roll">${game.i18n.localize("SWFFG.DestinyPoolRoll")}</button>`;
 
-                new Map([...game.settings.settings].filter(([k, v]) => v.key.includes("destinyrollers"))).forEach((i) => {
-                    game.settings.set(i.namespace, i.key, undefined);
-                });
-
-                CONFIG.FFG.DestinyGM = game.user.id;
-
-                ChatMessage.create({
-                    user: game.user.id,
-                    content: messageText,
-                });
-            },
-            minimumRole: CONST.USER_ROLES.GAMEMASTER,
-        },
-    ];
-    const card_manager = new CardManager(undefined, {menu: defaultDestinyMenu, top: "100%", left: "100%"});
+    const card_manager = new CardManager(undefined, {top: "100%", left: "100%"});
     await card_manager.render(true);
 });
