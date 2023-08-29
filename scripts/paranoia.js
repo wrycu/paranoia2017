@@ -90,7 +90,6 @@ Hooks.once("init", async function () {
     CONFIG.Item.documentClass = paranoia_item;
 
     Token.prototype._drawBar = function (number, bar, data) {
-        console.log(data)
         let val = Number(data.value);
         // health is the opposite of what Foundry expects
         // code is taken from the star wars engine, which does the same reversal
@@ -134,6 +133,18 @@ Hooks.once("init", async function () {
     Items.registerSheet("paranoia", item_sheet_v1, {makeDefault: true});
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("paranoia", troubleshooter_sheet, {makeDefault: true});
+
+    game.settings.register(
+        "paranoia",
+        "token_configured",
+        {
+            name: "token_configured",
+            hint: "used to track if the tokens have undergone one-time configuration",
+            scope: "world",
+            type: Boolean,
+            default: false,
+        }
+    );
 
     game.settings.register(
         "paranoia",
@@ -196,7 +207,9 @@ Hooks.on("renderSidebarTab", (app, html, data) => {
 });
 
 Hooks.on("combatStart", async function (combat_info, round_info) {
-    if (!game.user.isGM) { return; }
+    if (!game.user.isGM) {
+        return;
+    }
     let update_form = new initiative_manager(
         {},
         {
@@ -213,6 +226,16 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
 });
 
 Hooks.once("ready", async function () {
+    if (!game.settings.get("paranoia", "token_configured")) {
+        let token_data = {
+            bar1: {
+                attribute: 'wounds',
+            },
+            displayBars: 30, // hovered by anyone
+        };
+        game.settings.set("core", "defaultToken", token_data);
+        game.settings.set("paranoia", "token_configured", true);
+    }
     Hooks.on("createMacro", async function (...args) {
         args[0] = await create_macro(args[0])
         return args;
