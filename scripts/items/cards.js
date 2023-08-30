@@ -33,6 +33,9 @@ export async function init_decks() {
             await Cards.create({
                 name: deck_name,
                 type: "deck",
+                ownership: {
+                    default: 3,
+                },
             });
         }
         await populate_deck(deck_name, deck_map[cur_base]);
@@ -43,6 +46,9 @@ export async function init_decks() {
             await Cards.create({
                 name: deck_name,
                 type: "pile",
+                ownership: {
+                    default: 3,
+                },
             });
         }
 
@@ -52,6 +58,9 @@ export async function init_decks() {
             await Cards.create({
                 name: deck_name,
                 type: "hand",
+                ownership: {
+                    default: 3,
+                },
             });
         }
     }

@@ -5,6 +5,7 @@
 * Fix for multiple combat managers opening after >1 combat
 * Set default bars for tokens ([#10](https://github.com/wrycu/paranoia/issues/10))
 * Update computer dice result ([#9](https://github.com/wrycu/paranoia/issues/9))
+* Update decks to be owned by players by default ([#26](https://github.com/wrycu/paranoia/issues/26))
 
 `1.5.5` - 2023-08-24
 * Fix for inability to update NPCs
