@@ -11,6 +11,7 @@ export default class roll_builder extends FormApplication {
         this.actor_id;
         this.attr;
         this.skill;
+        this.modifier;
     }
 
     static get defaultOptions() {
@@ -32,7 +33,7 @@ export default class roll_builder extends FormApplication {
     }
 
     _handle_skill_change(context) {
-        let node = parseInt($(".attr_selection").val()) + parseInt($(context.target).val());
+        let node = parseInt($(".attr_selection").val()) + parseInt($(context.target).val()) + this.modifier;
         $(".node_value").val(node);
         this.skill = context.target.options[context.target.options.selectedIndex].text
     }
@@ -46,6 +47,7 @@ export default class roll_builder extends FormApplication {
             skills: actor.system.skills,
             attr: this.attr,
             skill: this.skill,
+            modifier: this.modifier,
         };
         return data;
     }
@@ -93,7 +95,7 @@ export default class roll_builder extends FormApplication {
         ChatMessage.create(chat_options);
     }
 
-    async display_roll_dialog(node, computer, actor_id, attr=null, skill=null) {
+    async display_roll_dialog(node, computer, actor_id, attr=null, skill=null, modifier=0) {
         this.dice = {
             node: node,
             computer: computer,
@@ -101,6 +103,7 @@ export default class roll_builder extends FormApplication {
         this.actor_id = actor_id;
         this.attr = attr;
         this.skill = skill;
+        this.modifier = modifier;
         await this.render(true);
     }
 }

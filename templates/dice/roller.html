@@ -1,5 +1,8 @@
 <form class="paranoia_roller_window">
-    Choose Stats to calculate NODE<br>
+    {{# if (ne this.modifier 0) }}
+    <h4>Modifiers:</h4>
+    {{ this.modifier }} due to injury (already applied)
+    {{/if}}
     <div>
         <table>
             <thead>

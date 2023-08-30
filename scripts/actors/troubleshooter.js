@@ -241,11 +241,11 @@ export default class troubleshooter_sheet extends ActorSheet {
         console.log(this)
         let skill_val = this.actor.system.skills[skill].value;
         let attr_val = this.actor.system.stats[CONFIG.paranoia.skill_map[skill]].value;
-        let wounds_val = this.actor.system.wounds.value;
-        let total = skill_val + attr_val - wounds_val;
+        let wounds_val = this.actor.system.wounds.value * -1;
+        let total = skill_val + attr_val + wounds_val;
 
         let builder = new roll_builder();
-        await builder.display_roll_dialog(total, 1, this.actor.id, CONFIG.paranoia.skill_map[skill], skill);
+        await builder.display_roll_dialog(total, 1, this.actor.id, CONFIG.paranoia.skill_map[skill], skill, wounds_val);
     }
 
     /**
