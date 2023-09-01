@@ -171,6 +171,10 @@ export class CardManager extends FormApplication {
         }
     }
 
+    close() {
+        return;
+    }
+
     /** @override */
     getData() {
         const x = $(window).width();

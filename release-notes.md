@@ -7,6 +7,7 @@
 * Update computer dice result ([#9](https://github.com/wrycu/paranoia/issues/9))
 * Update decks to be owned by players by default ([#26](https://github.com/wrycu/paranoia/issues/26))
 * Handle injury in NODE calculation (beyond the initial config) ([#43](https://github.com/wrycu/paranoia/issues/43))
+* Fix for card manager closing when user hits ESC
 
 `1.5.5` - 2023-08-24
 * Fix for inability to update NPCs
