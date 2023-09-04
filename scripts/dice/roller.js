@@ -186,7 +186,7 @@ export async function reroll(...args) {
     let actor = game.actors.get(actor_id);
     if (!actor || actor.system.moxie.value < 1) {
         console.log("aborting r-eroll due to lack of actor or insufficient moxie");
-        ui.notifications.warn("You must have >= 1 moxie to reoll");
+        ui.notifications.warn("You must have >= 1 moxie to re-roll");
         return
     }
     await actor.update({system: {moxie: {value: actor.system.moxie.value - 1}}});
