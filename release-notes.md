@@ -1,4 +1,4 @@
-`1.5.6` - ?
+`1.6.0` - ?
 * Update token names to display full name (`NAME-CLEARANCE-HOME SECTOR-CLONE #`) ([#35](https://github.com/wrycu/paranoia/issues/35))
 * Activating a mutant power sends an audio cue ([#40](https://github.com/wrycu/paranoia/issues/40))
 * Activating a mutant power sends an initial notification to let the GM know more is coming ([#42](https://github.com/wrycu/paranoia/issues/42))
@@ -8,6 +8,7 @@
 * Update decks to be owned by players by default ([#26](https://github.com/wrycu/paranoia/issues/26))
 * Handle injury in NODE calculation (beyond the initial config) ([#43](https://github.com/wrycu/paranoia/issues/43))
 * Fix for card manager closing when user hits ESC
+* Add a re-roll button for 1 moxie ([#39](https://github.com/wrycu/paranoia/issues/39))
 
 `1.5.5` - 2023-08-24
 * Fix for inability to update NPCs

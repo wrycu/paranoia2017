@@ -1,7 +1,7 @@
 <div class="dice-roll">
     <div class="dice-result">
         <div class="dice-formula">
-            Rolling <b>{{ this.attr }}</b> with <b>{{ this.skill }}</b>...
+            {{#if this.reroll}}Spent 1 moxie to <b>re-roll</b>{{else}}Rolling{{/if}} <b>{{ this.attr }}</b> with <b>{{ this.skill }}</b>...
             <hr>
             NODE: {{ this.node }}
         </div>
@@ -38,5 +38,6 @@
         <h4 class="dice-total">
            {{ this.roll.successes }} successes{{#if this.roll.computer}},&nbsp;<img src=systems/paranoia/images/dice/computer.png>{{/if}}
         </h4>
+        {{#if this.reroll}}{{else}}<button type="button" class="reroll" data-node="{{ this.dice.node }}" data-actor_id="{{ this.actor_id }}" data-attr="{{ this.attr }}" data-skill="{{ this.skill }}" data-modifier="{{ this.modifier }}">Spend 1 Moxie to Re-roll</button>{{/if}}
     </div>
 </div>

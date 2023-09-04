@@ -1,8 +1,8 @@
 import {initiative_manager} from "../combat/initiative_manager.js";
-import roll_builder from "../dice/roller.js";
+import {roll_builder} from "../dice/roller.js";
 import mutant_power_use from "../items/mutant_power_popup.js";
 
-export default class troubleshooter_sheet extends ActorSheet {
+export class troubleshooter_sheet extends ActorSheet {
 
     /** @override */
     static get defaultOptions() {
@@ -24,10 +24,6 @@ export default class troubleshooter_sheet extends ActorSheet {
         // so stop people from accidentally making it empty and screwing themselves
         if (formData["system.memory.value"] === "") {
             formData["system.memory.value"] = "<p>Nothing in memory</p>";
-        }
-        // validate that the moxie was changed and that the new value is the max
-        if (this?.actor?.system?.moxie?.value !== formData["system.moxie.value"] && formData["system.moxie.value"] <= 0) {
-            await this.losing_it();
         }
         await super._updateObject(event, formData);
     }
@@ -130,23 +126,6 @@ export default class troubleshooter_sheet extends ActorSheet {
 
         new ContextMenu(html, ".item .item-name:not(.mutant_power)", [send_to_chat_menu, play_menu, bottom_of_deck_menu]);
         new ContextMenu(html, ".item .item-name.mutant_power", [use_mutant_power]);
-    }
-
-    async losing_it() {
-        const template = "systems/paranoia/templates/chat/losing_it.html";
-        const html = await renderTemplate(template);
-
-        const message_data = {
-            user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-            content: html,
-            speaker: {
-                actor: this.actor.id,
-                token: this.actor.token,
-                alias: this.actor.name,
-            },
-        };
-        ChatMessage.create(message_data);
     }
 
     async bottom_deck(card_id) {
@@ -345,4 +324,21 @@ export default class troubleshooter_sheet extends ActorSheet {
         // Finally, create the item!
         return await Item.create(itemData, {parent: this.actor});
     }
+}
+
+export async function losing_it(actor) {
+    const template = "systems/paranoia/templates/chat/losing_it.html";
+    const html = await renderTemplate(template);
+
+    const message_data = {
+        user: game.user.id,
+        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        content: html,
+        speaker: {
+            actor: actor.id,
+            token: actor.token,
+            alias: actor.name,
+        },
+    };
+    ChatMessage.create(message_data);
 }

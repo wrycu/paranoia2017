@@ -1,11 +1,11 @@
 import {computer_die, mutant_die, negative_node_die, node_die} from "./dice/dice.js";
 import {roll_paranoia} from "./dice/roll.js";
 import item_sheet_v1 from "./items/item_sheet_v1.js";
-import troubleshooter_sheet from "./actors/troubleshooter.js";
+import {troubleshooter_sheet, losing_it} from "./actors/troubleshooter.js";
 import {initiative_start} from "./combat/initiative.js";
 import {socket_listener} from "./socket.js";
 import {initiative_manager} from "./combat/initiative_manager.js";
-import roll_builder from "./dice/roller.js";
+import {roll_builder, reroll} from "./dice/roller.js";
 import paranoia_item from "./items/item.js";
 import paranoia_actor from "./actors/actor.js";
 import {create_macro} from "./macros/macro.js";
@@ -248,6 +248,21 @@ Hooks.once("ready", async function () {
             token_HUD.remove_hud(token);
         }
     });
+
+    Hooks.on("renderChatMessage", (app, html, messageData) => {
+        html.on("click", ".reroll", async function () {
+            await reroll(messageData);
+        });
+    });
+
+    Hooks.on("updateActor", (actor, update_data, metadata, id) => {
+        if (actor.type !== 'troubleshooter') {
+            return;
+        }
+        if (update_data?.system?.moxie?.value === 0) {
+            losing_it(actor);
+        }
+    })
 
     await init_decks();
 
