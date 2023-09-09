@@ -176,11 +176,20 @@ Hooks.once("init", async function () {
     game.socket.on("system.paranoia", socket_listener);
 
     Hooks.on("dropActorSheetData", async function (actor, actor_sheet, item_data) {
-        console.log("dropped")
         const item = await fromUuid(item_data.uuid);
-        console.log(actor)
-        console.log(item)
-        await deal_card(actor.id, item);
+        let src = item_data.uuid.split('.')[0];
+        if (src && src === 'Actor') {
+            // the card was already in someone's hand, transfer it without updating state
+            let src_actor = item_data.uuid.split('.')[1];
+            // no need to delete it if they're rearranging in their own sheet
+            if (src_actor !== actor.id) {
+                let item_id = (await fromUuid(item_data.uuid)).id;
+                await game.actors.get(src_actor).deleteEmbeddedDocuments("Item", [item_id]);
+            }
+        } else {
+            // track that a card was given to a user
+            await deal_card(actor.id, item);
+        }
     });
 
     Hooks.on("renderSidebar", async function (sidebar, context, tabs) {

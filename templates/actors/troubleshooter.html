@@ -309,6 +309,7 @@
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;ACTION CARDS >>></b>
                         </div>
                     </div>
+                    <span class="item-list">
                     {{#each items as |item id|}}
                     {{#if (eq item.type "action_card")}}
                     <li class="item flexrow" data-item-id="{{item._id}}">
@@ -327,6 +328,7 @@
                     </li>
                     {{/if}}
                     {{/each}}
+                    </span>
                 </div>
                 <div class="troubleshooter_secret_societies">
                     <div class="troubleshooter_section">
