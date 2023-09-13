@@ -28,12 +28,25 @@ export default class item_sheet_v1 extends ItemSheet {
     }
 
     _updateObject(event, formData) {
+        if (this.name !== formData['name']) {
+            if (game.user.isGM) {
+                ui.notifications.warn("Changing card names may break game state. It is not advised.");
+            } else {
+                // name was changed and the user is not a GM
+                ui.notifications.info("To maintain game state, players cannot edit the name of items");
+                formData['name'] = this.name;
+            }
+        }
         super._updateObject(event, formData);
-        console.log(formData)
-        if (formData['system.exclude_from_deck']) {
+        let changed = formData['system.exclude_from_deck'] !== this.item.system.exclude_from_deck;
+        if (changed && formData['system.exclude_from_deck']) {
             remove_from_decks(this.item);
-        } else if (!formData['system.exclude_from_deck']) {
+        } else if (changed && !formData['system.exclude_from_deck']) {
             add_to_decks(this.item);
+        }
+        if (this.name !== formData['name'] && !game.user.isGM) {
+            // re-render to show the user that their change did not work
+            this.render(true);
         }
     }
 

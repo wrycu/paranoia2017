@@ -79,19 +79,45 @@ async function populate_deck(deck_name, item_type) {
             let existing_card = deck.cards.filter(i => i.name === card.name);
             if (existing_card.length === 0) {
                 // the card is not already added to the appropriate deck, add it
-                await deck.createEmbeddedDocuments(
-                    "Card",
-                    [{
-                        name: card.name,
-                        type: "base",
-                        face: 0,
-                        faces: [{
-                            name: card.name,
-                            text: card.system.text,
-                            img: card.img,
-                        }],
-                    }],
-                );
+                await add_to_deck(card, deck);
+            }
+        }
+    }
+    await trim_decks();
+}
+
+async function trim_decks() {
+    let expected_deck_bases = [
+        "Action Card",
+        "Mutant Power",
+        "Equipment",
+        "Secret Society",
+        "Bonus Duty",
+    ];
+    console.log("trimming decks")
+    for (const cur_base of expected_deck_bases) {
+        let deck = game.cards.find(i => i.name === `${cur_base} Deck`);
+        let discard_deck = game.cards.find(i => i.name === `${cur_base} Discard`);
+        let held_deck = game.cards.find(i => i.name === `${cur_base} Held`);
+        for (let x = 0; x < deck.cards.contents.length; x++) {
+            let card_data = deck.cards.contents[x];
+            if (game.items.filter(i => i.name === card_data.name).length === 0) {
+                // the item has been renamed or removed; remove it from the deck
+                await remove_from_deck(card_data, deck);
+            }
+        }
+        for (let x = 0; x < discard_deck.cards.contents.length; x++) {
+            let card_data = discard_deck.cards.contents[x];
+            if (game.items.filter(i => i.name === card_data.name).length === 0) {
+                // the item has been renamed or removed; remove it from the deck
+                await remove_from_deck(card_data, discard_deck);
+            }
+        }
+        for (let x = 0; x < held_deck.cards.contents.length; x++) {
+            let card_data = held_deck.cards.contents[x];
+            if (game.items.filter(i => i.name === card_data.name).length === 0) {
+                // the item has been renamed or removed; remove it from the deck
+                await remove_from_deck(card_data, held_deck);
             }
         }
     }
@@ -143,9 +169,9 @@ export async function remove_from_decks(card_data) {
     let discard_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Discard`);
     let held_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Held`);
 
-    await delete_from_deck(card_data, draw_deck);
-    await delete_from_deck(card_data, discard_deck);
-    await delete_from_deck(card_data, held_deck);
+    await remove_from_deck(card_data, draw_deck);
+    await remove_from_deck(card_data, discard_deck);
+    await remove_from_deck(card_data, held_deck);
 }
 
 /**
@@ -154,7 +180,7 @@ export async function remove_from_decks(card_data) {
  * @param deck - deck from which to remove the card
  * @returns {Promise<void>}
  */
-async function delete_from_deck(card_data, deck) {
+async function remove_from_deck(card_data, deck) {
     let cards = deck.cards.filter(i => i.name === card_data.name);
     for (let x = 0; x < cards.length; x++) {
         await deck.deleteEmbeddedDocuments(
@@ -207,35 +233,11 @@ export async function deal_card(actor_id, card_data) {
     let found_discard_card = discard_deck.cards.filter(i => i.name === card_name);
 
     if (found_card.length === 0) {
-        found_card = await draw_deck.createEmbeddedDocuments(
-            "Card",
-            [{
-                name: card_data.name,
-                type: "base",
-                face: 0,
-                faces: [{
-                    name: card_data.name,
-                    text: card_data.system.text,
-                    img: card_data.img,
-                }],
-            }],
-        );
+        found_card = await add_to_deck(card_data, draw_deck);
     } else if (found_card.filter(i => i.drawn === false).length === 0) {
         if (found_discard_card.length === 0) {
             // nothing available in the discard, create it
-            found_card = await draw_deck.createEmbeddedDocuments(
-                "Card",
-                [{
-                    name: card_data.name,
-                    type: "base",
-                    face: 0,
-                    faces: [{
-                        name: card_data.name,
-                        text: card_data.system.text,
-                        img: card_data.img,
-                    }],
-                }],
-            );
+            found_card = await add_to_deck(card_data, draw_deck);
         } else {
             // shuffle the discard into the deck
             for (const card of discard_deck.cards) {
