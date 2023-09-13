@@ -23,6 +23,17 @@
                 </div>
             </div>
             <div class="action_order_details">
+            {{#if is_gm}}
+            <div class="exclude_from_deck">
+                <label for="system.exclude_from_deck" class="action_order_details-label">Exclude from decks</label>
+                <div class="action_order_details-content flexrow flex-center flex-between">
+                    <input type="checkbox" name="system.exclude_from_deck" {{checked item.system.exclude_from_deck}}
+                           data-dtype="Boolean"/>
+                </div>
+            </div>
+            {{/if}}
+            </div>
+            <div class="action_order_details">
                 <label for="system.reaction" class="action_order_details-label">REACTION</label>
                 <div class="action_order_details-content flexrow flex-center flex-between">
                     <input type="checkbox" name="system.reaction" {{checked item.system.reaction}}

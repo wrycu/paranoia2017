@@ -474,6 +474,13 @@
     margin-right: 30px;
 }
 
+.exclude_from_deck {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 .bonus_duty_card .sheet-body .bonus_duty_card_stuff_container {
     margin-right: 30px;
 }

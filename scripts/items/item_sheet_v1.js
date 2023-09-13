@@ -1,3 +1,5 @@
+import {add_to_decks, remove_from_decks} from "./cards.js";
+
 export default class item_sheet_v1 extends ItemSheet {
 
     /** @override */
@@ -21,7 +23,18 @@ export default class item_sheet_v1 extends ItemSheet {
         // it would not be available through returning the item entity elsewhere.
         const data = super.getData();
         data.config = CONFIG.paranoia;
+        data.is_gm = game.user.isGM;
         return data;
+    }
+
+    _updateObject(event, formData) {
+        super._updateObject(event, formData);
+        console.log(formData)
+        if (formData['system.exclude_from_deck']) {
+            remove_from_decks(this.item);
+        } else if (!formData['system.exclude_from_deck']) {
+            add_to_decks(this.item);
+        }
     }
 
     /** @override */

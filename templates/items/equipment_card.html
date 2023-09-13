@@ -49,6 +49,15 @@
                     </div>
                 </div>
             </div>
+            {{#if is_gm}}
+            <div class="exclude_from_deck">
+                <label for="system.exclude_from_deck" class="action_order_details-label">Exclude from decks</label>
+                <div class="action_order_details-content flexrow flex-center flex-between">
+                    <input type="checkbox" name="system.exclude_from_deck" {{checked item.system.exclude_from_deck}}
+                           data-dtype="Boolean"/>
+                </div>
+            </div>
+            {{/if}}
             <div class="equipment_card_description_container">
                 <div class="text" data-group="primary">
                     {{editor item.system.text target="system.text" button=true owner=owner editable=editable}}

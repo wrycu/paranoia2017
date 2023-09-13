@@ -203,13 +203,15 @@
             ],
             "quote": "",
             "text": "<p></p>",
-            "reaction": false
+            "reaction": false,
+            "exclude_from_deck": false
         },
         "mutant_power_card": {
             "templates": [
                 "combat_card"
             ],
-            "text": "<p></p>"
+            "text": "<p></p>",
+            "exclude_from_deck": false
         },
         "equipment_card": {
             "templates": [
@@ -221,17 +223,20 @@
             "skill": {
                 "name": "violence",
                 "bonus": "0"
-            }
+            },
+            "exclude_from_deck": false
         },
         "secret_society_card": {
             "templates": [],
             "keywords": "",
             "beliefs": "<p></p>",
-            "goals": "<p></p>"
+            "goals": "<p></p>",
+            "exclude_from_deck": false
         },
         "bonus_duty_card": {
             "templates": [],
-            "responsibilities": "<p></p>"
+            "responsibilities": "<p></p>",
+            "exclude_from_deck": false
         },
         "number_one_card": {
             "templates": []

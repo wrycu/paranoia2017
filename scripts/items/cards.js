@@ -75,24 +75,115 @@ export async function init_decks() {
 async function populate_deck(deck_name, item_type) {
     let deck = game.cards.filter(i => i.name === deck_name)[0];
     for (const card of game.items.filter(i => i.type === item_type)) {
-        let existing_card = deck.cards.filter(i => i.name === card.name);
-        if (existing_card.length === 0) {
-            // the card is not already added to the appropriate deck, add it
-            await deck.createEmbeddedDocuments(
-                "Card",
-                [{
-                    name: card.name,
-                    type: "base",
-                    face: 0,
-                    faces: [{
+        if (!card.system.exclude_from_deck) {
+            let existing_card = deck.cards.filter(i => i.name === card.name);
+            if (existing_card.length === 0) {
+                // the card is not already added to the appropriate deck, add it
+                await deck.createEmbeddedDocuments(
+                    "Card",
+                    [{
                         name: card.name,
-                        text: card.system.text,
-                        img: card.img,
+                        type: "base",
+                        face: 0,
+                        faces: [{
+                            name: card.name,
+                            text: card.system.text,
+                            img: card.img,
+                        }],
                     }],
-                }],
-            );
+                );
+            }
         }
     }
+}
+
+/**
+ * Adds a card to all relevant decks
+ * @param card_data - item data for the card to be added
+ * @returns {Promise<void>}
+ */
+export async function add_to_decks(card_data) {
+    let expected_deck_bases = [
+        "Action Card",
+        "Mutant Power",
+        "Equipment",
+        "Secret Society",
+        "Bonus Duty",
+    ];
+    let deck_map = {
+        "Action Card": "action_card",
+        "Mutant Power": "mutant_power_card",
+        "Equipment": "equipment_card",
+        "Secret Society": "secret_society_card",
+        "Bonus Duty": "bonus_duty_card",
+    };
+    for (const cur_base of expected_deck_bases) {
+        if (deck_map[cur_base] === card_data.type) {
+            let deck = game.cards.filter(i => i.name === `${cur_base} Deck`)[0];
+            await add_to_deck(card_data, deck);
+        }
+    }
+}
+
+/**
+ * Remove a card from all decks
+ * @param card_data - item data for the card to be removed
+ * @returns {Promise<void>}
+ */
+export async function remove_from_decks(card_data) {
+    let deck_map = {
+        "action_card": "Action Card",
+        "equipment_card": "Equipment",
+        "mutant_power_card": "Mutant Power",
+        "bonus_duty_card": "Bonus Duty",
+        "secret_society_card": "Secret Society",
+    };
+    const card_type = card_data.type;
+    let draw_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Deck`);
+    let discard_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Discard`);
+    let held_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Held`);
+
+    await delete_from_deck(card_data, draw_deck);
+    await delete_from_deck(card_data, discard_deck);
+    await delete_from_deck(card_data, held_deck);
+}
+
+/**
+ * Remove a card from a specific deck
+ * @param card_data - item data for the card to be removed
+ * @param deck - deck from which to remove the card
+ * @returns {Promise<void>}
+ */
+async function delete_from_deck(card_data, deck) {
+    let cards = deck.cards.filter(i => i.name === card_data.name);
+    for (let x = 0; x < cards.length; x++) {
+        await deck.deleteEmbeddedDocuments(
+            "Card",
+            [cards[x].id],
+        );
+    }
+}
+
+/**
+ * Add a card to a specific deck
+ * @param card_data - item data for the card to be added
+ * @param deck - deck to add the card to
+ * @returns {Promise<*>}
+ */
+async function add_to_deck(card_data, deck) {
+    return await deck.createEmbeddedDocuments(
+        "Card",
+        [{
+            name: card_data.name,
+            type: "base",
+            face: 0,
+            faces: [{
+                name: card_data.name,
+                text: card_data.system.text,
+                img: card_data.img,
+            }],
+        }],
+    );
 }
 
 export async function deal_card(actor_id, card_data) {
