@@ -1,4 +1,4 @@
-`1.6.0` - ?
+`1.6.0` - 2023-09-12
 * Update token names to display full name (`NAME-CLEARANCE-HOME SECTOR-CLONE #`) ([#35](https://github.com/wrycu/paranoia/issues/35))
 * Activating a mutant power sends an audio cue ([#40](https://github.com/wrycu/paranoia/issues/40))
 * Activating a mutant power sends an initial notification to let the GM know more is coming ([#42](https://github.com/wrycu/paranoia/issues/42))
