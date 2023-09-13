@@ -34,9 +34,10 @@ export class roll_builder extends FormApplication {
      * @private
      */
     _handle_attr_change(context) {
-        let node = parseInt($(context.target).val()) + parseInt($(".skill_selection").val());
+        let node = parseInt($(context.target).val()) + parseInt($(".skill_selection").val()) + this.modifier;
         $(".node_value").val(node);
-        this.attr = context.target.options[context.target.options.selectedIndex].text
+        this.attr = context.target.options[context.target.options.selectedIndex].text;
+        this.dice.node = node;
     }
 
     /**
@@ -48,6 +49,7 @@ export class roll_builder extends FormApplication {
         let node = parseInt($(".attr_selection").val()) + parseInt($(context.target).val()) + this.modifier;
         $(".node_value").val(node);
         this.skill = context.target.options[context.target.options.selectedIndex].text
+        this.dice.node = node;
     }
 
     getData() {
@@ -72,6 +74,7 @@ export class roll_builder extends FormApplication {
      * @private
      */
     async _updateObject(event, formData) {
+        paranoia_log(`Skill roller got form update: ${formData}`);
         let formula;
         if (formData.node > 0) {
             formula = `${formData.node}dn`;
