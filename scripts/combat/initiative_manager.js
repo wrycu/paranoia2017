@@ -11,6 +11,7 @@ export class initiative_manager extends FormApplication {
         this.setup_hooks();
         this.setup_socket();
         this.setup_initiative();
+        this.get_combatants();
     }
 
 
@@ -34,6 +35,9 @@ export class initiative_manager extends FormApplication {
             console.log("got event in window ;)")
             console.log(data)
             if (data.type === "initiative") {
+                if (!am_in_combat()) {
+                    this.close();
+                }
                 if (data.subtype === "player_card_selection") {
                     console.log("got remote card selection")
                     this._handle_foreign_card_selection(data);
@@ -71,26 +75,21 @@ export class initiative_manager extends FormApplication {
         this.challenged_this_round = false;
         // can't access "this" in the foreach
         let selected_cards = {}
-        game.users.filter(i => i.active).forEach(function (user) {
-            if (!user.isGM) {
-                let is_me;
-                if (game.user.isGM) {
-                    is_me = false;
-                } else {
-                    is_me = user.character.id === game.user.character.id;
-                }
-                selected_cards[user.character.id] = {
-                    name: user.name,
-                    is_selected: false,
-                    selected_card: {
-                        name: null,
-                        id: null,
-                        action_order: null,
-                    },
-                    is_me: is_me,
-                };
-            }
+        let combatants = this.get_combatants();
+
+        combatants.forEach(function (combatant) {
+            selected_cards[combatant.actor_id] = {
+                name: combatant.user_name,
+                is_selected: false,
+                selected_card: {
+                    name: null,
+                    id: null,
+                    action_order: null,
+                },
+                is_me: combatant.is_me,
+            };
         });
+
         this.selected_cards = selected_cards;
         this.slots = [];
         this.lost_challenge = [];
@@ -469,4 +468,84 @@ export class initiative_manager extends FormApplication {
     async _updateObject(event, formData) {
         console.log("_updateobject")
     }
+
+    /**
+     * Get a list of characters in the combat who has an associated active user
+     * @returns [] - array of actor IDs in the combat with active user owners
+     */
+    get_combatants() {
+        let active_characters = []; // users here must have an assigned character
+        let my_character_id = game.user?.character?.id;
+        game.users.filter(i => i.active).forEach(function (user) {
+            if (!user.isGM) { // exclude GMs from this list as they don't actually select cards
+                active_characters.push(user.character.id);
+            }
+        });
+
+        let combatants = [];
+        let combats = game.combats.filter(i => i.active);
+        for (let x = 0; x < combats.length; x++) {
+            let cur_combat = combats[x];
+            let combants = cur_combat.combatants.map(i => i);
+            for (let k = 0; k < combants.length; k++) {
+                let combatant = combants[k];
+                console.log(combatant)
+                if (active_characters.includes(combatant.actorId)) {
+                    let owner = this.get_combatant_owner(combatant);
+                    console.log(`found owner: ${owner}`)
+                    combatants.push({
+                        user_name: owner.name,
+                        user_id: owner.id,
+                        actor_id: combatant.actorId,
+                        is_me: owner.id === game.user.id,
+                    });
+                }
+            }
+        }
+        console.log(combatants)
+        return combatants;
+    }
+
+    get_combatant_owner(combatant) {
+        console.log(`looking for owner for ${combatant.name}`)
+        let owners = Object.keys(combatant.actor.ownership);
+        let final_owner = false;
+        owners.forEach(function (owner) {
+            let ownership_status = combatant.actor.ownership[owner];
+            if (ownership_status === 3 && !game.users.get(owner).isGM) {
+                // we have found the owner
+                console.log(`found owner: ${game.users.get(owner).name}`)
+                final_owner = game.users.get(owner);
+            }
+        });
+        console.log(`owner: ${final_owner}`)
+        return final_owner;
+    }
+}
+
+/**
+ * Used to determine if the current user is a part of the combat (in order to stop showing the initiative manager)
+ * @returns {boolean} - true if the current user owns an actor in an active combat, otherwise false
+ */
+export function am_in_combat() {
+    console.log("am_in_combat")
+    if (game.user.isGM) {
+        console.log("true")
+        return true;
+    }
+    let combats = game.combats.filter(i => i.active);
+    for (let x = 0; x < combats.length; x++) {
+        let cur_combat = combats[x];
+        let combatants = cur_combat.combatants.map(i => i);
+        for (let k = 0; k < combatants.length; k++) {
+            let combatant = combatants[k];
+            console.log(combatant)
+            if (combatant.isOwner) {
+                console.log("true")
+                return true;
+            }
+        }
+    }
+    console.log("false")
+    return false;
 }

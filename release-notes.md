@@ -10,6 +10,7 @@
 * Fix for card manager closing when user hits ESC
 * Add a re-roll button for 1 moxie ([#39](https://github.com/wrycu/paranoia/issues/39))
 * Add drag-and-drop between actors ([#32](https://github.com/wrycu/paranoia/issues/32))
+* Combat tracker now updates when combatants are changed ([#38](https://github.com/wrycu/paranoia/issues/38))
 
 `1.5.5` - 2023-08-24
 * Fix for inability to update NPCs
