@@ -15,17 +15,12 @@ import {CardManager, deal_card, init_decks} from "./items/cards.js";
 
 Hooks.once("init", async function () {
     CONFIG.module = 'paranoia';
-    //CONFIG.Dice.push(CONFIG.Dice.rolls[0]);
-    let original_term = CONFIG.Dice.rolls[0];
     CONFIG.Dice.rolls[0] = roll_paranoia;
-    //CONFIG.Dice.rolls.push(original_term);
-    console.log("hello")
     CONFIG.Dice.terms["c"] = computer_die;
     CONFIG.Dice.terms["m"] = mutant_die;
     CONFIG.Dice.terms["n"] = node_die;
     CONFIG.Dice.terms["x"] = negative_node_die;
 
-    // TODO: move this into a config setup or something
     let paranoia = {
         skill_map: {
             "athletics": "violence",
@@ -83,16 +78,16 @@ Hooks.once("init", async function () {
             "green",
             "blue",
         ],
-    }
+    };
 
     CONFIG.paranoia = paranoia;
     CONFIG.Actor.documentClass = paranoia_actor;
     CONFIG.Item.documentClass = paranoia_item;
 
+    // health is the opposite of what Foundry expects
+    // code is taken from the star wars engine, which does the same reversal
     Token.prototype._drawBar = function (number, bar, data) {
         let val = Number(data.value);
-        // health is the opposite of what Foundry expects
-        // code is taken from the star wars engine, which does the same reversal
         if (data.attribute === "wounds" || data.attribute === "moxie") {
             val = Number(data.max - data.value);
         }
@@ -115,6 +110,7 @@ Hooks.once("init", async function () {
         bar.position.set(0, posY);
     };
 
+    // register template helpers
     Handlebars.registerHelper("json", JSON.stringify);
     Handlebars.registerHelper("math", function (lvalue, operator, rvalue, options) {
         lvalue = parseFloat(lvalue);
@@ -129,11 +125,13 @@ Hooks.once("init", async function () {
         }[operator];
     });
 
+    // register items
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("paranoia", item_sheet_v1, {makeDefault: true});
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("paranoia", troubleshooter_sheet, {makeDefault: true});
 
+    // register settings
     game.settings.register(
         "paranoia",
         "token_configured",
@@ -145,7 +143,6 @@ Hooks.once("init", async function () {
             default: false,
         }
     );
-
     game.settings.register(
         "paranoia",
         "wifi_dead_zone",
@@ -157,7 +154,6 @@ Hooks.once("init", async function () {
             default: false,
         },
     );
-
     game.settings.register(
         "paranoia",
         "mutant_power_audio_cue",
@@ -172,10 +168,14 @@ Hooks.once("init", async function () {
         },
     );
 
-    //CONFIG.debug.hooks = true;
+    // register the socket listener
     game.socket.on("system.paranoia", socket_listener);
 
+    // register hook handlers which need to be after Foundry is initialized
     Hooks.on("dropActorSheetData", async function (actor, actor_sheet, item_data) {
+        /*
+        Allow drag-and-drop of items, including between actors. handle updating deck state as needed
+        */
         const item = await fromUuid(item_data.uuid);
         let src = item_data.uuid.split('.')[0];
         if (src && src === 'Actor') {
@@ -193,6 +193,11 @@ Hooks.once("init", async function () {
     });
 
     Hooks.on("renderSidebar", async function (sidebar, context, tabs) {
+        /*
+        Used to hide the deck tab from players.
+        They have to be owners of the decks (since they move cards around by playing them), but we don't want
+            them to be able to see which cards are in which state
+        */
         if (!game.user.isGM) {
             // since we have to make players owners of the card stacks for them to be able to interact with them,
             // hide the tab, so they can't view info about it
@@ -201,21 +206,17 @@ Hooks.once("init", async function () {
         return [sidebar, context, tabs];
     });
 
+    // preload templates
     const partial_templates = [
         "systems/paranoia/templates/chat/item.html",
     ];
     await loadTemplates(partial_templates);
 });
 
-Hooks.on("renderSidebarTab", (app, html, data) => {
-    html.find(".chat-control-icon").click(async (event) => {
-        console.log("clicked dice roller")
-        let builder = new roll_builder({test: 1});
-        await builder.display_roll_dialog();
-    });
-});
-
 Hooks.on("combatStart", async function (combat_info, round_info) {
+    /*
+    Used to show the initiative manager since Paranoia uses... weird initiative
+    */
     if (!game.user.isGM) {
         return;
     }
@@ -235,6 +236,57 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
 });
 
 Hooks.once("ready", async function () {
+    configure_token();
+
+    Hooks.on("createMacro", async function (...args) {
+        /*
+        Kinda nuts that this is not default behavior, but take the item image when creating a macro
+        */
+        args[0] = await create_macro(args[0])
+        return args;
+    });
+
+    Hooks.on("hoverToken", (token, mouse_in) => {
+        /*
+        Used to render the pretty mouse-over HUD
+        */
+        if (mouse_in) {
+            token_HUD.add_hud(token);
+        } else {
+            token_HUD.remove_hud(token);
+        }
+    });
+
+    Hooks.on("renderChatMessage", (app, html, messageData) => {
+        /*
+        Used to hook the spend moxie to re-roll button
+        */
+        html.on("click", ".reroll", async function () {
+            await reroll(messageData);
+        });
+    });
+
+    Hooks.on("updateActor", (actor, update_data, metadata, id) => {
+        /*
+        Generic location to handle losing it (0 moxie left)
+        */
+        if (actor.type !== 'troubleshooter') {
+            return;
+        }
+        if (update_data?.system?.moxie?.value === 0) {
+            losing_it(actor);
+        }
+    })
+
+    // create and populate the decks used to track card state
+    await init_decks();
+
+    // show the card manager on the bottom right
+    const card_manager = new CardManager(undefined, {top: "100%", left: "100%"});
+    await card_manager.render(true);
+});
+
+function configure_token() {
     if (!game.settings.get("paranoia", "token_configured")) {
         let token_data = {
             bar1: {
@@ -245,36 +297,4 @@ Hooks.once("ready", async function () {
         game.settings.set("core", "defaultToken", token_data);
         game.settings.set("paranoia", "token_configured", true);
     }
-    Hooks.on("createMacro", async function (...args) {
-        args[0] = await create_macro(args[0])
-        return args;
-    });
-
-    Hooks.on("hoverToken", (token, mouse_in) => {
-        if (mouse_in) {
-            token_HUD.add_hud(token);
-        } else {
-            token_HUD.remove_hud(token);
-        }
-    });
-
-    Hooks.on("renderChatMessage", (app, html, messageData) => {
-        html.on("click", ".reroll", async function () {
-            await reroll(messageData);
-        });
-    });
-
-    Hooks.on("updateActor", (actor, update_data, metadata, id) => {
-        if (actor.type !== 'troubleshooter') {
-            return;
-        }
-        if (update_data?.system?.moxie?.value === 0) {
-            losing_it(actor);
-        }
-    })
-
-    await init_decks();
-
-    const card_manager = new CardManager(undefined, {top: "100%", left: "100%"});
-    await card_manager.render(true);
-});
+}
