@@ -1,4 +1,4 @@
-`1.6.1` - ?
+`1.6.1` - 2023-09-13
 * Fix for poorly-implemented new mutant power flow ([#48](https://github.com/wrycu/paranoia/issues/48)) 
 * Add GM-only field to prevent items from being added to card decks ([#44](https://github.com/wrycu/paranoia/issues/44))
 * Harden card state tracking ([#46](https://github.com/wrycu/paranoia/issues/46))
