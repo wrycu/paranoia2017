@@ -167,6 +167,18 @@ Hooks.once("init", async function () {
             default: 'sounds/combat/epic-next-horn.ogg',
         },
     );
+    game.settings.register(
+        "paranoia",
+        "debug_logging",
+        {
+            name: "Enable debug logging",
+            hint: "Logs additional information to the console",
+            config: true,
+            scope: "world",
+            type: Boolean,
+            default: false,
+        },
+    );
 
     // register the socket listener
     game.socket.on("system.paranoia", socket_listener);

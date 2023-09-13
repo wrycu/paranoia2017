@@ -2,6 +2,7 @@
 * Fix for poorly-implemented new mutant power flow ([#48](https://github.com/wrycu/paranoia/issues/48)) 
 * Add GM-only field to prevent items from being added to card decks ([#44](https://github.com/wrycu/paranoia/issues/44))
 * Harden card state tracking ([#46](https://github.com/wrycu/paranoia/issues/46))
+* Overall moved console logs to a debugging setting and moved some messaged to the UI ([#50](https://github.com/wrycu/paranoia/issues/50))
 
 `1.6.0` - 2023-09-12
 * Update token names to display full name (`NAME-CLEARANCE-HOME SECTOR-CLONE #`) ([#35](https://github.com/wrycu/paranoia/issues/35))

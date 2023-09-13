@@ -1,8 +1,7 @@
+import {paranoia_log} from "../util.js";
+
 export async function initiative_start(combat_info, round_info, time_info=null) {
-    console.log("initiative_start");
-    console.log(combat_info)
-    console.log(round_info)
-    console.log(time_info)
+    paranoia_log("Caught combat start!");
     request_pick_card();
 
     if (time_info) {
@@ -13,7 +12,7 @@ export async function initiative_start(combat_info, round_info, time_info=null) 
 }
 
 export async function initiative_stop(combat_info, round_info, time_info=null) {
-    console.log("initiative stop")
+    paranoia_log("emit initiative_stop");
     if (time_info) {
         return {combat_info, round_info, time_info};
     } else {
@@ -22,11 +21,10 @@ export async function initiative_stop(combat_info, round_info, time_info=null) {
 }
 
 function request_pick_card() {
+    paranoia_log("emit start_request_card_pick");
     let data = {
         type: "initiative",
         sub_type: "start_request_card_pick",
     };
     game.socket.emit("system.paranoia", data);
-    console.log("emit")
-    //game.socket.emit("system.paranoia", {});
 }

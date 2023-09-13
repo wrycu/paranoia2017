@@ -3,8 +3,6 @@ import {computer_die} from "./dice.js";
 export class roll_paranoia extends Roll {
     constructor(...args) {
         super(...args);
-        console.log("custom roller")
-        console.log(...args)
     }
 
     static CHAT_TEMPLATE = "systems/paranoia/templates/dice/computer_roll.html";
@@ -26,9 +24,7 @@ export class roll_paranoia extends Roll {
         }
 
         this.dice.forEach(function (die_type) {
-            console.log(die_type.constructor.name)
             die_type.results.forEach(function (result) {
-                console.log(result.result)
                 evaluated.results.push(result.result);
                 if (die_type.constructor.name === 'node_die') {
                     evaluated.contains_paranoia_dice = true;

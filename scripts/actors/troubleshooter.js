@@ -1,6 +1,7 @@
 import {initiative_manager} from "../combat/initiative_manager.js";
 import {roll_builder} from "../dice/roller.js";
 import mutant_power_use from "../items/mutant_power_popup.js";
+import {paranoia_log} from "../util.js";
 
 export class troubleshooter_sheet extends ActorSheet {
 
@@ -19,6 +20,7 @@ export class troubleshooter_sheet extends ActorSheet {
         return `systems/paranoia/templates/actors/${this.actor.type}.html`;
     }
 
+    /** @override */
     async _updateObject(event, formData) {
         // wow, the editor is dumb. if someone empties the field and saves it, the editor simply no longer renders
         // so stop people from accidentally making it empty and screwing themselves
@@ -53,9 +55,6 @@ export class troubleshooter_sheet extends ActorSheet {
         context.rollData = context.actor.getRollData();
         context.config = CONFIG.paranoia;
         context.is_gm = game.user.isGM;
-
-        // Prepare active effects
-        //context.effects = prepareActiveEffectCategories(this.actor.effects);
 
         return context;
     }
@@ -128,12 +127,23 @@ export class troubleshooter_sheet extends ActorSheet {
         new ContextMenu(html, ".item .item-name.mutant_power", [use_mutant_power]);
     }
 
+    /**
+     * Send a card to the bottom of the respective deck
+     * @param card_id - ID of the item on the actor
+     * @returns {Promise<void>}
+     */
     async bottom_deck(card_id) {
         let item = this.actor.items.get(card_id);
         await item.to_bottom_of_deck();
         item.delete();
     }
 
+    /**
+     * Plays a card from inventory
+     * (deleting it from the inventory and moving it from the "Held" deck to the "Discard" deck
+     * @param card_id - ID of the item on the actor
+     * @returns {Promise<void>}
+     */
     async play_card(card_id) {
         let item = this.actor.items.get(card_id);
         const item_details = item.get_item_details();
@@ -156,9 +166,13 @@ export class troubleshooter_sheet extends ActorSheet {
         item.delete();
     }
 
+    /**
+     * Notifies the GM that the clearance level was changed
+     * @param context - HTML context of the clearance level change
+     * @returns {Promise<void>}
+     */
     async tattle(context) {
-        console.log("tattling")
-        console.log(context)
+        paranoia_log("Notifying GM of clearance level change");
         const template = "systems/paranoia/templates/chat/tattle.html";
         const html = await renderTemplate(template, {level: $(".security_level").find(":selected").val()});
 
@@ -176,11 +190,15 @@ export class troubleshooter_sheet extends ActorSheet {
         ChatMessage.create(message_data);
     }
 
+    /**
+     * Activates a mutant power card, prompting the user to describe what they want to do
+     * @param item_id - ID of the item on the actor
+     * @returns {Promise<void>}
+     * @private
+     */
     async _use_mutant_power(item_id) {
         let item = this.actor.items.get(item_id);
-        console.log(item)
-        // TODO: prompt for moxie points spent and what you'd like to do
-
+        paranoia_log(`Prompting user for activating mutant power ${item.name}`);
         const item_details = item.get_item_details();
         const template = "systems/paranoia/templates/chat/item.html";
         const html = await renderTemplate(template, {item_details, item});
@@ -191,9 +209,15 @@ export class troubleshooter_sheet extends ActorSheet {
         ).render(true);
     }
 
+    /**
+     * Sends item details to the chat (for other players to see)
+     * @param item_id - ID of the item on the actor
+     * @returns {Promise<void>}
+     * @private
+     */
     async _send_item_to_chat(item_id) {
         let item = this.actor.items.get(item_id);
-        console.log(item)
+        paranoia_log(`Sending ${item.name} to chat`);
 
         const item_details = item.get_item_details();
         const template = "systems/paranoia/templates/chat/item.html";
@@ -212,17 +236,22 @@ export class troubleshooter_sheet extends ActorSheet {
         ChatMessage.create(message_data);
     }
 
+    /**
+     * Opens the roll prompt for a skill check
+     * @param context - HTML context from the click event
+     * @returns {Promise<void>}
+     * @private
+     */
     async _roll_skill(context) {
-        console.log("got skill roll request")
-        console.log(context)
+        paranoia_log("User rolling skill");
         let skill = $(context.target).attr("data-skill");
-        console.log(skill)
-        console.log(this)
+        paranoia_log(skill);
         let skill_val = this.actor.system.skills[skill].value;
         let attr_val = this.actor.system.stats[CONFIG.paranoia.skill_map[skill]].value;
         let wounds_val = this.actor.system.wounds.value * -1;
         let total = skill_val + attr_val + wounds_val;
 
+        paranoia_log("Rendering roll builder...");
         let builder = new roll_builder();
         await builder.display_roll_dialog(total, 1, this.actor.id, CONFIG.paranoia.skill_map[skill], skill, wounds_val);
     }
@@ -235,7 +264,6 @@ export class troubleshooter_sheet extends ActorSheet {
      * @return {undefined}
      */
     _prepareItems(context) {
-        console.log(context)
         // Initialize containers.
         const gear = [];
         const features = [];
@@ -260,7 +288,6 @@ export class troubleshooter_sheet extends ActorSheet {
                 item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
             }
         }
-        console.log(context)
 
         // Iterate through items, allocating to containers
         for (let i of context.items) {
@@ -326,6 +353,11 @@ export class troubleshooter_sheet extends ActorSheet {
     }
 }
 
+/**
+ * Sends a message to let players know they're losing it
+ * @param actor - actor object for the actor losing it
+ * @returns {Promise<void>}
+ */
 export async function losing_it(actor) {
     const template = "systems/paranoia/templates/chat/losing_it.html";
     const html = await renderTemplate(template);

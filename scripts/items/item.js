@@ -1,7 +1,7 @@
+import {paranoia_log} from "../util.js";
+
 export default class paranoia_item extends Item {
     get_item_details() {
-        console.log("got details")
-        console.log(this)
         let data = {
             name: this.name,
             img: this.img,
@@ -25,7 +25,6 @@ export default class paranoia_item extends Item {
      *   e.g. "Action Card" for the "Action Card Deck", "Action Card Held", "Action Card Discard"  set of cards
      */
     determine_deck_base_name() {
-        console.log(this.type)
         if (this.type === "action_card") {
             return "Action Card";
         } else if (this.type === "bonus_duty_card") {
@@ -37,19 +36,17 @@ export default class paranoia_item extends Item {
         } else if (this.type === "secret_society_card") {
             return "Secret Society";
         } else {
-            console.log(`UNKNOWN CARD TYPE: ${this.type}`)
+            paranoia_log(`UNKNOWN CARD TYPE: ${this.type}`);
             return "";
         }
     }
 
     draw_card() {
-        console.log("drawing card")
-        console.log(this.name)
+
     }
 
     async to_bottom_of_deck() {
-        console.log("card to bottom of deck")
-        console.log(this.name)
+        paranoia_log(`Placing ${this.name} to bottom of deck`);
         let base_deck = this.determine_deck_base_name();
         const held_pile = game.cards.filter(i => i.name === `${base_deck} Held`)[0];
         const deck_pile = game.cards.filter(i => i.name === `${base_deck} Deck`)[0];
@@ -63,17 +60,18 @@ export default class paranoia_item extends Item {
             await moved_card.update({sort: length});
 
         } else {
-            console.log(`bad game state - could not find ${this.name} in held deck`)
+            ui.notifications.error(`bad game state - could not find ${this.name} in held deck`)
+            paranoia_log(`bad game state - could not find ${this.name} in held deck`);
         }
     }
 
     async discard_card() {
-        console.log("discarding card")
-        console.log(this.name)
+        paranoia_log(`Discarding ${this.name}`);
         await this.play_card()
     }
 
     async play_card() {
+        paranoia_log(`Playing ${this.name}`);
         let base_deck = this.determine_deck_base_name();
         const held_pile = game.cards.filter(i => i.name === `${base_deck} Held`)[0];
         const discarded_pile = game.cards.filter(i => i.name === `${base_deck} Discard`)[0];
@@ -81,7 +79,8 @@ export default class paranoia_item extends Item {
         if (played_card.length > 0) {
             await held_pile.pass(discarded_pile, [played_card[0].id], {chatNotification: false});
         } else {
-            console.log(`bad game state - could not find ${this.name} in held deck`)
+            ui.notifications.error(`bad game state - could not find ${this.name} in held deck`)
+            paranoia_log(`bad game state - could not find ${this.name} in held deck`)
         }
     }
 }

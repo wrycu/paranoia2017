@@ -1,3 +1,5 @@
+import {paranoia_log} from "../util.js";
+
 /**
  * Creates all the decks, hands, and piles used to track cards
  * It then populates those with one copy of every item
@@ -64,6 +66,7 @@ export async function init_decks() {
             });
         }
     }
+    await trim_decks();
 }
 
 /**
@@ -73,6 +76,7 @@ export async function init_decks() {
  * @returns {Promise<void>}
  */
 async function populate_deck(deck_name, item_type) {
+    paranoia_log(`Populating ${deck_name} with cards`);
     let deck = game.cards.filter(i => i.name === deck_name)[0];
     for (const card of game.items.filter(i => i.type === item_type)) {
         if (!card.system.exclude_from_deck) {
@@ -83,10 +87,10 @@ async function populate_deck(deck_name, item_type) {
             }
         }
     }
-    await trim_decks();
 }
 
 async function trim_decks() {
+    paranoia_log("Trimming decks");
     let expected_deck_bases = [
         "Action Card",
         "Mutant Power",
@@ -94,7 +98,6 @@ async function trim_decks() {
         "Secret Society",
         "Bonus Duty",
     ];
-    console.log("trimming decks")
     for (const cur_base of expected_deck_bases) {
         let deck = game.cards.find(i => i.name === `${cur_base} Deck`);
         let discard_deck = game.cards.find(i => i.name === `${cur_base} Discard`);
@@ -129,6 +132,7 @@ async function trim_decks() {
  * @returns {Promise<void>}
  */
 export async function add_to_decks(card_data) {
+    paranoia_log("Adding missing cards to decks");
     let expected_deck_bases = [
         "Action Card",
         "Mutant Power",
@@ -146,6 +150,7 @@ export async function add_to_decks(card_data) {
     for (const cur_base of expected_deck_bases) {
         if (deck_map[cur_base] === card_data.type) {
             let deck = game.cards.filter(i => i.name === `${cur_base} Deck`)[0];
+            paranoia_log(`Found missing card: ${card_data.name}`);
             await add_to_deck(card_data, deck);
         }
     }
@@ -157,6 +162,7 @@ export async function add_to_decks(card_data) {
  * @returns {Promise<void>}
  */
 export async function remove_from_decks(card_data) {
+    paranoia_log(`Removing ${card_data.name} from all decks`);
     let deck_map = {
         "action_card": "Action Card",
         "equipment_card": "Equipment",
@@ -181,8 +187,10 @@ export async function remove_from_decks(card_data) {
  * @returns {Promise<void>}
  */
 async function remove_from_deck(card_data, deck) {
+    paranoia_log(`Attempting to remove ${card_data} from deck`);
     let cards = deck.cards.filter(i => i.name === card_data.name);
     for (let x = 0; x < cards.length; x++) {
+        paranoia_log("Found card; deleting");
         await deck.deleteEmbeddedDocuments(
             "Card",
             [cards[x].id],
@@ -197,6 +205,7 @@ async function remove_from_deck(card_data, deck) {
  * @returns {Promise<*>}
  */
 async function add_to_deck(card_data, deck) {
+    paranoia_log(`Adding ${card_data.name} to deck`);
     return await deck.createEmbeddedDocuments(
         "Card",
         [{
@@ -213,9 +222,7 @@ async function add_to_deck(card_data, deck) {
 }
 
 export async function deal_card(actor_id, card_data) {
-    console.log("dealing card")
-    console.log(actor_id)
-    console.log(card_data)
+    paranoia_log(`Dealing ${card_data.name}`);
     const card_name = card_data.name;
     const card_type = card_data.type;
     let deck_map = {
@@ -248,7 +255,8 @@ export async function deal_card(actor_id, card_data) {
         }
     }
     if (found_card.length === 0) {
-        console.log("could not find card; bad game state");
+        ui.notifications.error(`Could not find ${card_name}; bad game state. Please notify your GM.`);
+        paranoia_log(`Could not find ${card_name}; bad game state. Please notify your GM.`);
     }
     // at this point the card exists and has not yet been drawn
     // need to draw the specific card
@@ -300,7 +308,6 @@ export class CardManager extends FormApplication {
     }
 
     async _handle_click(context) {
-        console.log("yes hello")
         let drawer = new card_draw();
         await drawer.render(true);
     }
@@ -344,26 +351,17 @@ export class card_draw extends FormApplication {
         }
         data['actors'] = actors;
         data['is_gm'] = is_gm;
-        console.log("getData")
-        console.log(data)
         return data;
     }
 
     activateListeners(html) {
         super.activateListeners(html);
-        console.log("activating listeners")
-
-        // TODO: refactor to use initial / real handlers
-        //html.find(".progress_combat").click(this.initial_stage_transition.bind(this));
-        //html.find(".card_selection").on("change", this._handle_my_card_selection.bind(this));
     }
 
     async _updateObject(event, formData) {
-        console.log("_updateobject")
         if (!Array.isArray(formData['actors'])) {
             formData['actors'] = [formData['actors']];
         }
-        console.log(formData)
         for (const cur_actor of formData['actors']) {
             if (!cur_actor) {
                 // form submission includes null (unchecked) actors; just skip over them

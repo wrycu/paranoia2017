@@ -1,8 +1,8 @@
 import {initiative_manager, am_in_combat} from "./combat/initiative_manager.js";
+import {paranoia_log} from "./util.js";
 
 export async function socket_listener(data) {
-    console.log("got data from socket")
-    console.log(data)
+    paranoia_log(`Got data from socket: ${data}`);
     if (data.type === "initiative" && (data.subtype === "stage_transition" || data.subtype === "open_manager")) {
         // skip the check if we aren't in the combat
         if (!am_in_combat()) {

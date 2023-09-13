@@ -1,4 +1,5 @@
 import {roll_paranoia} from "./roll.js";
+import {paranoia_log} from "../util.js";
 
 export class roll_builder extends FormApplication {
     constructor(object, options) {
@@ -27,12 +28,22 @@ export class roll_builder extends FormApplication {
         html.find(".skill_selection").on("change", this._handle_skill_change.bind(this));
     }
 
+    /**
+     * Update the skill list & NODE
+     * @param context
+     * @private
+     */
     _handle_attr_change(context) {
         let node = parseInt($(context.target).val()) + parseInt($(".skill_selection").val());
         $(".node_value").val(node);
         this.attr = context.target.options[context.target.options.selectedIndex].text
     }
 
+    /**
+     * Update the NODE
+     * @param context
+     * @private
+     */
     _handle_skill_change(context) {
         let node = parseInt($(".attr_selection").val()) + parseInt($(context.target).val()) + this.modifier;
         $(".node_value").val(node);
@@ -53,10 +64,14 @@ export class roll_builder extends FormApplication {
         return data;
     }
 
+    /**
+     * Converts the data into a formula and rolls
+     * @param event
+     * @param formData
+     * @returns {Promise<void>}
+     * @private
+     */
     async _updateObject(event, formData) {
-        console.log("_updateobject")
-        console.log(event)
-        console.log(formData)
         let formula;
         if (formData.node > 0) {
             formula = `${formData.node}dn`;
@@ -66,7 +81,6 @@ export class roll_builder extends FormApplication {
         if (formData.computer > 0) {
             formula += ` + ${formData.computer}dc`
         }
-
 
         let roll = new roll_paranoia(formula);
         let chat_data;
@@ -100,6 +114,16 @@ export class roll_builder extends FormApplication {
         ChatMessage.create(chat_options);
     }
 
+    /**
+     * Display the roller window
+     * @param node
+     * @param computer
+     * @param actor_id
+     * @param attr
+     * @param skill
+     * @param modifier
+     * @returns {Promise<void>}
+     */
     async display_roll_dialog(node, computer, actor_id, attr = null, skill = null, modifier = 0) {
         this.dice = {
             node: node,
@@ -112,6 +136,18 @@ export class roll_builder extends FormApplication {
         await this.render(true);
     }
 
+    /**
+     * Actually perform the roll
+     * @param node
+     * @param computer_dice
+     * @param attr
+     * @param skill
+     * @param dice
+     * @param actor_id
+     * @param modifier
+     * @param reroll
+     * @returns {Promise<void>}
+     */
     async roll(node, computer_dice, attr, skill, dice, actor_id, modifier, reroll) {
         let formula;
         if (node > 0) {
@@ -161,7 +197,7 @@ export async function reroll(...args) {
     let element = $(message.message.content);
     // check if we are the author, as only the original user can reroll
     if (!message.author.isSelf) {
-        console.log("quitting as I am not the author of this message");
+        paranoia_log("quitting re-roll as I am not the author of this message");
         ui.notifications.error("You cannot re-roll for another user (good try ;))");
         return;
     }
@@ -185,7 +221,7 @@ export async function reroll(...args) {
 
     let actor = game.actors.get(actor_id);
     if (!actor || actor.system.moxie.value < 1) {
-        console.log("aborting r-eroll due to lack of actor or insufficient moxie");
+        paranoia_log("aborting re-roll due to lack of actor or insufficient moxie");
         ui.notifications.warn("You must have >= 1 moxie to re-roll");
         return
     }
