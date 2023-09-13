@@ -41,9 +41,11 @@ export default class mutant_power_use extends FormApplication {
         };
     }
 
-    close() {
-        this.initial_message.delete();
-        super.close();
+    close(...args) {
+        if (this.initial_message) {
+            this.initial_message.delete();
+        }
+        super.close({force: true});
     }
 
     activateListeners(html) {
@@ -71,5 +73,6 @@ export default class mutant_power_use extends FormApplication {
         );
 
         this.initial_message.update({content: html})
+        this.initial_message = null;
     }
 }
