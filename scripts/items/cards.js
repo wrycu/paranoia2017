@@ -186,8 +186,8 @@ export async function remove_from_decks(card_data) {
  * @param deck - deck from which to remove the card
  * @returns {Promise<void>}
  */
-async function remove_from_deck(card_data, deck) {
-    paranoia_log(`Attempting to remove ${card_data} from deck`);
+export async function remove_from_deck(card_data, deck) {
+    paranoia_log(`Attempting to remove ${card_data.name} from deck`);
     let cards = deck.cards.filter(i => i.name === card_data.name);
     for (let x = 0; x < cards.length; x++) {
         paranoia_log("Found card; deleting");
@@ -204,7 +204,7 @@ async function remove_from_deck(card_data, deck) {
  * @param deck - deck to add the card to
  * @returns {Promise<*>}
  */
-async function add_to_deck(card_data, deck) {
+export async function add_to_deck(card_data, deck) {
     paranoia_log(`Adding ${card_data.name} to deck`);
     return await deck.createEmbeddedDocuments(
         "Card",

@@ -391,7 +391,7 @@ export class initiative_manager extends FormApplication {
         let actor = game.actors.get(actor_id);
         let item = actor.items.get(card_id);
         if (item?.type !== "mutant_power_card") {
-            actor.deleteEmbeddedDocuments("Item", [card_id]);
+            card_discarder(actor_id, card_id);
         }
     }
 
