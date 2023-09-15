@@ -1,4 +1,3 @@
-import {initiative_manager} from "../combat/initiative_manager.js";
 import {roll_builder} from "../dice/roller.js";
 import mutant_power_use from "../items/mutant_power_popup.js";
 import {paranoia_log} from "../util.js";
