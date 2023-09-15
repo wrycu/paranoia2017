@@ -11,6 +11,7 @@ import paranoia_actor from "./actors/actor.js";
 import {create_macro} from "./macros/macro.js";
 import {token_HUD} from "./tokens/hud.js";
 import {CardManager, deal_card, init_decks} from "./items/cards.js";
+import {register_wifi_dead_zone} from "./init.js";
 
 
 Hooks.once("init", async function () {
@@ -83,6 +84,7 @@ Hooks.once("init", async function () {
     CONFIG.paranoia = paranoia;
     CONFIG.Actor.documentClass = paranoia_actor;
     CONFIG.Item.documentClass = paranoia_item;
+    //CONFIG.debug.hooks = true
 
     // health is the opposite of what Foundry expects
     // code is taken from the star wars engine, which does the same reversal
@@ -245,6 +247,16 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
     // get other clients to open their manager as well
     game.socket.emit("system.paranoia", {"type": "initiative", "subtype": "open_manager"});
     return await initiative_start(combat_info, round_info);
+});
+
+Hooks.on("getSceneControlButtons", (buttons) => {
+    /*
+    Used to add wifi dead-zone to scene controls
+    */
+    if (!game.user.isGM) {
+        return;
+    }
+    return register_wifi_dead_zone(buttons);
 });
 
 Hooks.once("ready", async function () {

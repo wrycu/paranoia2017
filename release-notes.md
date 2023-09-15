@@ -1,6 +1,7 @@
-`1.6.2` - ?
+`1.7.0` - ?
 * Fix for item name change popping up on every item close
 * Use modified NODE for re-rolls when spending moxie ([#59](https://github.com/wrycu/paranoia/issues/59))
+* Add Wifi Deadzone toggle to scene controls ([#58](https://github.com/wrycu/paranoia/issues/58))
 
 `1.6.1` - 2023-09-13
 * Fix for poorly-implemented new mutant power flow ([#48](https://github.com/wrycu/paranoia/issues/48)) 
