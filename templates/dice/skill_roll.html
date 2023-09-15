@@ -38,6 +38,6 @@
         <h4 class="dice-total">
            {{ this.roll.successes }} successes{{#if this.roll.computer}},&nbsp;<img src=systems/paranoia/images/dice/computer.png>{{/if}}
         </h4>
-        {{#if this.reroll}}{{else}}<button type="button" class="reroll" data-node="{{ this.dice.node }}" data-actor_id="{{ this.actor_id }}" data-attr="{{ this.attr }}" data-skill="{{ this.skill }}" data-modifier="{{ this.modifier }}">Spend 1 Moxie to Re-roll</button>{{/if}}
+        {{#if this.reroll}}{{else}}<button type="button" class="reroll" data-node="{{ this.node }}" data-actor_id="{{ this.actor_id }}" data-attr="{{ this.attr }}" data-skill="{{ this.skill }}" data-modifier="{{ this.modifier }}">Spend 1 Moxie to Re-roll</button>{{/if}}
     </div>
 </div>
