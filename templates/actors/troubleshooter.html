@@ -239,6 +239,7 @@
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;BONUS DUTY >>></b>
                         </div>
                     </div>
+                    <span class="item-list">
                     {{#each items as |item id|}}
                     {{#if (eq item.type "bonus_duty_card")}}
                     <li class="item flexrow" data-item-id="{{item._id}}">
@@ -252,6 +253,7 @@
                     </li>
                     {{/if}}
                     {{/each}}
+                    </span>
                 </div>
                 <div class="troubleshooter_mutant_powers">
                     <div class="troubleshooter_section">
@@ -262,6 +264,7 @@
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;MUTANT POWERS >>></b>
                         </div>
                     </div>
+                    <span class="item-list">
                     {{#each items as |item id|}}
                     {{#if (eq item.type "mutant_power_card")}}
                     <li class="item flexrow" data-item-id="{{item._id}}">
@@ -276,6 +279,7 @@
                     </li>
                     {{/if}}
                     {{/each}}
+                    </span>
                 </div>
                 <div class="troubleshooter_secret_societies">
                     <div class="troubleshooter_section">
@@ -286,6 +290,7 @@
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;SECRET SOCIETIES >>></b>
                         </div>
                     </div>
+                    <span class="item-list">
                     {{#each items as |item id|}}
                     {{#if (eq item.type "secret_society_card")}}
                     <li class="item flexrow" data-item-id="{{item._id}}">
@@ -299,6 +304,7 @@
                     </li>
                     {{/if}}
                     {{/each}}
+                    </span>
                 </div>
                 <div class="troubleshooter_secret_societies">
                     <div class="troubleshooter_section">
@@ -339,6 +345,7 @@
                             <b>&nbsp;&nbsp;&nbsp;&nbsp;EQUIPMENT >>></b>
                         </div>
                     </div>
+                    <span class="item-list">
                     {{#each items as |item id|}}
                     {{#if (eq item.type "equipment_card")}}
                     <li class="item flexrow" data-item-id="{{item._id}}">
@@ -352,6 +359,7 @@
                     </li>
                     {{/if}}
                     {{/each}}
+                    </span>
                 </div>
             </div>
         </div>

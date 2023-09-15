@@ -27,11 +27,21 @@ export class initiative_manager extends FormApplication {
      * Close the manager when combat ends
      */
     setup_hooks() {
-        Hooks.on("deleteCombat", this.close.bind(this));
+        Hooks.on("deleteCombat", this.custom_close.bind(this));
         delete this;
     }
 
+    /**
+     * Probit accidentally closing the manager
+     */
     close() {
+        return;
+    }
+
+    /**
+     * Allow closing via a custom function
+     */
+    custom_close() {
         super.close();
     }
 
@@ -44,7 +54,7 @@ export class initiative_manager extends FormApplication {
             if (data.type === "initiative") {
                 if (!am_in_combat()) {
                     paranoia_log("Closing manager since I'm not in combat");
-                    this.close();
+                    this.custom_close();
                 }
                 if (data.subtype === "player_card_selection") {
                     paranoia_log("got remote card selection");
