@@ -38,6 +38,9 @@ export default class item_sheet_v1 extends ItemSheet {
             }
         }
         super._updateObject(event, formData);
+        if (formData['system.exclude_from_deck'] === undefined) {
+            formData['system.exclude_from_deck'] = false;
+        }
         let changed = formData['system.exclude_from_deck'] !== this.item.system.exclude_from_deck;
         if (changed && formData['system.exclude_from_deck']) {
             remove_from_decks(this.item);
