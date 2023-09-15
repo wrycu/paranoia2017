@@ -1,3 +1,6 @@
+`1.6.2` - ?
+* Fix for item name change popping up on every item close
+
 `1.6.1` - 2023-09-13
 * Fix for poorly-implemented new mutant power flow ([#48](https://github.com/wrycu/paranoia/issues/48)) 
 * Add GM-only field to prevent items from being added to card decks ([#44](https://github.com/wrycu/paranoia/issues/44))

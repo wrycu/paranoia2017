@@ -28,7 +28,7 @@ export default class item_sheet_v1 extends ItemSheet {
     }
 
     _updateObject(event, formData) {
-        if (this.name !== formData['name']) {
+        if (this.item.name !== formData['name']) {
             if (game.user.isGM) {
                 ui.notifications.warn("Changing card names may break game state. It is not advised.");
             } else {
