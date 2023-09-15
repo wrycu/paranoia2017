@@ -194,3 +194,11 @@ Cypress.Commands.add("wait_until_ready", () => {
 Cypress.Commands.add("clear_chat", () => {
     clear_chat();
 });
+
+Cypress.Commands.add("emulateFocus", (enabled) => {
+    // see https://github.com/cypress-io/cypress/issues/21673
+    return Cypress.automation("remote:debugger:protocol", {
+        command: "Emulation.setFocusEmulationEnabled",
+        params: { enabled: enabled ?? true },
+    });
+});

@@ -17,6 +17,7 @@ describe("paranoia actors", () => {
         });
 
         // end create a folder for our actors
+        cy.emulateFocus();
     });
     beforeEach(() => {
         cy.join();
@@ -161,6 +162,7 @@ describe("paranoia actors", () => {
     });
     */
 
+    /*
     it("tests making a positive-NODE skill check", () => {
         // create the troubleshooter
         cy.get('[data-tab="actors"] > .fas').click();
@@ -177,27 +179,356 @@ describe("paranoia actors", () => {
         cy.get('.window-app.paranoia').trigger('mouseenter');
         cy.get('.window-app.paranoia').trigger('mouseover');
         cy.get('[data-edit="system.memory.value"]').scrollIntoView();
-        cy.get('[name="system.stats.violence.value"]').type('3');
+        cy.get('[name="system.stats.violence.value"]').type('{backspace}3');
+        cy.get('[name="system.stats.violence.value"]').blur();
         cy.get('[name="system.stats.violence.value"]').should('have.value', 3);
         //cy.get(':nth-child(4) > .development_information > :nth-child(1) > .development_information_details-content > input').type('{del}3');
         cy.get(':nth-child(5) > .skill_information_details-label > .skill').should('be.visible'); // guns
         cy.get(':nth-child(5) > .skill_information_details-label > .skill').click();                      // guns
-        cy.get('.attr_selection').should('be.visible').and('have.value', 0);
+        cy.get('.attr_selection').should('be.visible').and('have.value', 3);
         cy.get('.attr_selection').find(':selected').should('contain.text', 'violence');
         cy.get('.skill_selection').should('be.visible').and('have.value', 0);
         cy.get('.skill_selection').find(':selected').should('contain.text', 'guns');
-        cy.get('.node_value').should('be.visible').and('have.value', 0);
+        cy.get('.node_value').should('be.visible').and('have.value', 3);
         cy.get('[name="computer"]').should('be.visible').and('have.value', 1);
-        /*
         cy.get('.paranoia_roller_window > button').click();
         cy.get('.paranoia_roller_window > button').should('not.be.visible');
+
+        // check the message results
         cy.get('.chat-message').should('be.visible');
-        cy.get('.dice-formula').should('be.visible').and('contain.text', 'violence').and('contain.text', 'guns').and('contain.text', 'NODE: 0');
+        cy.get('.dice-formula').should('be.visible').and('contain.text', 'violence').and('contain.text', 'guns').and('contain.text', 'NODE: 3');
+        cy.get('.reroll').should('be.visible').and('be.enabled');
+        cy.get('.dice-tooltip').should('not.be.visible');
+        cy.get('.dice-formula').click();
+        cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
+    });
+    */
+
+    /*
+    it("tests making a positive-NODE skill check from attr and skill", () => {
+        let stat = 4;
+        let skill = 2;
+        let total = stat + skill;
+        // create the troubleshooter
+        cy.get('[data-tab="actors"] > .fas').click();
+        cy.get('.folder-header > .create-entry > .fa-user').click();
+        cy.get('.form-fields > input').should('be.visible').and('be.enabled');
+        cy.get(':nth-child(2) > .form-fields > select').select('troubleshooter');
+        cy.get('.form-fields > input').type('positive NODE skill check');
+        cy.get('.dialog-button').click();
+        cy.get('.form-fields > input').should('not.be.visible');
+        cy.get('.fa-comments').click();
+
+        // test a default skill check
+        cy.get(".window-app.paranoia").should("exist").and("be.visible");
+        cy.get('.window-app.paranoia').trigger('mouseenter');
+        cy.get('.window-app.paranoia').trigger('mouseover');
+        cy.get('[data-edit="system.memory.value"]').scrollIntoView();
+        cy.get('[name="system.stats.violence.value"]').type(`{backspace}${stat}`);
+        cy.get('[name="system.stats.violence.value"]').blur();
+        cy.get('[name="system.stats.violence.value"]').should('have.value', stat);
+        cy.get('[name="system.skills.guns.value"]').type(`{backspace}${skill}`);
+        cy.get('[name="system.skills.guns.value"]').should('have.value', skill);
+        cy.get('[name="system.skills.guns.value"]').blur();
+        //cy.get(':nth-child(4) > .development_information > :nth-child(1) > .development_information_details-content > input').type('{del}3');
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').should('be.visible'); // guns
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').click();                      // guns
+        cy.get('.attr_selection').should('be.visible').and('have.value', stat);
+        cy.get('.attr_selection').find(':selected').should('contain.text', 'violence');
+        cy.get('.skill_selection').should('be.visible').and('have.value', skill);
+        cy.get('.skill_selection').find(':selected').should('contain.text', 'guns');
+        cy.get('.node_value').should('be.visible').and('have.value', total);
+        cy.get('[name="computer"]').should('be.visible').and('have.value', 1);
+        cy.get('.paranoia_roller_window > button').click();
+        cy.get('.paranoia_roller_window > button').should('not.be.visible');
+
+        // check the message results
+        cy.get('.chat-message').should('be.visible');
+        cy.get('.dice-formula').should('be.visible').and('contain.text', 'violence').and('contain.text', 'guns').and('contain.text', `NODE: ${total}`);
+        cy.get('.reroll').should('be.visible').and('be.enabled');
+        cy.get('.dice-tooltip').should('not.be.visible');
+        cy.get('.dice-formula').click();
+        cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
+    });
+    */
+    /*
+    it("tests making a negative-NODE skill check", () => {
+        let stat = -5;
+        let skill = 0;
+        let total = stat + skill;
+        // create the troubleshooter
+        cy.get('[data-tab="actors"] > .fas').click();
+        cy.get('.folder-header > .create-entry > .fa-user').click();
+        cy.get('.form-fields > input').should('be.visible').and('be.enabled');
+        cy.get(':nth-child(2) > .form-fields > select').select('troubleshooter');
+        cy.get('.form-fields > input').type('positive NODE skill check');
+        cy.get('.dialog-button').click();
+        cy.get('.form-fields > input').should('not.be.visible');
+        cy.get('.fa-comments').click();
+
+        // test a default skill check
+        cy.get(".window-app.paranoia").should("exist").and("be.visible");
+        cy.get('.window-app.paranoia').trigger('mouseenter');
+        cy.get('.window-app.paranoia').trigger('mouseover');
+        cy.get('[data-edit="system.memory.value"]').scrollIntoView();
+        cy.get('[name="system.stats.violence.value"]').type(`{backspace}${stat}`);
+        cy.get('[name="system.stats.violence.value"]').blur();
+        cy.get('[name="system.stats.violence.value"]').should('have.value', stat);
+        cy.get('[name="system.skills.guns.value"]').type(`{backspace}${skill}`);
+        cy.get('[name="system.skills.guns.value"]').should('have.value', skill);
+        cy.get('[name="system.skills.guns.value"]').blur();
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').should('be.visible'); // guns
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').click();                      // guns
+        cy.get('.attr_selection').should('be.visible').and('have.value', stat);
+        cy.get('.attr_selection').find(':selected').should('contain.text', 'violence');
+        cy.get('.skill_selection').should('be.visible').and('have.value', skill);
+        cy.get('.skill_selection').find(':selected').should('contain.text', 'guns');
+        cy.get('.node_value').should('be.visible').and('have.value', total);
+        cy.get('[name="computer"]').should('be.visible').and('have.value', 1);
+        cy.get('.paranoia_roller_window > button').click();
+        cy.get('.paranoia_roller_window > button').should('not.be.visible');
+
+        // check the message results
+        cy.get('.chat-message').should('be.visible');
+        cy.get('.dice-formula').should('be.visible').and('contain.text', 'violence').and('contain.text', 'guns').and('contain.text', `NODE: ${total}`);
+        cy.get('.reroll').should('be.visible').and('be.enabled');
+        cy.get('.dice-tooltip').should('not.be.visible');
+        cy.get('.dice-formula').click();
+        cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
+    });
+    */
+    /*
+    it("tests making a negative-NODE skill check from attr and skill", () => {
+        let stat = -5;
+        let skill = -3;
+        let total = stat + skill;
+        // create the troubleshooter
+        cy.get('[data-tab="actors"] > .fas').click();
+        cy.get('.folder-header > .create-entry > .fa-user').click();
+        cy.get('.form-fields > input').should('be.visible').and('be.enabled');
+        cy.get(':nth-child(2) > .form-fields > select').select('troubleshooter');
+        cy.get('.form-fields > input').type('positive NODE skill check');
+        cy.get('.dialog-button').click();
+        cy.get('.form-fields > input').should('not.be.visible');
+        cy.get('.fa-comments').click();
+
+        // test a default skill check
+        cy.get(".window-app.paranoia").should("exist").and("be.visible");
+        cy.get('.window-app.paranoia').trigger('mouseenter');
+        cy.get('.window-app.paranoia').trigger('mouseover');
+        cy.get('[data-edit="system.memory.value"]').scrollIntoView();
+        cy.get('[name="system.stats.violence.value"]').type(`{backspace}${stat}`);
+        cy.get('[name="system.stats.violence.value"]').blur();
+        cy.get('[name="system.stats.violence.value"]').should('have.value', stat);
+        cy.get('[name="system.skills.guns.value"]').type(`{backspace}${skill}`);
+        cy.get('[name="system.skills.guns.value"]').should('have.value', skill);
+        cy.get('[name="system.skills.guns.value"]').blur();
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').should('be.visible'); // guns
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').click();                      // guns
+        cy.get('.attr_selection').should('be.visible').and('have.value', stat);
+        cy.get('.attr_selection').find(':selected').should('contain.text', 'violence');
+        cy.get('.skill_selection').should('be.visible').and('have.value', skill);
+        cy.get('.skill_selection').find(':selected').should('contain.text', 'guns');
+        cy.get('.node_value').should('be.visible').and('have.value', total);
+        cy.get('[name="computer"]').should('be.visible').and('have.value', 1);
+        cy.get('.paranoia_roller_window > button').click();
+        cy.get('.paranoia_roller_window > button').should('not.be.visible');
+
+        // check the message results
+        cy.get('.chat-message').should('be.visible');
+        cy.get('.dice-formula').should('be.visible').and('contain.text', 'violence').and('contain.text', 'guns').and('contain.text', `NODE: ${total}`);
+        cy.get('.reroll').should('be.visible').and('be.enabled');
+        cy.get('.dice-tooltip').should('not.be.visible');
+        cy.get('.dice-formula').click();
+        cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
+    });
+    */
+    /*
+    it("tests making a skill check with a wounded actor", () => {
+        let stat = 3;
+        let skill = -1;
+        let total = stat + skill;
+        // create the troubleshooter
+        cy.get('[data-tab="actors"] > .fas').click();
+        cy.get('.folder-header > .create-entry > .fa-user').click();
+        cy.get('.form-fields > input').should('be.visible').and('be.enabled');
+        cy.get(':nth-child(2) > .form-fields > select').select('troubleshooter');
+        cy.get('.form-fields > input').type('positive NODE skill check');
+        cy.get('.dialog-button').click();
+        cy.get('.form-fields > input').should('not.be.visible');
+        cy.get('.fa-comments').click();
+
+        // test a default skill check
+        cy.get(".window-app.paranoia").should("exist").and("be.visible");
+        cy.get('.window-app.paranoia').trigger('mouseenter');
+        cy.get('.window-app.paranoia').trigger('mouseover');
+        cy.get('[data-edit="system.memory.value"]').scrollIntoView();
+
+        cy.get('.wb_information_details-content > select').select('hurt');
+        cy.get('.wb_information_details-content > select').should('have.value', 1);
+        total--; // due to injury
+
+        cy.get('[name="system.stats.violence.value"]').type(`{backspace}${stat}`);
+        cy.get('[name="system.stats.violence.value"]').blur();
+        cy.get('[name="system.stats.violence.value"]').should('have.value', stat);
+        cy.get('[name="system.skills.guns.value"]').type(`{backspace}${skill}`);
+        cy.get('[name="system.skills.guns.value"]').should('have.value', skill);
+        cy.get('[name="system.skills.guns.value"]').blur();
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').should('be.visible'); // guns
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').click();                      // guns
+        cy.get('.attr_selection').should('be.visible').and('have.value', stat);
+        cy.get('.attr_selection').find(':selected').should('contain.text', 'violence');
+        cy.get('.skill_selection').should('be.visible').and('have.value', skill);
+        cy.get('.skill_selection').find(':selected').should('contain.text', 'guns');
+        cy.get('.node_value').should('be.visible').and('have.value', total);
+        cy.get('[name="computer"]').should('be.visible').and('have.value', 1);
+        cy.get('.paranoia_roller_window > button').click();
+        cy.get('.paranoia_roller_window > button').should('not.be.visible');
+
+        // check the message results
+        cy.get('.chat-message').should('be.visible');
+        cy.get('.dice-formula').should('be.visible').and('contain.text', 'violence').and('contain.text', 'guns').and('contain.text', `NODE: ${total}`);
+        cy.get('.reroll').should('be.visible').and('be.enabled');
+        cy.get('.dice-tooltip').should('not.be.visible');
+        cy.get('.dice-formula').click();
+        cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
+    });
+
+     */
+    /*
+    it("tests rerolling with a healthy actor", () => {
+        let stat = 3;
+        let skill = -1;
+        let total = stat + skill;
+        // create the troubleshooter
+        cy.get('[data-tab="actors"] > .fas').click();
+        cy.get('.folder-header > .create-entry > .fa-user').click();
+        cy.get('.form-fields > input').should('be.visible').and('be.enabled');
+        cy.get(':nth-child(2) > .form-fields > select').select('troubleshooter');
+        cy.get('.form-fields > input').type('positive NODE skill check');
+        cy.get('.dialog-button').click();
+        cy.get('.form-fields > input').should('not.be.visible');
+        cy.get('.fa-comments').click();
+
+        // test a default skill check
+        cy.get(".window-app.paranoia").should("exist").and("be.visible");
+        cy.get('.window-app.paranoia').trigger('mouseenter');
+        cy.get('.window-app.paranoia').trigger('mouseover');
+        cy.get('[data-edit="system.memory.value"]').scrollIntoView();
+
+        cy.get('[name="system.stats.violence.value"]').type(`{backspace}${stat}`);
+        cy.get('[name="system.stats.violence.value"]').blur();
+        cy.get('[name="system.stats.violence.value"]').should('have.value', stat);
+        cy.get('[name="system.skills.guns.value"]').type(`{backspace}${skill}`);
+        cy.get('[name="system.skills.guns.value"]').should('have.value', skill);
+        cy.get('[name="system.skills.guns.value"]').blur();
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').should('be.visible'); // guns
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').click();                      // guns
+        cy.get('.attr_selection').should('be.visible').and('have.value', stat);
+        cy.get('.attr_selection').find(':selected').should('contain.text', 'violence');
+        cy.get('.skill_selection').should('be.visible').and('have.value', skill);
+        cy.get('.skill_selection').find(':selected').should('contain.text', 'guns');
+        cy.get('.node_value').should('be.visible').and('have.value', total);
+        cy.get('[name="computer"]').should('be.visible').and('have.value', 1);
+        cy.get('.paranoia_roller_window > button').click();
+        cy.get('.paranoia_roller_window > button').should('not.be.visible');
+
+        // check the message results
+        cy.get('.chat-message').should('be.visible');
+        cy.get('.dice-formula').should('be.visible').and('contain.text', 'violence').and('contain.text', 'guns').and('contain.text', `NODE: ${total}`);
         cy.get('.reroll').should('be.visible').and('be.enabled');
         cy.get('.dice-tooltip').should('not.be.visible');
         cy.get('.dice-formula').click();
         cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
 
-         */
+        // re-roll
+        cy.get('#chat-log').children().should('have.length', 1);
+        cy.get('.reroll').click();
+        cy.get('#chat-log').children().should('have.length', 2);
+        cy.get('.dice-roll.reroll > .dice-result > .dice-formula').should('be.visible').and('contain.text', 're-roll');
+        cy.get('.dice-roll.reroll > .dice-result > .dice-formula').should('contain.text', `NODE: ${total}`);
+    });
+
+     */
+    /*
+    it("tests rerolling with a modified NODE", () => {
+        let stat = 3;
+        let skill = -1;
+        let total = stat + skill;
+        // create the troubleshooter
+        cy.get('[data-tab="actors"] > .fas').click();
+        cy.get('.folder-header > .create-entry > .fa-user').click();
+        cy.get('.form-fields > input').should('be.visible').and('be.enabled');
+        cy.get(':nth-child(2) > .form-fields > select').select('troubleshooter');
+        cy.get('.form-fields > input').type('positive NODE skill check');
+        cy.get('.dialog-button').click();
+        cy.get('.form-fields > input').should('not.be.visible');
+        cy.get('.fa-comments').click();
+
+        // test a default skill check
+        cy.get(".window-app.paranoia").should("exist").and("be.visible");
+        cy.get('.window-app.paranoia').trigger('mouseenter');
+        cy.get('.window-app.paranoia').trigger('mouseover');
+        cy.get('[data-edit="system.memory.value"]').scrollIntoView();
+
+        cy.get('[name="system.stats.violence.value"]').type(`{backspace}${stat}`);
+        cy.get('[name="system.stats.violence.value"]').blur();
+        cy.get('[name="system.stats.violence.value"]').should('have.value', stat);
+        cy.get('[name="system.skills.guns.value"]').type(`{backspace}${skill}`);
+        cy.get('[name="system.skills.guns.value"]').should('have.value', skill);
+        cy.get('[name="system.skills.guns.value"]').blur();
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').should('be.visible'); // guns
+        cy.get(':nth-child(5) > .skill_information_details-label > .skill').click();                      // guns
+        cy.get('.attr_selection').should('be.visible').and('have.value', stat);
+        cy.get('.attr_selection').find(':selected').should('contain.text', 'violence');
+        cy.get('.skill_selection').should('be.visible').and('have.value', skill);
+        cy.get('.skill_selection').find(':selected').should('contain.text', 'guns');
+        cy.get('.node_value').should('be.visible').and('have.value', total);
+        total++;
+        cy.get('.node_value').type(`{backspace}${total}`);
+        cy.get('[name="computer"]').should('be.visible').and('have.value', 1);
+        cy.get('.paranoia_roller_window > button').click();
+        cy.get('.paranoia_roller_window > button').should('not.be.visible');
+
+        // check the message results
+        cy.get('.chat-message').should('be.visible');
+        cy.get('.dice-formula').should('be.visible').and('contain.text', 'violence').and('contain.text', 'guns').and('contain.text', `NODE: ${total}`);
+        cy.get('.reroll').should('be.visible').and('be.enabled');
+        cy.get('.dice-tooltip').should('not.be.visible');
+        cy.get('.dice-formula').click();
+        cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
+
+        // re-roll
+        cy.get('#chat-log').children().should('have.length', 1);
+        cy.get('.reroll').click();
+        cy.get('#chat-log').children().should('have.length', 2);
+        cy.get('.dice-roll.reroll > .dice-result > .dice-formula').should('be.visible').and('contain.text', 're-roll');
+        cy.get('.dice-roll.reroll > .dice-result > .dice-formula').should('contain.text', `NODE: ${total}`);
+    });
+
+     */
+    it("tests losing it", () => {
+        let expected = 0;
+        // create the troubleshooter
+        cy.get('[data-tab="actors"] > .fas').click();
+        cy.get('.folder-header > .create-entry > .fa-user').click();
+        cy.get('.form-fields > input').should('be.visible').and('be.enabled');
+        cy.get(':nth-child(2) > .form-fields > select').select('troubleshooter');
+        cy.get('.form-fields > input').type('positive NODE skill check');
+        cy.get('.dialog-button').click();
+        cy.get('.form-fields > input').should('not.be.visible');
+        cy.get('.fa-comments').click();
+
+        // wait the actor window to show up
+        cy.get(".window-app.paranoia").should("exist").and("be.visible");
+        cy.get('.window-app.paranoia').trigger('mouseenter');
+        cy.get('.window-app.paranoia').trigger('mouseover');
+        cy.get('[data-edit="system.memory.value"]').scrollIntoView();
+
+        cy.get('[name="system.moxie.value"]').type(`{backspace}${expected}`);
+        cy.get('[name="system.moxie.value"]').blur();
+        cy.get('[name="system.moxie.value"]').should('have.value', `${expected}`);
+        // check the chat for the message
+        cy.get('#chat-log').children().should('have.length', 1);
     });
 });

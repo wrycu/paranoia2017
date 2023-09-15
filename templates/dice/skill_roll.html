@@ -1,4 +1,4 @@
-<div class="dice-roll">
+<div class="dice-roll{{#if this.reroll}} reroll{{/if}}">
     <div class="dice-result">
         <div class="dice-formula">
             {{#if this.reroll}}Spent 1 moxie to <b>re-roll</b>{{else}}Rolling{{/if}} <b>{{ this.attr }}</b> with <b>{{ this.skill }}</b>...

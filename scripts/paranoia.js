@@ -12,6 +12,7 @@ import {create_macro} from "./macros/macro.js";
 import {token_HUD} from "./tokens/hud.js";
 import {CardManager, deal_card, init_decks} from "./items/cards.js";
 import {register_wifi_dead_zone} from "./init.js";
+import {paranoia_log} from "./util.js";
 
 
 Hooks.once("init", async function () {
@@ -297,7 +298,9 @@ Hooks.once("ready", async function () {
         if (actor.type !== 'troubleshooter') {
             return;
         }
+        paranoia_log("Updating actor...");
         if (update_data?.system?.moxie?.value === 0) {
+            paranoia_log("Oh no, the troubleshooter has lost it");
             losing_it(actor);
         }
     })
