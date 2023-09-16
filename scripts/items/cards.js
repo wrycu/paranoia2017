@@ -398,7 +398,7 @@ export class card_draw extends FormApplication {
         // TODO: this may still end up with 0 cards (if they're all held). ...oh well
         let drawn_card = await held_deck.draw(draw_deck, 1, {chatNotification: false});
 
-        game.socket.emit("system.paranoia", {type: "card", subtype: "draw", actor_id: actor_id})
+        game.socket.emit("system.paranoia2017", {type: "card", subtype: "draw", actor_id: actor_id})
 
         for (let card of drawn_card) {
             let item = game.items.find(i => i.name === card.name);

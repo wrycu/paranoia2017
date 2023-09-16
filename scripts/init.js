@@ -28,8 +28,8 @@ export function register_wifi_dead_zone(buttons) {
 export function toggle_wifi() {
     paranoia_log("Toggling Wifi Deadzone setting");
     game.settings.set(
-        "paranoia",
+        "paranoia2017",
         "wifi_dead_zone",
-        !game.settings.get("paranoia", "wifi_dead_zone"),
+        !game.settings.get("paranoia2017", "wifi_dead_zone"),
     );
 }

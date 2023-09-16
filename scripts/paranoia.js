@@ -13,10 +13,11 @@ import {token_HUD} from "./tokens/hud.js";
 import {CardManager, deal_card, init_decks} from "./items/cards.js";
 import {register_wifi_dead_zone} from "./init.js";
 import {paranoia_log} from "./util.js";
+//import {ToolTipSettings} from "./ui/settings.js";
 
 
 Hooks.once("init", async function () {
-    CONFIG.module = 'paranoia';
+    CONFIG.module = 'paranoia2017';
     CONFIG.Dice.rolls[0] = roll_paranoia;
     CONFIG.Dice.terms["c"] = computer_die;
     CONFIG.Dice.terms["m"] = mutant_die;
@@ -54,6 +55,24 @@ Hooks.once("init", async function () {
             "brains",
             "chutzpah",
             "mechanics",
+        ],
+        skills: [
+            "athletics",
+            "guns",
+            "melee",
+            "throw",
+            "science",
+            "psychology",
+            "bureaucracy",
+            "alpha_complex",
+            "bluff",
+            "charm",
+            "intimidate",
+            "stealth",
+            "operate",
+            "engineer",
+            "program",
+            "demolitions",
         ],
         levels: [
             "alpha",
@@ -130,13 +149,13 @@ Hooks.once("init", async function () {
 
     // register items
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("paranoia", item_sheet_v1, {makeDefault: true});
+    Items.registerSheet("paranoia2017", item_sheet_v1, {makeDefault: true});
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("paranoia", troubleshooter_sheet, {makeDefault: true});
+    Actors.registerSheet("paranoia2017", troubleshooter_sheet, {makeDefault: true});
 
     // register settings
     game.settings.register(
-        "paranoia",
+        "paranoia2017",
         "token_configured",
         {
             name: "token_configured",
@@ -147,7 +166,7 @@ Hooks.once("init", async function () {
         }
     );
     game.settings.register(
-        "paranoia",
+        "paranoia2017",
         "wifi_dead_zone",
         {
             name: "Wifi Dead Zone",
@@ -158,7 +177,7 @@ Hooks.once("init", async function () {
         },
     );
     game.settings.register(
-        "paranoia",
+        "paranoia2017",
         "mutant_power_audio_cue",
         {
             name: "Mutant Power Audio Cue",
@@ -171,7 +190,7 @@ Hooks.once("init", async function () {
         },
     );
     game.settings.register(
-        "paranoia",
+        "paranoia2017",
         "debug_logging",
         {
             name: "Enable debug logging",
@@ -183,7 +202,7 @@ Hooks.once("init", async function () {
         },
     );
     game.settings.register(
-        "paranoia",
+        "paranoia2017",
         "tutorial_shown",
         {
             name: "Tutorial Shown",
@@ -193,9 +212,140 @@ Hooks.once("init", async function () {
             default: false,
         },
     );
+    /*
+    game.settings.registerMenu(
+        "paranoia2017",
+        "skills_and_stats",
+        {
+            name: "Stats & Skills Tooltips",
+            label: "Configure",      // The text label used in the button
+            hint: "Configure the tooltips shown on stat and skill hover",
+            icon: "fas fa-bars",               // A Font Awesome icon used in the submenu button
+            type: ToolTipSettings,   // A FormApplication subclass which should be created
+            restricted: true,                   // Restrict this submenu to gamemaster only?
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "enable_tooltips",
+        {
+            name: "Tooltip 1 name",
+            hint: "Tooltip 1 hint",
+            config: false,
+            scope: "world",
+            type: Boolean,
+            default: true,
+            restricted: true,
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "tooltip_stats_violence",
+        {
+            name: "Violence name",
+            hint: "Violence hint",
+            config: false,
+            scope: "world",
+            type: String,
+            default: 'Your GM can set this tooltip in the settings',
+            restricted: true,
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "tooltip_stats_brains",
+        {
+            name: "Brains name",
+            hint: "Brains hint",
+            config: false,
+            scope: "world",
+            type: String,
+            default: 'Your GM can set this tooltip in the settings',
+            restricted: true,
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "tooltip_stats_chutzpah",
+        {
+            name: "Chutzpah name",
+            hint: "Chutzpah hint",
+            config: false,
+            scope: "world",
+            type: String,
+            default: 'Your GM can set this tooltip in the settings',
+            restricted: true,
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "tooltip_stats_mechanics",
+        {
+            name: "Mechanics name",
+            hint: "Mechanics hint",
+            config: false,
+            scope: "world",
+            type: String,
+            default: 'Your GM can set this tooltip in the settings',
+            restricted: true,
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "tooltip_skills_athletics",
+        {
+            name: "Mechanics name",
+            hint: "Mechanics hint",
+            config: false,
+            scope: "world",
+            type: String,
+            default: 'Your GM can set this tooltip in the settings',
+            restricted: true,
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "tooltip_skills_guns",
+        {
+            name: "Mechanics name",
+            hint: "Mechanics hint",
+            config: false,
+            scope: "world",
+            type: String,
+            default: 'Your GM can set this tooltip in the settings',
+            restricted: true,
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "tooltip_skills_melee",
+        {
+            name: "Mechanics name",
+            hint: "Mechanics hint",
+            config: false,
+            scope: "world",
+            type: String,
+            default: 'Your GM can set this tooltip in the settings',
+            restricted: true,
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
+        "tooltip_skills_athletics",
+        {
+            name: "Mechanics name",
+            hint: "Mechanics hint",
+            config: false,
+            scope: "world",
+            type: String,
+            default: 'Your GM can set this tooltip in the settings',
+            restricted: true,
+        },
+    );
+    */
 
     // register the socket listener
-    game.socket.on("system.paranoia", socket_listener);
+    game.socket.on("system.paranoia2017", socket_listener);
 
     // register hook handlers which need to be after Foundry is initialized
     Hooks.on("dropActorSheetData", async function (actor, actor_sheet, item_data) {
@@ -238,7 +388,7 @@ Hooks.once("init", async function () {
     ];
     await loadTemplates(partial_templates);
 
-    if (!game.settings.get('paranoia', 'tutorial_shown')) {
+    if (!game.settings.get('paranoia2017', 'tutorial_shown')) {
         let d = new Dialog({
             title: "Welcome!",
             content: "<p>Welcome to Paranoia, Troubleshooter!</p><p>Friend Computer has made a tutorial available <a href='https://github.com/wrycu/paranoia2017/wiki'>in the wiki.</a></p><p>(This message will show only once.)</p>",
@@ -252,7 +402,7 @@ Hooks.once("init", async function () {
             default: "one",
         });
         d.render(true);
-        game.settings.set('paranoia', 'tutorial_shown', true);
+        game.settings.set('paranoia2017', 'tutorial_shown', true);
     }
 });
 
@@ -274,7 +424,7 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
     );
     await update_form.render(true);
     // get other clients to open their manager as well
-    game.socket.emit("system.paranoia", {"type": "initiative", "subtype": "open_manager"});
+    game.socket.emit("system.paranoia2017", {"type": "initiative", "subtype": "open_manager"});
     return await initiative_start(combat_info, round_info);
 });
 
@@ -342,7 +492,7 @@ Hooks.once("ready", async function () {
 });
 
 function configure_token() {
-    if (!game.settings.get("paranoia", "token_configured")) {
+    if (!game.settings.get("paranoia2017", "token_configured")) {
         let token_data = {
             bar1: {
                 attribute: 'wounds',
@@ -350,6 +500,6 @@ function configure_token() {
             displayBars: 30, // hovered by anyone
         };
         game.settings.set("core", "defaultToken", token_data);
-        game.settings.set("paranoia", "token_configured", true);
+        game.settings.set("paranoia2017", "token_configured", true);
     }
 }

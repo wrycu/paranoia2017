@@ -49,7 +49,7 @@ export class initiative_manager extends FormApplication {
      * Set up the socket to handle further events
      */
     setup_socket() {
-        game.socket.on("system.paranoia", (data) => {
+        game.socket.on("system.paranoia2017", (data) => {
             paranoia_log(`Got socket data in initiative manager: ${data}`);
             if (data.type === "initiative") {
                 if (!am_in_combat()) {
@@ -190,7 +190,7 @@ export class initiative_manager extends FormApplication {
             }
         };
 
-        game.socket.emit("system.paranoia", data);
+        game.socket.emit("system.paranoia2017", data);
         this._stage_transition(data);
     }
 
@@ -260,7 +260,7 @@ export class initiative_manager extends FormApplication {
         ChatMessage.create(message_data);
 
         this._challenge(data);
-        game.socket.emit("system.paranoia", data);
+        game.socket.emit("system.paranoia2017", data);
     }
 
     /**
@@ -334,7 +334,7 @@ export class initiative_manager extends FormApplication {
                 "player_id": game.user.character.id,
             },
         };
-        game.socket.emit("system.paranoia", data);
+        game.socket.emit("system.paranoia2017", data);
 
         this._lost_challenge(data);
     }
@@ -353,7 +353,7 @@ export class initiative_manager extends FormApplication {
                 challenger_id: challenger_id,
             }
         };
-        game.socket.emit("system.paranoia", data);
+        game.socket.emit("system.paranoia2017", data);
     }
 
     /**
@@ -427,7 +427,7 @@ export class initiative_manager extends FormApplication {
                 contains_me: false,
             }
         };
-        game.socket.emit("system.paranoia", data);
+        game.socket.emit("system.paranoia2017", data);
         // update value for local usage
         data.data.contains_me = true;
         this._handle_initiative_select(data);
@@ -465,7 +465,7 @@ export class initiative_manager extends FormApplication {
                 data: {},
             };
             this._handle_initiative_next(data);
-            game.socket.emit("system.paranoia", data);
+            game.socket.emit("system.paranoia2017", data);
         }
     }
 
@@ -517,7 +517,7 @@ export class initiative_manager extends FormApplication {
 
         };
         // update remote records
-        game.socket.emit("system.paranoia", data);
+        game.socket.emit("system.paranoia2017", data);
     }
 
     /**

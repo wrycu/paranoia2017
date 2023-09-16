@@ -55,6 +55,14 @@ export class troubleshooter_sheet extends ActorSheet {
         context.config = CONFIG.paranoia;
         context.is_gm = game.user.isGM;
 
+        // add data for tooltips
+        context.tooltips = {};
+        if (game.settings.get('paranoia2017', 'enable_tooltips')) {
+            CONFIG.paranoia.stats.forEach(function (stat) {
+                context.tooltips[stat] = game.settings.get('paranoia2017', `tooltip_${stat}`);
+            });
+        }
+
         return context;
     }
 

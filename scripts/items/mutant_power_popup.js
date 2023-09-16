@@ -30,7 +30,7 @@ export default class mutant_power_use extends FormApplication {
                 alias: this.actor.name,
             },
             whisper: game.users.filter(i => i.isGM && i.active).map(i => i.id),
-            sound: game.settings.get('paranoia', 'mutant_power_audio_cue'),
+            sound: game.settings.get('paranoia2017', 'mutant_power_audio_cue'),
         };
         this.initial_message = await ChatMessage.create(message_data);
     }

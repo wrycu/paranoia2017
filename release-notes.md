@@ -1,3 +1,6 @@
+`1.8.2` - 2023-09-16
+* More fixes due to the system rename (socket stuff and settings this time)
+
 `1.8.1` - 20233-09-15
 * Fix for relative paths being out-of-date due to system rename
 

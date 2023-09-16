@@ -138,7 +138,7 @@
                 <section class="sheet-body">
                     <div class="development_information grid grid-4col">
                         {{#each actor.system.stats as |stat|}}
-                        <div class="development_information_details flexrow">
+                        <div class="development_information_details flexrow" data-tooltip="{{lookup ../tooltips @key }}">
                             <label for="system.stats.{{ @key }}" class="development_information_details-label">{{ @key
                                 }}:</label>
                             <div class="development_information_details-content flexrow flex-center flex-between">

@@ -26,5 +26,5 @@ function request_pick_card() {
         type: "initiative",
         sub_type: "start_request_card_pick",
     };
-    game.socket.emit("system.paranoia", data);
+    game.socket.emit("system.paranoia2017", data);
 }

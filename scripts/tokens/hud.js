@@ -28,7 +28,7 @@ export class token_HUD {
             name: name,
             xp: xp,
             treason_stars: treason_stars,
-            dead_zone: game.settings.get("paranoia", "wifi_dead_zone"),
+            dead_zone: game.settings.get("paranoia2017", "wifi_dead_zone"),
         };
         // render the data into an HTML object for insertion
         let rendered_data = await renderTemplate(
