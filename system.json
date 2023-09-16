@@ -1,5 +1,5 @@
 {
-    "id": "paranoia",
+    "id": "paranoia2017",
     "title": "Paranoia (2017)",
     "description": "Paranoia for FVTT",
     "version": "1.7.0",
@@ -33,7 +33,7 @@
     "gridUnits": "ft",
     "primaryTokenAttribute": "resources.health",
     "secondaryTokenAttribute": "resources.power",
-    "url": "https://github.com/wrycu/paranoia",
-    "manifest": "https://github.com/wrycu/paranoia/releases/latest/download/system.json",
-    "download": "https://github.com/wrycu/paranoia/releases/download/1.7.0/system.zip"
+    "url": "https://github.com/wrycu/paranoia2017",
+    "manifest": "https://github.com/wrycu/paranoia2017/releases/latest/download/system.json",
+    "download": "https://github.com/wrycu/paranoia2017/releases/download/1.7.0/system.zip"
 }

@@ -241,7 +241,7 @@ Hooks.once("init", async function () {
     if (!game.settings.get('paranoia', 'tutorial_shown')) {
         let d = new Dialog({
             title: "Welcome!",
-            content: "<p>Welcome to Paranoia, Troubleshooter!</p><p>Friend Computer has made a tutorial available <a href='https://github.com/wrycu/paranoia/wiki'>in the wiki.</a></p><p>(This message will show only once.)</p>",
+            content: "<p>Welcome to Paranoia, Troubleshooter!</p><p>Friend Computer has made a tutorial available <a href='https://github.com/wrycu/paranoia2017/wiki'>in the wiki.</a></p><p>(This message will show only once.)</p>",
             buttons: {
                 one: {
                     icon: '<i class="fas fa-check"></i>',
