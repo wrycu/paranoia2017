@@ -4,6 +4,7 @@
 * Add Wifi Deadzone toggle to scene controls ([#58](https://github.com/wrycu/paranoia/issues/58))
 * Fix for only Action Cards being drag-and-droppable ([#57](https://github.com/wrycu/paranoia/issues/57))
 * Prevent accidentally closing combat manager ([#56](https://github.com/wrycu/paranoia/issues/56))
+* Add a one-time link to the Wiki ([#54](https://github.com/wrycu/paranoia/issues/54))
 
 `1.6.1` - 2023-09-13
 * Fix for poorly-implemented new mutant power flow ([#48](https://github.com/wrycu/paranoia/issues/48)) 

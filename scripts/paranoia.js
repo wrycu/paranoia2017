@@ -182,6 +182,17 @@ Hooks.once("init", async function () {
             default: false,
         },
     );
+    game.settings.register(
+        "paranoia",
+        "tutorial_shown",
+        {
+            name: "Tutorial Shown",
+            hint: "",
+            scope: "client",
+            type: Boolean,
+            default: false,
+        },
+    );
 
     // register the socket listener
     game.socket.on("system.paranoia", socket_listener);
@@ -226,6 +237,23 @@ Hooks.once("init", async function () {
         "systems/paranoia/templates/chat/item.html",
     ];
     await loadTemplates(partial_templates);
+
+    if (!game.settings.get('paranoia', 'tutorial_shown')) {
+        let d = new Dialog({
+            title: "Welcome!",
+            content: "<p>Welcome to Paranoia, Troubleshooter!</p><p>Friend Computer has made a tutorial available <a href='https://github.com/wrycu/paranoia/wiki'>in the wiki.</a></p><p>(This message will show only once.)</p>",
+            buttons: {
+                one: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Ok",
+                    callback: () => console.log("Chose One")
+                },
+            },
+            default: "one",
+        });
+        d.render(true);
+        game.settings.set('paranoia', 'tutorial_shown', true);
+    }
 });
 
 Hooks.on("combatStart", async function (combat_info, round_info) {
