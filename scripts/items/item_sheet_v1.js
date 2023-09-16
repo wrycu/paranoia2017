@@ -14,7 +14,7 @@ export default class item_sheet_v1 extends ItemSheet {
 
     /** @override */
     get template() {
-        return `systems/paranoia/templates/items/${this.item.type}.html`;
+        return `systems/paranoia2017/templates/items/${this.item.type}.html`;
     }
 
     /** @override */

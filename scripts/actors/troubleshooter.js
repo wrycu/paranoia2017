@@ -16,7 +16,7 @@ export class troubleshooter_sheet extends ActorSheet {
 
     /** @override */
     get template() {
-        return `systems/paranoia/templates/actors/${this.actor.type}.html`;
+        return `systems/paranoia2017/templates/actors/${this.actor.type}.html`;
     }
 
     /** @override */
@@ -146,7 +146,7 @@ export class troubleshooter_sheet extends ActorSheet {
     async play_card(card_id) {
         let item = this.actor.items.get(card_id);
         const item_details = item.get_item_details();
-        const template = "systems/paranoia/templates/chat/tattle_play.html";
+        const template = "systems/paranoia2017/templates/chat/tattle_play.html";
         const html = await renderTemplate(template, {item_details, item});
 
         const message_data = {
@@ -172,7 +172,7 @@ export class troubleshooter_sheet extends ActorSheet {
      */
     async tattle(context) {
         paranoia_log("Notifying GM of clearance level change");
-        const template = "systems/paranoia/templates/chat/tattle.html";
+        const template = "systems/paranoia2017/templates/chat/tattle.html";
         const html = await renderTemplate(template, {level: $(".security_level").find(":selected").val()});
 
         const message_data = {
@@ -199,7 +199,7 @@ export class troubleshooter_sheet extends ActorSheet {
         let item = this.actor.items.get(item_id);
         paranoia_log(`Prompting user for activating mutant power ${item.name}`);
         const item_details = item.get_item_details();
-        const template = "systems/paranoia/templates/chat/item.html";
+        const template = "systems/paranoia2017/templates/chat/item.html";
         const html = await renderTemplate(template, {item_details, item});
 
         new mutant_power_use(
@@ -219,7 +219,7 @@ export class troubleshooter_sheet extends ActorSheet {
         paranoia_log(`Sending ${item.name} to chat`);
 
         const item_details = item.get_item_details();
-        const template = "systems/paranoia/templates/chat/item.html";
+        const template = "systems/paranoia2017/templates/chat/item.html";
         const html = await renderTemplate(template, {item_details, item});
 
         const message_data = {
@@ -358,7 +358,7 @@ export class troubleshooter_sheet extends ActorSheet {
  * @returns {Promise<void>}
  */
 export async function losing_it(actor) {
-    const template = "systems/paranoia/templates/chat/losing_it.html";
+    const template = "systems/paranoia2017/templates/chat/losing_it.html";
     const html = await renderTemplate(template);
 
     const message_data = {

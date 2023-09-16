@@ -11,7 +11,7 @@ export default class mutant_power_use extends FormApplication {
         return mergeObject(super.defaultOptions, {
             classes: ['form'],
             popOut: true,
-            template: `systems/paranoia/templates/chat/mutant_power_popup.html`,
+            template: `systems/paranoia2017/templates/chat/mutant_power_popup.html`,
             id: 'mutant_power_popup',
             title: 'Describe Mutant Power Use',
         });
@@ -57,7 +57,7 @@ export default class mutant_power_use extends FormApplication {
             {system: {moxie: {value: this.actor.system.moxie.value - parseInt(formData.moxie_usage)}}}
         );
 
-        const template = "systems/paranoia/templates/chat/mutant_power.html";
+        const template = "systems/paranoia2017/templates/chat/mutant_power.html";
         const html = await renderTemplate(
             template,
             {

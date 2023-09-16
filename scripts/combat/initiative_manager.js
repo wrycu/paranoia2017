@@ -19,7 +19,7 @@ export class initiative_manager extends FormApplication {
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: "systems/paranoia/templates/combat/initiative_manager.html"
+            template: "systems/paranoia2017/templates/combat/initiative_manager.html"
         });
     }
 
@@ -145,7 +145,7 @@ export class initiative_manager extends FormApplication {
                         item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
                     }
                     const item_details = item.get_item_details();
-                    const template = "systems/paranoia/templates/chat/item.html";
+                    const template = "systems/paranoia2017/templates/chat/item.html";
                     item.html = await renderTemplate(template, {item_details, item});
                     data.available_cards.push(item);
                 }
@@ -243,7 +243,7 @@ export class initiative_manager extends FormApplication {
         }
 
         const html = await renderTemplate(
-            "systems/paranoia/templates/combat/initiative_challenge_start.html",
+            "systems/paranoia2017/templates/combat/initiative_challenge_start.html",
             {
                 other_person: game.actors.get(challenged_player).name,
             },
@@ -309,7 +309,7 @@ export class initiative_manager extends FormApplication {
         paranoia_log(`I lose the challenge to ${challenger_id}`);
         // TODO: insert the challenger in the initiative
         const html = await renderTemplate(
-            "systems/paranoia/templates/combat/initiative_challenge_correct.html",
+            "systems/paranoia2017/templates/combat/initiative_challenge_correct.html",
             {
                 challenger: game.actors.get(challenger_id).name,
             },
@@ -383,7 +383,7 @@ export class initiative_manager extends FormApplication {
             }).render(true);
 
             const html = await renderTemplate(
-                "systems/paranoia/templates/combat/initiative_challenge_incorrect.html",
+                "systems/paranoia2017/templates/combat/initiative_challenge_incorrect.html",
             );
             const message_data = {
                 user: game.user.id,

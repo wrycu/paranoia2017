@@ -5,9 +5,9 @@ export class roll_paranoia extends Roll {
         super(...args);
     }
 
-    static CHAT_TEMPLATE = "systems/paranoia/templates/dice/computer_roll.html";
+    static CHAT_TEMPLATE = "systems/paranoia2017/templates/dice/computer_roll.html";
 
-    static TOOLTIP_TEMPLATE = "systems/paranoia/templates/dice/tooltip.html";
+    static TOOLTIP_TEMPLATE = "systems/paranoia2017/templates/dice/tooltip.html";
 
     evaluate({minimize = false, maximize = false, async} = {}) {
         return super.evaluate({minimize, maximize, async});

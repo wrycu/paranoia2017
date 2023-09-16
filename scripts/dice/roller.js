@@ -18,7 +18,7 @@ export class roll_builder extends FormApplication {
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: "systems/paranoia/templates/dice/roller.html"
+            template: "systems/paranoia2017/templates/dice/roller.html"
         });
     }
 
@@ -90,7 +90,7 @@ export class roll_builder extends FormApplication {
 
         if (this.attr && this.skill) {
             chat_data = await renderTemplate(
-                "systems/paranoia/templates/dice/skill_roll.html",
+                "systems/paranoia2017/templates/dice/skill_roll.html",
                 {
                     roll: await roll.get_roll_data(),
                     attr: this.attr,
@@ -167,7 +167,7 @@ export class roll_builder extends FormApplication {
 
         if (attr && skill) {
             chat_data = await renderTemplate(
-                "systems/paranoia/templates/dice/skill_roll.html",
+                "systems/paranoia2017/templates/dice/skill_roll.html",
                 {
                     roll: await roll.get_roll_data(),
                     attr: attr,

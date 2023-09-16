@@ -32,7 +32,7 @@ export class token_HUD {
         };
         // render the data into an HTML object for insertion
         let rendered_data = await renderTemplate(
-            "systems/paranoia/templates/actors/hud.html",
+            "systems/paranoia2017/templates/actors/hud.html",
             data,
         )
 

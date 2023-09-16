@@ -234,7 +234,7 @@ Hooks.once("init", async function () {
 
     // preload templates
     const partial_templates = [
-        "systems/paranoia/templates/chat/item.html",
+        "systems/paranoia2017/templates/chat/item.html",
     ];
     await loadTemplates(partial_templates);
 

@@ -295,7 +295,7 @@ export class CardManager extends FormApplication {
             id: "card_manager",
             classes: ["paranoia"],
             title: "Card Manager",
-            template: "systems/paranoia/templates/cards/manager.html",
+            template: "systems/paranoia2017/templates/cards/manager.html",
         });
     }
 
@@ -326,7 +326,7 @@ export class card_draw extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             title: "Draw Cards",
-            template: "systems/paranoia/templates/cards/draw.html"
+            template: "systems/paranoia2017/templates/cards/draw.html"
         });
     }
 

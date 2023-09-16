@@ -1,3 +1,6 @@
+`1.8.1` - 20233-09-15
+* Fix for relative paths being out-of-date due to system rename
+
 `1.8.0` - 2023-09-15
 * Avoid Foundry name conflict by renaming from `paranoia` to `paranoia2017`
 
