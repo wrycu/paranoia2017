@@ -1,0 +1,29 @@
+<form class="{{ cssClass }} tooltip_settings" autocomplete="off">
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+        <span class="enabled_container">
+            <label>Enable Tooltips:</label>
+            <div>
+                <input type="checkbox" name="enabled" {{ checked this.tooltips.enabled }} data-dtype="Boolean"/>
+            </div>
+        </span>
+        {{#each this.tooltips.stats as |stat|}}
+        <label><b>{{ @key }}</b></label>
+        <div>
+            <input type="text" name="{{ @key }}" value="{{ stat }}" data-dtype="Text"/>
+        </div>
+        {{/each}}
+        <hr>
+        {{#each this.tooltips.skills as |skill|}}
+        <label><b>{{ @key }}</b></label>
+        <div>
+            <input type="text" name="{{ @key }}" value="{{ skill }}" data-dtype="Text"/>
+        </div>
+        {{/each}}
+    </section>
+    <footer>
+        <button type="submit" class="" title="TBD">
+            <i class="fas fa-plus fa-fw"></i>Save
+        </button>
+    </footer>
+</form>

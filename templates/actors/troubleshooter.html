@@ -138,7 +138,7 @@
                 <section class="sheet-body">
                     <div class="development_information grid grid-4col">
                         {{#each actor.system.stats as |stat|}}
-                        <div class="development_information_details flexrow" data-tooltip="{{lookup ../tooltips @key }}">
+                        <div class="development_information_details flexrow" data-tooltip="{{lookup ../tooltips/stats @key }}">
                             <label for="system.stats.{{ @key }}" class="development_information_details-label">{{ @key
                                 }}:</label>
                             <div class="development_information_details-content flexrow flex-center flex-between">
@@ -163,7 +163,7 @@
                 <section class="sheet-body">
                     <div class="skill_information grid grid-4col">
                         {{#each actor.system.skills as |skill|}}
-                        <div class="skill_information_details flexrow flex-group-center">
+                        <div class="skill_information_details flexrow flex-group-center" data-tooltip="{{lookup ../tooltips/skills @key }}">
                             <label for="system.skills.{{ @key }}.value" class="skill_information_details-label"><a
                                     class="skill rollable" data-skill="{{ @key }}">{{ @key
                                 }}</a></label>

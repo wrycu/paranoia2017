@@ -13,7 +13,7 @@ import {token_HUD} from "./tokens/hud.js";
 import {CardManager, deal_card, init_decks} from "./items/cards.js";
 import {register_wifi_dead_zone} from "./init.js";
 import {paranoia_log} from "./util.js";
-//import {ToolTipSettings} from "./ui/settings.js";
+import {ToolTipSettings} from "./ui/settings.js";
 
 
 Hooks.once("init", async function () {
@@ -212,7 +212,6 @@ Hooks.once("init", async function () {
             default: false,
         },
     );
-    /*
     game.settings.registerMenu(
         "paranoia2017",
         "skills_and_stats",
@@ -227,122 +226,43 @@ Hooks.once("init", async function () {
     );
     game.settings.register(
         "paranoia2017",
-        "enable_tooltips",
+        "tooltips",
         {
-            name: "Tooltip 1 name",
-            hint: "Tooltip 1 hint",
+            name: "tooltips name",
+            hint: "tooltips hint",
             config: false,
             scope: "world",
-            type: Boolean,
-            default: true,
+            type: Object,
+            default: {
+                'enabled': true,
+                'stats': {
+                    'violence': 'Your GM can set this tooltip in the settings',
+                    'brains': 'Your GM can set this tooltip in the settings',
+                    'chutzpah': 'Your GM can set this tooltip in the settings',
+                    'mechanics': 'Your GM can set this tooltip in the settings',
+                },
+                'skills': {
+                    'athletics': 'Your GM can set this tooltip in the settings',
+                    'guns': 'Your GM can set this tooltip in the settings',
+                    'melee': 'Your GM can set this tooltip in the settings',
+                    'throw': 'Your GM can set this tooltip in the settings',
+                    'science': 'Your GM can set this tooltip in the settings',
+                    'psychology': 'Your GM can set this tooltip in the settings',
+                    'bureaucracy': 'Your GM can set this tooltip in the settings',
+                    'alpha_complex': 'Your GM can set this tooltip in the settings',
+                    'bluff': 'Your GM can set this tooltip in the settings',
+                    'charm': 'Your GM can set this tooltip in the settings',
+                    'intimidate': 'Your GM can set this tooltip in the settings',
+                    'stealth': 'Your GM can set this tooltip in the settings',
+                    'operate': 'Your GM can set this tooltip in the settings',
+                    'engineer': 'Your GM can set this tooltip in the settings',
+                    'program': 'Your GM can set this tooltip in the settings',
+                    'demolitions': 'Your GM can set this tooltip in the settings',
+                },
+            },
             restricted: true,
         },
     );
-    game.settings.register(
-        "paranoia2017",
-        "tooltip_stats_violence",
-        {
-            name: "Violence name",
-            hint: "Violence hint",
-            config: false,
-            scope: "world",
-            type: String,
-            default: 'Your GM can set this tooltip in the settings',
-            restricted: true,
-        },
-    );
-    game.settings.register(
-        "paranoia2017",
-        "tooltip_stats_brains",
-        {
-            name: "Brains name",
-            hint: "Brains hint",
-            config: false,
-            scope: "world",
-            type: String,
-            default: 'Your GM can set this tooltip in the settings',
-            restricted: true,
-        },
-    );
-    game.settings.register(
-        "paranoia2017",
-        "tooltip_stats_chutzpah",
-        {
-            name: "Chutzpah name",
-            hint: "Chutzpah hint",
-            config: false,
-            scope: "world",
-            type: String,
-            default: 'Your GM can set this tooltip in the settings',
-            restricted: true,
-        },
-    );
-    game.settings.register(
-        "paranoia2017",
-        "tooltip_stats_mechanics",
-        {
-            name: "Mechanics name",
-            hint: "Mechanics hint",
-            config: false,
-            scope: "world",
-            type: String,
-            default: 'Your GM can set this tooltip in the settings',
-            restricted: true,
-        },
-    );
-    game.settings.register(
-        "paranoia2017",
-        "tooltip_skills_athletics",
-        {
-            name: "Mechanics name",
-            hint: "Mechanics hint",
-            config: false,
-            scope: "world",
-            type: String,
-            default: 'Your GM can set this tooltip in the settings',
-            restricted: true,
-        },
-    );
-    game.settings.register(
-        "paranoia2017",
-        "tooltip_skills_guns",
-        {
-            name: "Mechanics name",
-            hint: "Mechanics hint",
-            config: false,
-            scope: "world",
-            type: String,
-            default: 'Your GM can set this tooltip in the settings',
-            restricted: true,
-        },
-    );
-    game.settings.register(
-        "paranoia2017",
-        "tooltip_skills_melee",
-        {
-            name: "Mechanics name",
-            hint: "Mechanics hint",
-            config: false,
-            scope: "world",
-            type: String,
-            default: 'Your GM can set this tooltip in the settings',
-            restricted: true,
-        },
-    );
-    game.settings.register(
-        "paranoia2017",
-        "tooltip_skills_athletics",
-        {
-            name: "Mechanics name",
-            hint: "Mechanics hint",
-            config: false,
-            scope: "world",
-            type: String,
-            default: 'Your GM can set this tooltip in the settings',
-            restricted: true,
-        },
-    );
-    */
 
     // register the socket listener
     game.socket.on("system.paranoia2017", socket_listener);

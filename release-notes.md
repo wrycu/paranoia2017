@@ -1,3 +1,6 @@
+`1.9.0` - ?
+* Add tooltips to skills and stats in character sheets ([#37](https://github.com/wrycu/paranoia2017/issues/37))
+
 `1.8.2` - 2023-09-16
 * More fixes due to the system rename (socket stuff and settings this time)
 
