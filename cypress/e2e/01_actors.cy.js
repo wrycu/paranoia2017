@@ -22,6 +22,7 @@ describe("paranoia actors", () => {
     beforeEach(() => {
         cy.join();
         cy.wait_until_ready();
+        cy.close_welcome();
         cy.clear_chat();
     });
 
@@ -39,7 +40,7 @@ describe("paranoia actors", () => {
         //cy.clear_chat();
     });
 
-    /*
+
     it("creates an NPC", () => {
         // create the NPC
         cy.log("Initialization complete");
@@ -59,9 +60,7 @@ describe("paranoia actors", () => {
         cy.get('.npc_health_input').select(4);
         cy.get('.npc_health_input').should('have.value', 4);
     });
-    */
 
-    /*
     it("creates a troubleshooter", () => {
         // create the troubleshooter
         cy.get('[data-tab="actors"] > .fas').click();
@@ -128,9 +127,7 @@ describe("paranoia actors", () => {
         cy.get('.description > :nth-child(1) > .troubleshooter_section > .troubleshooter_section_name > b').should('be.visible');
         cy.get('.background > .troubleshooter_section > .troubleshooter_section_name > b').should('not.be.visible');
     });
-    */
 
-    /*
     it("tests making a basic skill check", () => {
         // create the troubleshooter
         cy.get('[data-tab="actors"] > .fas').click();
@@ -160,9 +157,7 @@ describe("paranoia actors", () => {
         cy.get('.dice-formula').click();
         cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
     });
-    */
 
-    /*
     it("tests making a positive-NODE skill check", () => {
         // create the troubleshooter
         cy.get('[data-tab="actors"] > .fas').click();
@@ -202,9 +197,7 @@ describe("paranoia actors", () => {
         cy.get('.dice-formula').click();
         cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
     });
-    */
 
-    /*
     it("tests making a positive-NODE skill check from attr and skill", () => {
         let stat = 4;
         let skill = 2;
@@ -250,8 +243,7 @@ describe("paranoia actors", () => {
         cy.get('.dice-formula').click();
         cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
     });
-    */
-    /*
+
     it("tests making a negative-NODE skill check", () => {
         let stat = -5;
         let skill = 0;
@@ -296,8 +288,7 @@ describe("paranoia actors", () => {
         cy.get('.dice-formula').click();
         cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
     });
-    */
-    /*
+
     it("tests making a negative-NODE skill check from attr and skill", () => {
         let stat = -5;
         let skill = -3;
@@ -342,8 +333,7 @@ describe("paranoia actors", () => {
         cy.get('.dice-formula').click();
         cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
     });
-    */
-    /*
+
     it("tests making a skill check with a wounded actor", () => {
         let stat = 3;
         let skill = -1;
@@ -394,8 +384,6 @@ describe("paranoia actors", () => {
         cy.get('.dice-tooltip.expanded').should('be.visible').and('contain.text', 'Skill').and('contain.text', 'Computer');
     });
 
-     */
-    /*
     it("tests rerolling with a healthy actor", () => {
         let stat = 3;
         let skill = -1;
@@ -449,8 +437,6 @@ describe("paranoia actors", () => {
         cy.get('.dice-roll.reroll > .dice-result > .dice-formula').should('contain.text', `NODE: ${total}`);
     });
 
-     */
-    /*
     it("tests rerolling with a modified NODE", () => {
         let stat = 3;
         let skill = -1;
@@ -506,7 +492,6 @@ describe("paranoia actors", () => {
         cy.get('.dice-roll.reroll > .dice-result > .dice-formula').should('contain.text', `NODE: ${total}`);
     });
 
-     */
     it("tests losing it", () => {
         let expected = 0;
         // create the troubleshooter

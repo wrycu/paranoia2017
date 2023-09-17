@@ -125,7 +125,7 @@ function close_initial_popups() {
                     .parent()
                     .parent()
                     .find(".dialog-button")
-                    .click({ force: true }) // Forced because dialogs can overlap
+                    .click({force: true}) // Forced because dialogs can overlap
                     .should("not.exist");
 
                 // The above triggers a page reload due to it setting animations to off.
@@ -141,7 +141,7 @@ function close_initial_popups() {
                     .parent()
                     .parent()
                     .find(".dialog-button")
-                    .click({ force: true }); // Forced because dialogs can overlap
+                    .click({force: true}); // Forced because dialogs can overlap
             }
         });
     });
@@ -179,6 +179,13 @@ function clear_chat() {
     cy.get('.yes').should('not.be.visible');
 }
 
+function close_welcome() {
+    if (Cypress.$('#app-1 > .window-content > .dialog-buttons > .dialog-button').length > 0) {
+        cy.get('#app-1 > .window-content > .dialog-buttons > .dialog-button').should('be.visible').and('be.enabled');
+        cy.get('#app-1 > .window-content > .dialog-buttons > .dialog-button').click({force: true});
+    }
+}
+
 Cypress.Commands.add("setup", () => {
     setup();
 });
@@ -195,10 +202,14 @@ Cypress.Commands.add("clear_chat", () => {
     clear_chat();
 });
 
+Cypress.Commands.add("close_welcome", () => {
+    close_welcome();
+});
+
 Cypress.Commands.add("emulateFocus", (enabled) => {
     // see https://github.com/cypress-io/cypress/issues/21673
     return Cypress.automation("remote:debugger:protocol", {
         command: "Emulation.setFocusEmulationEnabled",
-        params: { enabled: enabled ?? true },
+        params: {enabled: enabled ?? true},
     });
 });
