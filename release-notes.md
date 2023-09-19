@@ -1,3 +1,6 @@
+`1.9.1` - 2023-09-19
+* Add open-source losing it image
+
 `1.9.0` - 2023-09-18
 * Add tooltips to skills and stats in character sheets ([#37](https://github.com/wrycu/paranoia2017/issues/37))
 
