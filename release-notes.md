@@ -1,4 +1,4 @@
-`1.9.2` - ?
+`1.9.2` - 2023-10-11
 * Fix for card manager not working if users existed without an assigned character
 * Add a tattle when players draw cards
 
