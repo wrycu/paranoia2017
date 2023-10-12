@@ -1,3 +1,7 @@
+`1.9.2` - ?
+* Fix for card manager not working if users existed without an assigned character
+* Add a tattle when players draw cards
+
 `1.9.1` - 2023-09-19
 * Add open-source losing it image
 

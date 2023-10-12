@@ -343,7 +343,7 @@ export class card_draw extends FormApplication {
         let is_gm = game.user.isGM;
         if (is_gm) {
             //actors[game.user.character.id] = game.user.character.name;
-            for (const user of game.users.filter(i => !i.isGM)) {
+            for (const user of game.users.filter(i => !i.isGM && i?.character)) {
                 actors[user.character.id] = `${user.character.name} (${user.name})`;
             }
         } else {
@@ -367,10 +367,44 @@ export class card_draw extends FormApplication {
                 // form submission includes null (unchecked) actors; just skip over them
                 continue;
             }
+            this.tattle_draw(game.user.isGM, cur_actor, formData['draw_amount'], formData['deck']);
             for (let x = 0; x < formData['draw_amount']; x++) {
                 await this.draw_card(formData['deck'], cur_actor)
             }
         }
+    }
+
+    async tattle_draw(is_gm, actor, card_count, card_type) {
+        if (is_gm) {
+            return;
+        }
+        let deck_map = {
+            "action_card": "Action Card",
+            "equipment_card": "Equipment",
+            "mutant_power_card": "Mutant Power",
+            "bonus_duty_card": "Bonus Duty",
+            "secret_society_card": "Secret Society",
+        }
+        let chat_data;
+
+        chat_data = await renderTemplate(
+            "systems/paranoia2017/templates/chat/tattle_draw.html",
+            {
+                count: card_count,
+                type: deck_map[card_type],
+            },
+        );
+
+        let chat_options = {
+            speaker: {
+                actor: actor.id,
+            },
+            content: chat_data,
+            isRoll: true,
+            sound: "sounds/dice.wav",
+            whisper: game.users.filter(i => i.isGM && i.active).map(i => i.id),
+        };
+        ChatMessage.create(chat_options);
     }
 
     async draw_card(card_type, actor_id) {
