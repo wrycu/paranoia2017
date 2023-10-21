@@ -9,7 +9,7 @@
                 </h2>
                 <div class="npc_notes_container">
                     <div class="npc_section_header npc_notes_header">
-                        <i>///&nbsp;<b>NOTES</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                        <i>///&nbsp;<b>{{ localize "paranoia.npc.notes" }}</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
                     </div>
                     <div class="npc_notes_editor">
                         {{editor actor.system.notes target="system.notes" button=true owner=owner
@@ -23,7 +23,7 @@
     <section class="sheet-body">
         <div class="npc_health_container">
             <div class="npc_section_header npc_health_header">
-                <i>///&nbsp;<b>STATS</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <i>///&nbsp;<b>{{ localize "paranoia.npc.header.stats" }}</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
             </div>
             <div class="npc_stats_block">
             <select name="system.wounds.value" class="npc_health_input">
@@ -35,7 +35,7 @@
             </select>
             <div class="core_information_details">
                 <label for="system.name"
-                       class="core_information_details-label troubleshooter_label">XP POINTS:</label>
+                       class="core_information_details-label troubleshooter_label">{{ localize "paranoia.npc.field.xp_points" }}:</label>
                 <div class="core_information_details-content">
                     <input type="text" class="npc_name_input white_input" name="system.xp_points.value"
                            value="{{ actor.system.xp_points.value }}" data-dtype="Number"/>
@@ -43,7 +43,7 @@
             </div>
             <div class="core_information_details">
                 <label for="system.name"
-                       class="core_information_details-label troubleshooter_label">TREASON STARS:</label>
+                       class="core_information_details-label troubleshooter_label">{{ localize "paranoia.npc.field.treason_stars" }}:</label>
                 <div class="core_information_details-content">
                     <input type="text" class="npc_name_input white_input" name="system.treason_stars.value"
                    value="{{ actor.system.treason_stars.value }}" data-dtype="Number"/>
@@ -53,7 +53,7 @@
         </div>
         <div class="npc_equipment_container">
             <div class="npc_section_header npc_equipment_container">
-                <i>///&nbsp;<b>EQUIPMENT</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <i>///&nbsp;<b>{{ localize "paranoia.npc.field.equipment" }}</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
             </div>
             {{#each items as |item id|}}
             {{#if (eq item.type "equipment_card")}}
@@ -71,7 +71,7 @@
         </div>
         <div class="npc_special_skills_container">
             <div class="npc_section_header npc_special_skills_container">
-                <i>///&nbsp;<b>SPECIAL SKILLS</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <i>///&nbsp;<b>{{ localize "paranoia.npc.field.special_skills" }}</b>&nbsp;&nbsp;&nbsp;&nbsp;</i>
             </div>
             <div class="npc_special_skills_editor">
                 {{editor actor.system.special_skills target="system.special_skills" button=true owner=owner

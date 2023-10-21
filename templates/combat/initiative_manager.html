@@ -1,16 +1,16 @@
 <form class="initiative_manager">
     {{#if (eq this.stage "stage_1") }}
     <!-- card selection -->
-    <h2>Card Selection</h2>
+    <h2>{{ localize "paranoia.combat.manager.selection" }}</h2>
     {{#if this.is_gm }}{{else}}
     <div>
-        <h3>Available Cards</h3>
+        <h3>{{ localize "paranoia.combat.manager.available" }}</h3>
         <div class="combat_available_cards_container">
             {{#each this.available_cards as |card|}}
             <div class="combat_available_card">
                 {{{ card.html }}}
                 <br>
-                <b>Action Order: {{ card.system.action_order }}</b>
+                <b>{{ localize "paranoia.combat.manager.action_order" }}: {{ card.system.action_order }}</b>
             </div>
             {{/each}}
         </div>
@@ -20,10 +20,10 @@
         <thead>
         <tr>
             <th>
-                Player
+                {{ localize "paranoia.combat.manager.player" }}
             </th>
             <th>
-                Card Selected
+                {{ localize "paranoia.combat.manager.selected" }}
             </th>
         </tr>
         </thead>
@@ -37,7 +37,7 @@
                 {{#if card.is_me }}
                 <select class="card_selection">
                     {{#select card.selected_card.id }}
-                    <option value="not_selected">select a card...</option>
+                    <option value="not_selected">{{ localize "paranoia.combat.manager.select" }}</option>
                     {{#each ../this.available_cards as |option|}}
                     <option value="{{ option.id }}" data-action-order="{{ option.system.action_order }}">
                         {{ option.name }} ({{ option.system.action_order }})
@@ -49,7 +49,7 @@
                 {{#if card.is_selected}}
                 {{ card.selected_card.name }}
                 {{else}}
-                (pending selection)
+                {{ localize "paranoia.combat.manager.pending" }}
                 {{/if}}
                 {{/if}}
             </td>
@@ -65,7 +65,7 @@
     {{else}}
     {{#each this.selected_cards as |card|}}
     {{#if card.is_me }}{{#if card.is_selected }}
-    Selected card: <span class="stage_2_selected_card" data-action-order="{{ card.selected_card.action_order }}" data-card-id="{{ card.selected_card.id }}">{{ card.selected_card.name }}</span>
+    {{ localize "paranoia.combat.manager.slot_selection" }}: <span class="stage_2_selected_card" data-action-order="{{ card.selected_card.action_order }}" data-card-id="{{ card.selected_card.id }}">{{ card.selected_card.name }}</span>
     {{/if}}{{/if}}
     {{/each}}
     {{/if}}
@@ -73,10 +73,10 @@
         <thead>
         <tr>
             <th>
-                Initiative
+                {{ localize "paranoia.combat.manager.state.initiative" }}
             </th>
             <th>
-                Selection
+                {{ localize "paranoia.combat.manager.state.selection" }}
             </th>
         </tr>
         </thead>
@@ -91,8 +91,8 @@
                     {{#if slot.contains_me }}{{else}}
                         {{#if ../this.gone_this_round}}{{else}}
                             {{#if ../this.is_gm }}{{else}}
-                                &nbsp;<button type="button" class="initiative_select" title="Select this slot for your initiative">
-                                    <i class="fas fa-plus fa-fw"></i>me!
+                                &nbsp;<button type="button" class="initiative_select" title="{{ localize "paranoia.combat.manager.state.selection-label" }}">
+                                    <i class="fas fa-plus fa-fw"></i>{{ localize "paranoia.combat.manager.state.me" }}
                                 </button>
                             {{/if}}
                         {{/if}}
@@ -107,8 +107,8 @@
                                     {{#if @../last}}
                                         {{#if ../../this.is_gm }} {{ else }}
                                             &nbsp;<button type="button" class="challenge_initiative" data-player-id="{{ actor.player_id }}"
-                                                    data-slot="{{ @../index }}" title="Challenge this player's initiative. Usable once per round.">
-                                                <i class="fas fa-plus fa-fw"></i>challenge
+                                                    data-slot="{{ @../index }}" title="{{ localize "paranoia.combat.manager.state.challenge-label" }}">
+                                                <i class="fas fa-plus fa-fw"></i>{{ localize "paranoia.combat.manager.state.challenge" }}
                                             </button>
                                         {{/if}}
                                     {{/if}}
@@ -117,10 +117,10 @@
                         {{/if}}
                     {{/each}}
                 {{else}}
-                    <div class="initiative_no_one">(no one)</div>
+                    <div class="initiative_no_one">{{ localize "paranoia.combat.manager.state.no_one" }}</div>
                 {{/if}}
                 {{#if (eq @index 10)}}
-                    <br>Basic Action:
+                    <br>{{ localize "paranoia.combat.manager.basic_action" }}:
                     {{#each ../this.lost_challenge as |lost|}}
                         {{ lost }}
                     {{/each}}
@@ -133,14 +133,14 @@
     {{/if}}
     {{#if this.is_gm }}
     <div class="initiative_button_container">
-        <button type="button" class="progress_combat" {{#if (eq this.stage "stage_2") }}{{#if (eq this.initiative_slot -1)}}{{else}} disabled {{/if}}{{/if}} data-action="progress" title="Move Troubleshooters to the next combat phase">
-            <i class="fas fa-plus fa-fw"></i>Next Combat Phase
+        <button type="button" class="progress_combat" {{#if (eq this.stage "stage_2") }}{{#if (eq this.initiative_slot -1)}}{{else}} disabled {{/if}}{{/if}} data-action="progress" title="{{ localize "paranoia.combat.manager.state.next_phase-label" }}">
+            <i class="fas fa-plus fa-fw"></i>{{ localize "paranoia.combat.manager.state.next_phase" }}
         </button>
         {{#if this.is_gm }}
             {{#if (eq this.stage "stage_2") }}
                 {{#if (lt this.slots.length 11)}}
-                    <button type="button" class="initiative_next" title="Allow Troubleshooters to claim the next initiative slot">
-                        <i class="fas fa-plus fa-fw"></i>Next Slot
+                    <button type="button" class="initiative_next" title="{{ localize "paranoia.combat.manager.state.next_slot-label" }}">
+                        <i class="fas fa-plus fa-fw"></i>{{ localize "paranoia.combat.manager.state.next_slot" }}
                     </button>
                 {{/if}}
             {{/if}}

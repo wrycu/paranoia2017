@@ -169,8 +169,8 @@ Hooks.once("init", async function () {
         "paranoia2017",
         "wifi_dead_zone",
         {
-            name: "Wifi Dead Zone",
-            hint: "Is the party currently in a Wifi Dead zone? (disables names, XP, treason star count)",
+            name: game.i18n.localize("paranoia.settings.wifi_dead_zone.name"),
+            hint: game.i18n.localize("paranoia.settings.wifi_dead_zone.hint"),
             scope: "world",
             type: Boolean,
             default: false,
@@ -180,8 +180,8 @@ Hooks.once("init", async function () {
         "paranoia2017",
         "mutant_power_audio_cue",
         {
-            name: "Mutant Power Audio Cue",
-            hint: "Audio cue to play for the GM when activating mutant powers",
+            name: game.i18n.localize("paranoia.settings.mutant_power_audio_cue.name"),
+            hint: game.i18n.localize("paranoia.settings.mutant_power_audio_cue.hint"),
             config: true,
             scope: "world",
             type: String,
@@ -193,8 +193,8 @@ Hooks.once("init", async function () {
         "paranoia2017",
         "debug_logging",
         {
-            name: "Enable debug logging",
-            hint: "Logs additional information to the console",
+            name: game.i18n.localize("paranoia.settings.debug_logging.name"),
+            hint: game.i18n.localize("paranoia.settings.debug_logging.hint"),
             config: true,
             scope: "world",
             type: Boolean,
@@ -216,9 +216,9 @@ Hooks.once("init", async function () {
         "paranoia2017",
         "skills_and_stats",
         {
-            name: "Stats & Skills Tooltips",
-            label: "Configure",      // The text label used in the button
-            hint: "Configure the tooltips shown on stat and skill hover",
+            name: game.i18n.localize("paranoia.settings.skills_and_stats.name"),
+            label: game.i18n.localize("paranoia.settings.skills_and_stats.label"),      // The text label used in the button
+            hint: game.i18n.localize("paranoia.settings.skills_and_stats.hint"),
             icon: "fas fa-bars",               // A Font Awesome icon used in the submenu button
             type: ToolTipSettings,   // A FormApplication subclass which should be created
             restricted: true,                   // Restrict this submenu to gamemaster only?
@@ -228,8 +228,8 @@ Hooks.once("init", async function () {
         "paranoia2017",
         "tooltips",
         {
-            name: "tooltips name",
-            hint: "tooltips hint",
+            name: game.i18n.localize("paranoia.settings.tooltips.name"),
+            hint: game.i18n.localize("paranoia.settings.tooltips.hint"),
             config: false,
             scope: "world",
             type: Object,
@@ -308,22 +308,7 @@ Hooks.once("init", async function () {
     ];
     await loadTemplates(partial_templates);
 
-    if (!game.settings.get('paranoia2017', 'tutorial_shown')) {
-        let d = new Dialog({
-            title: "Welcome!",
-            content: "<p>Welcome to Paranoia, Troubleshooter!</p><p>Friend Computer has made a tutorial available <a href='https://github.com/wrycu/paranoia2017/wiki'>in the wiki.</a></p><p>(This message will show only once.)</p>",
-            buttons: {
-                one: {
-                    icon: '<i class="fas fa-check"></i>',
-                    label: "Ok",
-                    callback: () => console.log("Chose One")
-                },
-            },
-            default: "one",
-        });
-        d.render(true);
-        game.settings.set('paranoia2017', 'tutorial_shown', true);
-    }
+
 });
 
 Hooks.on("combatStart", async function (combat_info, round_info) {
@@ -409,6 +394,23 @@ Hooks.once("ready", async function () {
     // show the card manager on the bottom right
     const card_manager = new CardManager(undefined, {top: "100%", left: "100%"});
     await card_manager.render(true);
+
+    if (!game.settings.get('paranoia2017', 'tutorial_shown')) {
+        let d = new Dialog({
+            title: game.i18n.localize("paranoia.settings.tooltips.name"),
+            content: `<p>${game.i18n.localize("paranoia.settings.welcome.message.part_1")}!</p><p>${game.i18n.localize("paranoia.settings.welcome.message.part_2")} <a href='https://github.com/wrycu/paranoia2017/wiki'>in the wiki.</a></p><p>(This message will show only once.)</p>`,
+            buttons: {
+                one: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Ok",
+                    callback: () => console.log("Chose One")
+                },
+            },
+            default: "one",
+        });
+        d.render(true);
+        game.settings.set('paranoia2017', 'tutorial_shown', true);
+    }
 });
 
 function configure_token() {

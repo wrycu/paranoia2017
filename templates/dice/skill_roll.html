@@ -1,12 +1,17 @@
 <div class="dice-roll{{#if this.reroll}} reroll{{/if}}">
     <div class="dice-result">
         <div class="dice-formula">
-            {{#if this.reroll}}Spent 1 moxie to <b>re-roll</b>{{else}}Rolling{{/if}} <b>{{ this.attr }}</b> with <b>{{ this.skill }}</b>...
+            {{#if this.reroll}}
+                {{{ localize "paranoia.dice.roll.spend_moxie.start" }}}
+            {{else}}
+                {{ localize "paranoia.dice.roll.reroll" }}
+            {{/if}} <b>{{ this.attr }}</b>
+            {{ localize "paranoia.dice.roll.with" }} <b>{{ this.skill }}</b>...
             <hr>
-            NODE: {{ this.node }}
+            {{ localize "paranoia.dice.roller.node" }}: {{ this.node }}
         </div>
         <div class="dice-tooltip">
-            Skill
+            {{ localize "paranoia.dice.roll.skill" }}:
             {{#each this.roll.pretty as |result|}}
             {{#if (eq result.type "node")}}
             {{#if (eq result.class "success") }}
@@ -24,7 +29,7 @@
             {{/if}}
             {{/each}}
             <hr>
-            Computer:
+            {{ localize "paranoia.dice.roll.computer" }}:
             {{#each this.roll.pretty as |result|}}
             {{#if (eq result.type "computer")}}
             {{#if (eq result.class "result") }}
@@ -36,8 +41,9 @@
             {{/each}}
         </div>
         <h4 class="dice-total">
-           {{ this.roll.successes }} successes{{#if this.roll.computer}},&nbsp;<img src=systems/paranoia2017/images/dice/computer.png>{{/if}}
+           {{ this.roll.successes }} {{ localize "paranoia.dice.roll.results.success" }}{{#if this.roll.computer}},&nbsp;<img src=systems/paranoia2017/images/dice/computer.png>{{/if}}
         </h4>
-        {{#if this.reroll}}{{else}}<button type="button" class="reroll" data-node="{{ this.node }}" data-actor_id="{{ this.actor_id }}" data-attr="{{ this.attr }}" data-skill="{{ this.skill }}" data-modifier="{{ this.modifier }}">Spend 1 Moxie to Re-roll</button>{{/if}}
+        {{#if this.reroll}}{{else}}<button type="button" class="reroll" data-node="{{ this.node }}" data-actor_id="{{ this.actor_id }}" data-attr="{{ this.attr }}" data-skill="{{ this.skill }}" data-modifier="{{ this.modifier }}">
+        {{ localize "paranoia.dice.roll.results.reroll" }}</button>{{/if}}
     </div>
 </div>

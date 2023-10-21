@@ -2,7 +2,7 @@
     {{!-- Sheet Body --}}
     <section class="sheet-body">
         <span class="enabled_container">
-            <label>Enable Tooltips:</label>
+            <label>{{ localize "paranoia.settings.tooltips.enabled" }}:</label>
             <div>
                 <input type="checkbox" name="enabled" {{ checked this.tooltips.enabled }} data-dtype="Boolean"/>
             </div>
@@ -23,7 +23,7 @@
     </section>
     <footer>
         <button type="submit" class="" title="TBD">
-            <i class="fas fa-plus fa-fw"></i>Save
+            <i class="fas fa-plus fa-fw"></i>{{ localize "paranoia.settings.tooltips.save" }}
         </button>
     </footer>
 </form>

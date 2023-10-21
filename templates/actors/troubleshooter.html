@@ -12,9 +12,9 @@
     </div>
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Overview</a>
-        <a class="item" data-tab="items">Items</a>
-        <a class="item" data-tab="background">Background</a>
+        <a class="item" data-tab="description">{{ localize "paranoia.troubleshooter.tabs.overview" }}</a>
+        <a class="item" data-tab="items">{{ localize "paranoia.troubleshooter.tabs.items" }}</a>
+        <a class="item" data-tab="background">{{ localize "paranoia.troubleshooter.tabs.background" }}</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -24,17 +24,17 @@
             <div class="core_information">
                 <div class="troubleshooter_section">
                     <div class="troubleshooter_section_header">
-                        <i>///&nbsp;PART ONE&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                        <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.part.one" }}&nbsp;&nbsp;&nbsp;&nbsp;</i>
                     </div>
                     <div class="troubleshooter_section_name">
-                        <b>&nbsp;&nbsp;&nbsp;&nbsp;CORE INFORMATION >>></b>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.core_info" }} >>></b>
                     </div>
                 </div>
                 <section class="sheet-body ">
                     <div class="core_information flexbox">
                         <div class="core_information_details">
                             <label for="system.name"
-                                   class="core_information_details-label troubleshooter_label">NAME:</label>
+                                   class="core_information_details-label troubleshooter_label">{{ localize "paranoia.troubleshooter.field.name" }}:</label>
                             <div class="core_information_details-content">
                                 <input type="text" class="troubleshooter_input" name="name" value="{{ actor.name }}"
                                        data-dtype="Text"/>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="core_information_details">
                             <label for="system.security_clearance"
-                                   class="core_information_details-label troubleshooter_label">CLEARANCE:</label>
+                                   class="core_information_details-label troubleshooter_label">{{ localize "paranoia.troubleshooter.field.clearance_level" }}:</label>
                             <div class="core_information_details-content">
                                 <select class="security_level" name="system.security_clearance">
                                     {{#each config.security_levels as |lvl|}}
@@ -60,8 +60,7 @@
                             </div>
                         </div>
                         <div class="core_information_details">
-                            <label for="system.home_sector" class="core_information_details-label troubleshooter_label">HOME
-                                SECTOR:</label>
+                            <label for="system.home_sector" class="core_information_details-label troubleshooter_label">{{ localize "paranoia.troubleshooter.field.home_sector" }}:</label>
                             <div class="core_information_details-content">
                                 <input type="text" class="troubleshooter_input" name="system.home_sector"
                                        value="{{ actor.system.home_sector }}"
@@ -70,12 +69,12 @@
                         </div>
                         <div class="core_information_details">
                             <label for="system.clone_number"
-                                   class="core_information_details-label troubleshooter_label">CLONE #:</label>
+                                   class="core_information_details-label troubleshooter_label">{{ localize "paranoia.troubleshooter.field.clone_num" }} #:</label>
                             <div class="core_information_details-content">
                                 <input type="number" class="troubleshooter_input clone_input" name="system.clone_number"
                                        value="{{ actor.system.clone_number }}"
                                        data-dtype="Number"/>
-                                &nbsp;<div class="of">of</div>&nbsp;
+                                &nbsp;<div class="of">{{ localize "paranoia.troubleshooter.field.of" }}</div>&nbsp;
                                 <input type="number" class="troubleshooter_input clone_input" name="system.clone_max"
                                        value="{{ actor.system.clone_max }}"
                                        data-dtype="Number"/>
@@ -84,7 +83,7 @@
                     </div>
                     <div class="core_information flexbox">
                         <div class="core_information_details">
-                            <label for="system.gender" class="core_information_details-label troubleshooter_label">GENDER:</label>
+                            <label for="system.gender" class="core_information_details-label troubleshooter_label">{{ localize "paranoia.troubleshooter.field.gender" }}:</label>
                             <div class="core_information_details-content">
                                 <input type="text" class="troubleshooter_input" name="system.gender"
                                        value="{{ actor.system.gender }}"
@@ -92,7 +91,7 @@
                             </div>
                         </div>
                         <div class="core_information_details" style="flex-grow: 1;">
-                            <label for="system.personality" class="core_information_details-label troubleshooter_label">PERSONALITY:</label>
+                            <label for="system.personality" class="core_information_details-label troubleshooter_label">{{ localize "paranoia.troubleshooter.field.personality" }}:</label>
                             <div class="core_information_details-content">
                                 <input type="text" class="troubleshooter_input" name="system.personality"
                                        value="{{ actor.system.personality }}"
@@ -105,17 +104,16 @@
             <div class="development_information">
                 <div class="troubleshooter_section">
                     <div class="troubleshooter_section_header">
-                        <i>///&nbsp;PART TWO&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                        <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.part.two" }}&nbsp;&nbsp;&nbsp;&nbsp;</i>
                     </div>
                     <div class="troubleshooter_section_name">
-                        <b>&nbsp;&nbsp;&nbsp;&nbsp;DEVELOPMENT >>></b>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.development" }} >>></b>
                     </div>
                 </div>
                 <section class="sheet-body">
                     <div class="development_information grid grid-2col">
                         <div class="development_information_details flexrow">
-                            <label for="system.treason_stars.value" class="development_information_details-label">TREASON
-                                STARS:</label>
+                            <label for="system.treason_stars.value" class="development_information_details-label">{{ localize "paranoia.troubleshooter.field.treason_stars" }}:</label>
                             <div class="development_information_details-content flexrow flex-center flex-between">
                                 <!-- TODO: this removes from the actor data the "min" and "max" values for treason stars -->
                                 <input type="number" name="system.treason_stars.value"
@@ -124,8 +122,7 @@
                             </div>
                         </div>
                         <div class="development_information_details flexrow">
-                            <label for="system.xp_points.value" class="development_information_details-label">XP
-                                POINTS:</label>
+                            <label for="system.xp_points.value" class="development_information_details-label">{{ localize "paranoia.troubleshooter.field.xp_points" }}:</label>
                             <div class="development_information_details-content flexrow flex-center flex-between">
                                 <input type="number" name="system.xp_points.value"
                                        value="{{ actor.system.xp_points.value }}"
@@ -134,7 +131,7 @@
                         </div>
                     </div>
                 </section>
-                <b>STATS >>></b>
+                <b>{{ localize paranoia.troubleshooter.sub_header.stats }} >>></b>
                 <section class="sheet-body">
                     <div class="development_information grid grid-4col">
                         {{#each actor.system.stats as |stat|}}
@@ -154,10 +151,10 @@
             <div class="skill_information">
                 <div class="troubleshooter_section">
                     <div class="troubleshooter_section_header">
-                        <i>///&nbsp;PART THREE&nbsp;&nbsp;</i>
+                        <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.part.three" }}&nbsp;&nbsp;</i>
                     </div>
                     <div class="troubleshooter_section_name">
-                        <b>&nbsp;&nbsp;&nbsp;&nbsp;SKILLS >>></b>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.skills" }} >>></b>
                     </div>
                 </div>
                 <section class="sheet-body">
@@ -180,22 +177,22 @@
             <div class="wb_information">
                 <div class="troubleshooter_section">
                     <div class="troubleshooter_section_header">
-                        <i>///&nbsp;PART FOUR&nbsp;&nbsp;&nbsp;</i>
+                        <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.part.four" }}&nbsp;&nbsp;&nbsp;</i>
                     </div>
                     <div class="troubleshooter_section_name">
-                        <b>&nbsp;&nbsp;&nbsp;&nbsp;WELLBEING >>></b>
+                        <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.wellbeing" }} >>></b>
                     </div>
                 </div>
                 <section class="sheet-body">
                     <div class="wb_information grid grid-2col">
                         <div class="wb_information_details flexrow flex-group-center">
-                            <label for="system.moxie.value" class="wb_information_details-label">MOXIE:</label>
+                            <label for="system.moxie.value" class="wb_information_details-label">{{ localize "paranoia.troubleshooter.field.moxie" }}:</label>
                             <div class="moxie_container">
                                 <div class="wb_information_details-content">
                                     <input type="number" name="system.moxie.value"
                                            value="{{ actor.system.moxie.value }}"
                                            data-dtype="Number" min="0" max="8"/>
-                                    &nbsp;<div class="of">of</div>&nbsp;
+                                    &nbsp;<div class="of">{{ localize "paranoia.troubleshooter.field.of" }}</div>&nbsp;
                                     <input type="number" name="system.moxie.current_max"
                                            value="{{ actor.system.moxie.current_max }}"
                                            data-dtype="Number" min="0" max="8"/>
@@ -203,7 +200,7 @@
                             </div>
                         </div>
                         <div class="wb_information_details flexrow flex-group-center">
-                            <label for="system.wounds.value" class="wb_information_details-label">WOUNDS:</label>
+                            <label for="system.wounds.value" class="wb_information_details-label">{{ localize "paranoia.troubleshooter.field.wounds" }}:</label>
                             <div class="wb_information_details-content">
                                 <select name="system.wounds.value">
                                     {{#select actor.system.wounds.value}}
@@ -218,7 +215,7 @@
                     <hr>
                     <div class="wb_information">
                         <div class="wb_information_details">
-                            <label for="system.memory.value" class="wb_information_details-label">MEMORY >>></label>
+                            <label for="system.memory.value" class="wb_information_details-label">{{ localize "paranoia.troubleshooter.field.memory" }} >>></label>
                             <div class="wb_information_details-content">
                                 {{editor actor.system.memory.value target="system.memory.value" button=true owner=owner
                                 editable=editable}}
@@ -233,10 +230,10 @@
                 <div class="troubleshooter_bonus_duties">
                     <div class="troubleshooter_section">
                         <div class="troubleshooter_section_header">
-                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                            <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.cards" }}&nbsp;&nbsp;&nbsp;</i>
                         </div>
                         <div class="troubleshooter_section_name">
-                            <b>&nbsp;&nbsp;&nbsp;&nbsp;BONUS DUTY >>></b>
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.bonus_duty" }} >>></b>
                         </div>
                     </div>
                     <span class="item-list">
@@ -258,10 +255,10 @@
                 <div class="troubleshooter_mutant_powers">
                     <div class="troubleshooter_section">
                         <div class="troubleshooter_section_header">
-                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                            <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.cards" }}&nbsp;&nbsp;&nbsp;</i>
                         </div>
                         <div class="troubleshooter_section_name">
-                            <b>&nbsp;&nbsp;&nbsp;&nbsp;MUTANT POWERS >>></b>
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.mutant_powers" }} >>></b>
                         </div>
                     </div>
                     <span class="item-list">
@@ -284,10 +281,10 @@
                 <div class="troubleshooter_secret_societies">
                     <div class="troubleshooter_section">
                         <div class="troubleshooter_section_header">
-                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                            <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.cards" }}&nbsp;&nbsp;&nbsp;</i>
                         </div>
                         <div class="troubleshooter_section_name">
-                            <b>&nbsp;&nbsp;&nbsp;&nbsp;SECRET SOCIETIES >>></b>
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.secret_societies" }} >>></b>
                         </div>
                     </div>
                     <span class="item-list">
@@ -309,10 +306,10 @@
                 <div class="troubleshooter_secret_societies">
                     <div class="troubleshooter_section">
                         <div class="troubleshooter_section_header">
-                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                            <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.cards" }}&nbsp;&nbsp;&nbsp;</i>
                         </div>
                         <div class="troubleshooter_section_name">
-                            <b>&nbsp;&nbsp;&nbsp;&nbsp;ACTION CARDS >>></b>
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.action_cards" }} >>></b>
                         </div>
                     </div>
                     <span class="item-list">
@@ -339,10 +336,10 @@
                 <div class="troubleshooter_secret_societies">
                     <div class="troubleshooter_section">
                         <div class="troubleshooter_section_header">
-                            <i>///&nbsp;CARDS&nbsp;&nbsp;&nbsp;</i>
+                            <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.cards" }}&nbsp;&nbsp;&nbsp;</i>
                         </div>
                         <div class="troubleshooter_section_name">
-                            <b>&nbsp;&nbsp;&nbsp;&nbsp;EQUIPMENT >>></b>
+                            <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.equipment" }} >>></b>
                         </div>
                     </div>
                     <span class="item-list">
@@ -366,10 +363,10 @@
         <div class="tab background" data-group="primary" data-tab="background">
             <div class="troubleshooter_section">
                 <div class="troubleshooter_section_header">
-                    <i>///&nbsp;STORY&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                    <i>///&nbsp;{{ localize "paranoia.troubleshooter.header.story" }}&nbsp;&nbsp;&nbsp;&nbsp;</i>
                 </div>
                 <div class="troubleshooter_section_name">
-                    <b>&nbsp;&nbsp;&nbsp;&nbsp;BACKGROUND >>></b>
+                    <b>&nbsp;&nbsp;&nbsp;&nbsp;{{ localize "paranoia.troubleshooter.header.background" }} >>></b>
                 </div>
             </div>
             <div class="wb_information_details-content">

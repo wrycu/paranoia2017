@@ -21,11 +21,11 @@
                 </div>
             </div>
             <div class="mutant_card_action_order_container">
-                <b>ACTION ORDER</b>
+                <b>{{ localize "paranoia.items.mutant.action_order" }}</b>
             </div>
             {{#if is_gm}}
             <div class="exclude_from_deck">
-                <label for="system.exclude_from_deck" class="action_order_details-label">Exclude from decks</label>
+                <label for="system.exclude_from_deck" class="action_order_details-label">{{ localize "paranoia.items.mutant.exclude" }}</label>
                 <div class="action_order_details-content flexrow flex-center flex-between">
                     <input type="checkbox" name="system.exclude_from_deck" {{checked item.system.exclude_from_deck}}
                            data-dtype="Boolean"/>

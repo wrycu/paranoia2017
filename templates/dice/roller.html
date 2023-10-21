@@ -1,17 +1,17 @@
 <form class="paranoia_roller_window">
     {{# if (ne this.modifier 0) }}
-    <h4>Modifiers:</h4>
-    {{ this.modifier }} due to injury (already applied)
+    <h4>{{ localize "paranoia.dice.roller.modifiers" }}:</h4>
+    {{ this.modifier }} {{ localize "paranoia.dice.roller.injury" }}
     {{/if}}
     <div>
         <table>
             <thead>
             <tr>
                 <th>
-                    stat
+                    {{ localize "paranoia.dice.roller.stat" }}
                 </th>
                 <th>
-                    skill
+                    {{ localize "paranoia.dice.roller.skill" }}
                 </th>
             </tr>
             </thead>
@@ -43,7 +43,7 @@
     <section class="sheet-body">
         <div class="node_container grid grid-2col">
             <div class="node_details flexrow">
-                <label for="system.stats.{{ @key }}" class="node_details-label">NODE</label>
+                <label for="system.stats.{{ @key }}" class="node_details-label">{{ localize "paranoia.dice.roller.node" }}</label>
                 <div class="node_details-content flexrow flex-center flex-between">
                     <input class="node_value" type="number" name="node"
                            value="{{ this.dice.node }}"
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="development_information_details flexrow">
-                <label for="system.stats.{{ @key }}" class="development_information_details-label">Computer</label>
+                <label for="system.stats.{{ @key }}" class="development_information_details-label">{{ localize "paranoia.dice.roller.computer" }}</label>
                 <div class="development_information_details-content flexrow flex-center flex-between">
                     <input type="number" name="computer"
                            value="{{ this.dice.computer }}"
@@ -60,5 +60,5 @@
             </div>
         </div>
     </section>
-    <button type="submit">Roll</button>
+    <button type="submit">{{ localize "paranoia.dice.roller.roll" }}</button>
 </form>

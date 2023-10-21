@@ -14,7 +14,7 @@
         <div class="equipment_card_body">
             <div class="equipment_card_action_order_container">
                 <div class="equipment_card_action_order_dropdown_container">
-                    <label class="action_order_details-label"><b>ACTION ORDER</b></label>
+                    <label class="action_order_details-label"><b>{{ localize "paranoia.items.equipment.action_order" }}</b></label>
                     <div class="equipment_card_action_order_details">
                         <select name="system.skill.name" class="equipment_card_action_order_dropdown">
                             {{#select item.system.skill.name}}
@@ -51,7 +51,7 @@
             </div>
             {{#if is_gm}}
             <div class="exclude_from_deck">
-                <label for="system.exclude_from_deck" class="action_order_details-label">Exclude from decks</label>
+                <label for="system.exclude_from_deck" class="action_order_details-label">{{ localize "paranoia.items.equipment.exclude" }}</label>
                 <div class="action_order_details-content flexrow flex-center flex-between">
                     <input type="checkbox" name="system.exclude_from_deck" {{checked item.system.exclude_from_deck}}
                            data-dtype="Boolean"/>
@@ -64,6 +64,5 @@
                 </div>
             </div>
         </div>
-
     </section>
 </form>

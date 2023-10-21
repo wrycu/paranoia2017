@@ -1,9 +1,13 @@
 <div class="paranoia_card_manager_container">
-    <div class="paranoia" title="Card Manager">
+    <div class="paranoia" title="{{ localize "paranoia.card_manager.title" }}">
         {{# if is_gm }}
-        <a class="paranoia card_manager" title="Deal Card"><i class="fas fa-edit"></i>Deal Card</a>
+        <a class="paranoia card_manager" title="{{ localize "paranoia.card_manager.deal_card" }}">
+            <i class="fas fa-edit"></i>{{ localize "paranoia.card_manager.deal_card" }}
+        </a>
         {{ else }}
-        <a class="paranoia card_manager" title="Draw Card"><i class="fas fa-edit"></i>Draw Card</a>
+        <a class="paranoia card_manager" title="{{ localize "paranoia.card_manager.draw_card" }}">
+            <i class="fas fa-edit"></i>{{ localize "paranoia.card_manager.draw_card" }}
+        </a>
         {{/ if }}
     </div>
 </div>
