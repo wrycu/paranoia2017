@@ -10,7 +10,7 @@
             <div class="combat_available_card">
                 {{{ card.html }}}
                 <br>
-                <b>{{ localize "paranoia.combat.manager.action_order" }}: {{ card.system.action_order }}</b>
+                <b>{{ localize "paranoia.combat.manager.action_order" }}: {{ card.system.action_order }}</b>{{#if card.system.reaction}}<img src=systems/paranoia2017/images/character_sheet/reaction.png title="Reaction" style="border: none;" width="16" height="16">{{/if}}
             </div>
             {{/each}}
         </div>
