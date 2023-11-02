@@ -11,7 +11,6 @@ export class initiative_manager extends FormApplication {
         this.gone_this_round = false;
         this.challenged_this_round = false;
         this.setup_hooks();
-        this.setup_socket();
         this.setup_initiative();
         this.get_combatants();
     }
@@ -43,47 +42,6 @@ export class initiative_manager extends FormApplication {
      */
     custom_close() {
         super.close();
-    }
-
-    /**
-     * Set up the socket to handle further events
-     */
-    setup_socket() {
-        game.socket.on("system.paranoia2017", (data) => {
-            paranoia_log(`Got socket data in initiative manager: ${data}`);
-            if (data.type === "initiative") {
-                if (!am_in_combat()) {
-                    paranoia_log("Closing manager since I'm not in combat");
-                    this.custom_close();
-                }
-                if (data.subtype === "player_card_selection") {
-                    paranoia_log("got remote card selection");
-                    this._handle_foreign_card_selection(data);
-                } else if (data.subtype === "player_initiative_select") {
-                    paranoia_log("got remote initiative select");
-                    this._handle_initiative_select(data);
-                } else if (data.subtype === "initiative_forward") {
-                    paranoia_log("got remote initiative next");
-                    this._handle_initiative_next(data);
-                } else if (data.subtype === "challenge_start") {
-                    paranoia_log("got remote challenge start");
-                    this._challenge(data);
-                } else if (data.subtype === "challenge_loss") {
-                    paranoia_log("got remote challenge loss");
-                    this._challenge_wrong(data);
-                } else if (data.subtype === "stage_transition") {
-                    paranoia_log("changing stage");
-                    this._stage_transition(data);
-                } else if (data.subtype === "lost_challenge") {
-                    paranoia_log("caught player losing challenge");
-                    this._lost_challenge(data);
-                } else {
-                    paranoia_log("Ignoring data");
-                    return;
-                }
-                this.render();
-            }
-        });
     }
 
     /**
@@ -163,14 +121,14 @@ export class initiative_manager extends FormApplication {
         super.activateListeners(html);
         // TODO: refactor to use initial / real handlers
         html.find(".progress_combat").click(this.initial_stage_transition.bind(this));
-        html.find(".card_selection").on("change", this._handle_my_card_selection.bind(this));
-        html.find(".initiative_next").click(this._initial_initiative_next.bind(this));
-        html.find(".initiative_select").click(this._handle_initial_initiative_select.bind(this));
-        html.find(".challenge_initiative").click(this._initial_challenge.bind(this));
+        html.find(".card_selection").on("change", this.handle_my_card_selection.bind(this));
+        html.find(".initiative_next").click(this.initial_initiative_next.bind(this));
+        html.find(".initiative_select").click(this.handle_initial_initiative_select.bind(this));
+        html.find(".challenge_initiative").click(this.initial_challenge.bind(this));
     }
 
     /**
-     * Initiator for _stage_transition; see notes there
+     * Initiator for stage_transition; see notes there
      * @param context
      */
     initial_stage_transition(context) {
@@ -191,14 +149,14 @@ export class initiative_manager extends FormApplication {
         };
 
         game.socket.emit("system.paranoia2017", data);
-        this._stage_transition(data);
+        this.stage_transition(data);
     }
 
     /**
      * Handle stage transitions (between card and slot selection)
      * @param data - data from socket
      */
-    _stage_transition(data) {
+    stage_transition(data) {
         this.stage = data.data.new_stage;
         if (this.stage === "stage_1") {
             this.setup_initiative();
@@ -211,7 +169,7 @@ export class initiative_manager extends FormApplication {
      * @param data
      * @private
      */
-    _lost_challenge(data) {
+    process_lost_challenge(data) {
         paranoia_log("Challenge loss");
         this.lost_challenge.push(data.data.player_name);
         let tmp_array = [];
@@ -226,7 +184,7 @@ export class initiative_manager extends FormApplication {
         this.render();
     }
 
-    async _initial_challenge(context) {
+    async initial_challenge(context) {
         paranoia_log("I have issued an initiative challenge");
         let challenged_player = $(context.target).attr("data-player-id");
         let challenged_index = parseInt($(context.target).attr("data-slot"));
@@ -259,7 +217,7 @@ export class initiative_manager extends FormApplication {
         };
         ChatMessage.create(message_data);
 
-        this._challenge(data);
+        this.challenge(data);
         game.socket.emit("system.paranoia2017", data);
     }
 
@@ -268,7 +226,7 @@ export class initiative_manager extends FormApplication {
      * @param data - socket data
      * @private
      */
-    _challenge(data) {
+    challenge(data) {
         paranoia_log(`Received challenge notification: ${data}`);
         if (!game.user.isGM && data.data.challenged_id === game.user.character.id) {
             // I am the one who was challenged; perform specific steps
@@ -336,7 +294,7 @@ export class initiative_manager extends FormApplication {
         };
         game.socket.emit("system.paranoia2017", data);
 
-        this._lost_challenge(data);
+        this.process_lost_challenge(data);
     }
 
     /**
@@ -362,7 +320,7 @@ export class initiative_manager extends FormApplication {
      * @returns {Promise<void>}
      * @private
      */
-    async _challenge_wrong(data) {
+    async challenge_wrong(data) {
         paranoia_log(`Challenge was wrong: ${data}`);
         if (!game.user.isGM && data.data.challenger_id === game.user.character.id) {
             paranoia_log("I was the challenger, discarding");
@@ -414,7 +372,7 @@ export class initiative_manager extends FormApplication {
      * @param context
      * @private
      */
-    _handle_initial_initiative_select(context) {
+    handle_initial_initiative_select(context) {
         paranoia_log("I've selected a card");
         console.log(context)
         let data = {
@@ -430,7 +388,7 @@ export class initiative_manager extends FormApplication {
         game.socket.emit("system.paranoia2017", data);
         // update value for local usage
         data.data.contains_me = true;
-        this._handle_initiative_select(data);
+        this.handle_initiative_select(data);
         // local only update
         this.gone_this_round = true;
     }
@@ -440,7 +398,7 @@ export class initiative_manager extends FormApplication {
      * @param data
      * @private
      */
-    _handle_initiative_select(data) {
+    handle_initiative_select(data) {
         // index is forward but countdown is backwards
         this.slots[9 - this.initiative_slot].actors.push({
             player_id: data.data.player_id,
@@ -456,7 +414,7 @@ export class initiative_manager extends FormApplication {
      * @param context
      * @private
      */
-    _initial_initiative_next(context) {
+    initial_initiative_next(context) {
         paranoia_log("Got initiative progress click from GM");
         if (this.initiative_slot >= 0) {
             let data = {
@@ -464,7 +422,7 @@ export class initiative_manager extends FormApplication {
                 subtype: "initiative_forward",
                 data: {},
             };
-            this._handle_initiative_next(data);
+            this.handle_initiative_next(data);
             game.socket.emit("system.paranoia2017", data);
         }
     }
@@ -474,7 +432,7 @@ export class initiative_manager extends FormApplication {
      * @param data
      * @private
      */
-    _handle_initiative_next(data) {
+    handle_initiative_next(data) {
         paranoia_log("Got initiative progress event");
         this.slots.push({
             actors: [],
@@ -489,7 +447,7 @@ export class initiative_manager extends FormApplication {
      * @param context
      * @private
      */
-    _handle_my_card_selection(context) {
+    handle_my_card_selection(context) {
         paranoia_log("I selected a card");
         // update the local record
         let card_name = context.target.selectedOptions[0].text;
@@ -525,7 +483,7 @@ export class initiative_manager extends FormApplication {
      * @param data
      * @private
      */
-    _handle_foreign_card_selection(data) {
+    handle_foreign_card_selection(data) {
         paranoia_log("Got someone else selecting a card");
         this.selected_cards[data.data.player_id]["is_selected"] = true;
         this.selected_cards[data.data.player_id]["selected_card"]["id"] = data.data.card_id;

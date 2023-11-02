@@ -1,5 +1,6 @@
 `1.9.3` - ?
 * Add reaction annotation for cards in combat manager ([#62](https://github.com/wrycu/paranoia2017/issues/62))
+* Fix for challenge occurring multiple times if combat has ended multiple times ([#63](https://github.com/wrycu/paranoia2017/issues/63))
 
 `1.9.2` - 2023-10-11
 * Fix for card manager not working if users existed without an assigned character

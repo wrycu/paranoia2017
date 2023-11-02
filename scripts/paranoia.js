@@ -23,6 +23,7 @@ Hooks.once("init", async function () {
     CONFIG.Dice.terms["m"] = mutant_die;
     CONFIG.Dice.terms["n"] = node_die;
     CONFIG.Dice.terms["x"] = negative_node_die;
+    game.manager = null;
 
     let paranoia = {
         skill_map: {
@@ -318,7 +319,7 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
     if (!game.user.isGM) {
         return;
     }
-    let update_form = new initiative_manager(
+    game.manager = await new initiative_manager(
         {},
         {
             width: "500",
@@ -327,7 +328,7 @@ Hooks.on("combatStart", async function (combat_info, round_info) {
             title: "Initiative Manager",
         }
     );
-    await update_form.render(true);
+    await game.manager.render(true);
     // get other clients to open their manager as well
     game.socket.emit("system.paranoia2017", {"type": "initiative", "subtype": "open_manager"});
     return await initiative_start(combat_info, round_info);

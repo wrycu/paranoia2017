@@ -11,7 +11,7 @@ export async function socket_listener(data) {
         // check to see if we need to open the initiative manager (when e.g. someone reloads)
         if ($(".initiative_manager").length === 0) {
             // it's not already open, open it
-            let update_form = new initiative_manager(
+            game.manager = await new initiative_manager(
                 {},
                 {
                     width: "500",
@@ -20,7 +20,39 @@ export async function socket_listener(data) {
                     title: "Initiative Manager",
                 }
             );
-            await update_form.render(true);
+            await game.manager.render(true);
         }
+    }
+    if (data.type === "initiative") {
+        if (!am_in_combat()) {
+            paranoia_log("Closing manager since I'm not in combat");
+            game.manager.custom_close();
+        }
+        if (data.subtype === "player_card_selection") {
+            paranoia_log("got remote card selection");
+            game.manager.handle_foreign_card_selection(data);
+        } else if (data.subtype === "player_initiative_select") {
+            paranoia_log("got remote initiative select");
+            game.manager.handle_initiative_select(data);
+        } else if (data.subtype === "initiative_forward") {
+            paranoia_log("got remote initiative next");
+            game.manager.handle_initiative_next(data);
+        } else if (data.subtype === "challenge_start") {
+            paranoia_log("got remote challenge start");
+            game.manager.challenge(data);
+        } else if (data.subtype === "challenge_loss") {
+            paranoia_log("got remote challenge loss");
+            game.manager.challenge_wrong(data);
+        } else if (data.subtype === "stage_transition") {
+            paranoia_log("changing stage");
+            game.manager.stage_transition(data);
+        } else if (data.subtype === "lost_challenge") {
+            paranoia_log("caught player losing challenge");
+            game.manager.process_lost_challenge(data);
+        } else {
+            paranoia_log("Ignoring data");
+            return;
+        }
+        game.manager.render();
     }
 }
