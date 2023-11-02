@@ -367,14 +367,16 @@ export class card_draw extends FormApplication {
                 // form submission includes null (unchecked) actors; just skip over them
                 continue;
             }
-            this.tattle_draw(game.user.isGM, cur_actor, formData['draw_amount'], formData['deck']);
+            let drawn = [];
             for (let x = 0; x < formData['draw_amount']; x++) {
-                await this.draw_card(formData['deck'], cur_actor)
+                drawn = drawn.concat(await this.draw_card(formData['deck'], cur_actor));
             }
+            console.log(drawn)
+            this.tattle_draw(game.user.isGM, cur_actor, formData['draw_amount'], formData['deck'], drawn);
         }
     }
 
-    async tattle_draw(is_gm, actor, card_count, card_type) {
+    async tattle_draw(is_gm, actor, card_count, card_type, cards_drawn) {
         if (is_gm) {
             return;
         }
@@ -392,6 +394,7 @@ export class card_draw extends FormApplication {
             {
                 count: card_count,
                 type: deck_map[card_type],
+                cards_drawn: cards_drawn,
             },
         );
 
@@ -419,6 +422,7 @@ export class card_draw extends FormApplication {
         let draw_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Deck`);
         let discard_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Discard`);
         let held_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Held`);
+        let drawn_cards = [];
 
         let length = draw_deck.cards.filter(i => !i.drawn).length;
         if (length === 0) {
@@ -440,8 +444,12 @@ export class card_draw extends FormApplication {
                 console.log(`bad item: ${card.name}`)
                 // TODO: this should probably delete the card
             } else {
+                console.log("drew card")
                 await actor.createEmbeddedDocuments("Item", [item]);
+                drawn_cards.push(item.name);
             }
         }
+        console.log(drawn_cards)
+        return drawn_cards;
     }
 }
