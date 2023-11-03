@@ -1,3 +1,6 @@
+`1.9.4` - ?
+* Fix for missing HTML tag on action card
+
 `1.9.3` - 2023-11-02
 * Add reaction annotation for cards in combat manager ([#62](https://github.com/wrycu/paranoia2017/issues/62))
 * Fix for challenge occurring multiple times if combat has ended multiple times ([#63](https://github.com/wrycu/paranoia2017/issues/63))
