@@ -377,6 +377,10 @@ export class card_draw extends FormApplication {
     }
 
     async tattle_draw(is_gm, actor, card_count, card_type, cards_drawn) {
+        if (cards_drawn.length === 0) {
+            // we didn't actually draw any cards
+            return;
+        }
         let verb = "paranoia.card_draw.tattle.drawn";
         if (is_gm) {
             verb = "paranoia.card_draw.tattle.dealt";
@@ -453,8 +457,13 @@ export class card_draw extends FormApplication {
             }
             await draw_deck.shuffle({chatNotification: false});
         }
+        length = draw_deck.cards.filter(i => !i.drawn).length
+        if (length === 0) {
+            // we still have zero cards, give a message and abort
+            ui.notifications.warn("All cards of the selected type are already held by actors, aborting");
+            return [];
+        }
         // ok, now draw
-        // TODO: this may still end up with 0 cards (if they're all held). ...oh well
         let drawn_card = await held_deck.draw(draw_deck, 1, {chatNotification: false});
 
         game.socket.emit("system.paranoia2017", {type: "card", subtype: "draw", actor_id: actor_id})
@@ -470,7 +479,6 @@ export class card_draw extends FormApplication {
                 drawn_cards.push(item.name);
             }
         }
-        console.log(drawn_cards)
         return drawn_cards;
     }
 }
