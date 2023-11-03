@@ -377,8 +377,9 @@ export class card_draw extends FormApplication {
     }
 
     async tattle_draw(is_gm, actor, card_count, card_type, cards_drawn) {
+        let verb = "paranoia.card_draw.tattle.drawn";
         if (is_gm) {
-            return;
+            verb = "paranoia.card_draw.tattle.dealt";
         }
         let deck_map = {
             "action_card": "Action Card",
@@ -395,19 +396,39 @@ export class card_draw extends FormApplication {
                 count: card_count,
                 type: deck_map[card_type],
                 cards_drawn: cards_drawn,
+                verb: game.i18n.localize(verb),
             },
         );
 
-        let chat_options = {
-            speaker: {
-                actor: actor.id,
-            },
-            content: chat_data,
-            isRoll: true,
-            sound: "sounds/dice.wav",
-            whisper: game.users.filter(i => i.isGM && i.active).map(i => i.id),
-        };
-        ChatMessage.create(chat_options);
+        let speaker_user;
+        let listener_user;
+        if (is_gm) {
+            let possible_users = game.users.filter(i => !i.isGM).map(i => i.id);
+            let owners = Object.keys(game.actors.get(actor).ownership);
+            owners.forEach(function(user) {
+                if (game.actors.get(actor).ownership[user] === 3 && possible_users.includes(user)) {
+                    listener_user = user;
+                }
+            });
+            speaker_user =  game.users.filter(i => i.isGM && i.active).map(i => i.id)[0];
+        } else {
+            speaker_user = game.user.id;
+            listener_user =  game.users.filter(i => i.isGM && i.active).map(i => i.id)[0];
+        }
+
+        if (speaker_user && listener_user) {
+            let chat_options = {
+                speaker: {
+                    actor: actor,
+                    user: speaker_user,
+                },
+                content: chat_data,
+                isRoll: true,
+                sound: "sounds/dice.wav",
+                whisper: listener_user,
+            };
+            ChatMessage.create(chat_options);
+        }
     }
 
     async draw_card(card_type, actor_id) {
