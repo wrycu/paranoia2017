@@ -1,4 +1,4 @@
-`1.9.4` - ?
+`1.9.4` - 2023-11-30
 * Fix for missing HTML tag on action card
 * List cards dealt in tattle (in addition to drawn)
 * Notify users if cards are drawn but the deck is empty
