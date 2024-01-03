@@ -366,6 +366,10 @@ Hooks.once("ready", async function () {
         }
     });
 
+    Hooks.on("destroyToken", (token) => {
+        token_HUD.remove_hud(token);
+    });
+
     Hooks.on("renderChatMessage", (app, html, messageData) => {
         /*
         Used to hook the spend moxie to re-roll button
