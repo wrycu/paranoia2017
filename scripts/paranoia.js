@@ -204,6 +204,17 @@ Hooks.once("init", async function () {
     );
     game.settings.register(
         "paranoia2017",
+        "previous_version",
+        {
+            name: "Previous Version",
+            hint: "Previously Loaded Game Version",
+            scope: "world",
+            type: String,
+            default: "",
+        },
+    );
+    game.settings.register(
+        "paranoia2017",
         "tutorial_shown",
         {
             name: "Tutorial Shown",
@@ -345,6 +356,7 @@ Hooks.on("getSceneControlButtons", (buttons) => {
 });
 
 Hooks.once("ready", async function () {
+    await migrate_system();
     configure_token();
 
     Hooks.on("createMacro", async function (...args) {
@@ -429,4 +441,54 @@ function configure_token() {
         game.settings.set("core", "defaultToken", token_data);
         game.settings.set("paranoia2017", "token_configured", true);
     }
+}
+
+/**
+ * Performs any required data massaging for dealing with differences between system versions
+ * As an example, 1.10.0 introduced the ability to use skills for action order on cards, which required
+ *  an update to how AO metadata was stored
+ * @returns {Promise<void>}
+ */
+async function migrate_system() {
+    const cur_version = game.system.version;
+    const previous_version = game.settings.get('paranoia2017', 'previous_version');
+
+    if (previous_version === "") {
+        paranoia_log("Migrating data structure for 1.10.0");
+        // this was only the case prior to 1.10.0, migrate equipment card skill bonus data structure
+        // migrate standalone items
+        const items = game.items.filter(i => i.type === 'equipment_card');
+        for (const item of items) {
+            paranoia_log(`\tMigrating item ${item.name}`);
+            await item.update({
+                system: {
+                    bonus: {
+                        type: 'stats', // all items prior to 1.10.0 were skill bonuses
+                        name: item.system.skill.name,
+                        value: item.system.skill.bonus,
+                    }
+                }
+            });
+        }
+        // migrate owned items
+        const actors = game.actors.filter(i => i.type === 'troubleshooter');
+        for (const actor of actors) {
+            paranoia_log(`\tMigrating actor ${actor.name}`);
+            const items = actor.items.filter(i => i.type === 'equipment_card');
+            for (const item of items) {
+                paranoia_log(`\t\tMigrating item ${item.name}`);
+                await item.update({
+                    system: {
+                        bonus: {
+                            type: 'stats', // all items prior to 1.10.0 were skill bonuses
+                            name: item.system.skill.name,
+                            value: item.system.skill.bonus,
+                        }
+                    }
+                });
+            }
+        }
+        paranoia_log("Done migrating for 1.10.0!");
+    }
+    await game.settings.set('paranoia2017', 'previous_version', cur_version);
 }

@@ -1,5 +1,6 @@
-`1.9.5` - ?
+`1.10.0` - 2024-01-03
 * Fix for HUD remaining when deleting a token (thanks `ambiguousname`!)
+* Add the ability to use stats OR skills for equipment cards ([#66](https://github.com/wrycu/paranoia2017/issues/66))
 
 `1.9.4` - 2023-11-30
 * Fix for missing HTML tag on action card

@@ -16,15 +16,31 @@
                 <div class="equipment_card_action_order_dropdown_container">
                     <label class="action_order_details-label"><b>{{ localize "paranoia.items.equipment.action_order" }}</b></label>
                     <div class="equipment_card_action_order_details">
-                        <select name="system.skill.name" class="equipment_card_action_order_dropdown">
-                            {{#select item.system.skill.name}}
-                            {{#each config.stats as |stat|}}
-                            <option value="{{ stat }}">{{ stat }}</option>
+                        <select name="system.bonus.type" class="equipment_card_action_order_dropdown">
+                            {{#select item.system.bonus.type}}
+                            {{#each bonus.types as |bonus_type|}}
+                            <option value="{{ bonus_type }}">{{ bonus_type }}</option>
                             {{/each}}
                             {{/select}}
                         </select>
-                        &nbsp;+&nbsp;<input class="shrink_input" type="number" name="system.skill.bonus"
-                                            value="{{item.system.skill.bonus}}" min="-10"
+                        <select name="system.bonus.name" class="equipment_card_action_order_dropdown">
+                        {{#if (eq item.system.bonus.type "skills")}}
+                            {{#select item.system.bonus.name}}
+                            {{#each bonus.skills as |skill|}}
+                            <option value="{{ skill }}">{{ skill }}</option>
+                            {{/each}}
+                            {{/select}}
+                        {{/if}}
+                        {{#if (eq item.system.bonus.type "stats")}}
+                            {{#select item.system.bonus.name}}
+                            {{#each bonus.stats as |stat|}}
+                            <option value="{{ stat }}">{{ stat }}</option>
+                            {{/each}}
+                            {{/select}}
+                        {{/if}}
+                        </select>
+                        &nbsp;+&nbsp;<input class="shrink_input" type="number" name="system.bonus.value"
+                                            value="{{item.system.bonus.value}}" min="-10"
                                             max="10" data-dtype="Number"/>
                     </div>
                 </div>

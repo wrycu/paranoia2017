@@ -100,7 +100,7 @@ export class initiative_manager extends FormApplication {
                 for (let item of items) {
                     // derived values on items are not calculated when accessing outside a sheet
                     if (item.type === "equipment_card") {
-                        item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
+                        item.system.action_order = actor[item.system.bonus.type][item.system.bonus.name].value + parseInt(item.system.bonus.value);
                     }
                     const item_details = item.get_item_details();
                     const template = "systems/paranoia2017/templates/chat/item.html";

@@ -23,6 +23,11 @@ export default class item_sheet_v1 extends ItemSheet {
         // it would not be available through returning the item entity elsewhere.
         const data = super.getData();
         data.config = CONFIG.paranoia;
+        data.bonus = {
+            stats: CONFIG.paranoia.stats,
+            skills: CONFIG.paranoia.skills,
+            types: ['skills', 'stats'],
+        }
         data.is_gm = game.user.isGM;
         return data;
     }

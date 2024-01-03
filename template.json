@@ -220,9 +220,10 @@
             "text": "<p></p>",
             "size": "medium",
             "level": 0,
-            "skill": {
+            "bonus": {
+                "type": "stats",
                 "name": "violence",
-                "bonus": "0"
+                "value": "0"
             },
             "exclude_from_deck": false
         },
