@@ -1,3 +1,6 @@
+`1.9.5` - ?
+* Fix for HUD remaining when deleting a token (thanks `ambiguousname`!)
+
 `1.9.4` - 2023-11-30
 * Fix for missing HTML tag on action card
 * List cards dealt in tattle (in addition to drawn)
