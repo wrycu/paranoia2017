@@ -299,7 +299,7 @@ export class troubleshooter_sheet extends ActorSheet {
         // Calculate derived action order values for equipment
         for (let item of context.items) {
             if (item.type === "equipment_card") {
-                item.system.action_order = actor.stats[item.system.skill.name].value + parseInt(item.system.skill.bonus);
+                item.system.action_order = actor[item.system.bonus.type][item.system.bonus.name].value + parseInt(item.system.bonus.value);
             }
         }
 
