@@ -1,3 +1,6 @@
+`1.11.0` - 2024-02-01
+* Fix for cards breaking actors due to the ability to use stats or skills added in 1.10.1 ([#73](https://github.com/wrycu/paranoia2017/issues/73))
+
 `1.10.0` - 2024-01-03
 * Fix for HUD remaining when deleting a token (thanks `ambiguousname`!)
 * Add the ability to use stats OR skills for equipment cards ([#66](https://github.com/wrycu/paranoia2017/issues/66))
