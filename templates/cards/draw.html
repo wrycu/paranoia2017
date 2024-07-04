@@ -4,11 +4,7 @@
         <label for="deck" class="paranoia deck_selection_label">{{ localize "paranoia.card_draw.field.deck_select" }}</label>
         <div class="paranoia deck_selection">
             <select name="deck">
-                {{#select this.decks}}
-                {{#each this.decks as |deck|}}
-                <option value="{{ deck }}">{{ @key }}</option>
-                {{/each}}
-                {{/select}}
+                {{selectOptions this.decks labelAttr="label"}}
             </select>
         </div>
     </div>
@@ -28,9 +24,9 @@
         </div>
     </div>
     {{else}}
-                {{#each this.actors as |actor|}}
+        {{#each this.actors as |actor|}}
             <input type="checkbox" checked name="actors" value="{{ @key }}" style="visibility: hidden;">
-            {{/each}}
+        {{/each}}
     {{/if}}
     <button class="paranoia card_draw submit">{{#if this.is_gm}}{{ localize "paranoia.card_draw.field.deal" }}!{{else}}{{ localize "paranoia.card_draw.field.draw" }}!{{/if}}</button>
 </form>

@@ -9,8 +9,8 @@ export class roll_paranoia extends Roll {
 
     static TOOLTIP_TEMPLATE = "systems/paranoia2017/templates/dice/tooltip.html";
 
-    evaluate({minimize = false, maximize = false, async} = {}) {
-        return super.evaluate({minimize, maximize, async});
+    evaluateSync({minimize = false, maximize = false, async} = {}) {
+        return super.evaluateSync({minimize, maximize, async});
     }
 
     async get_roll_data() {

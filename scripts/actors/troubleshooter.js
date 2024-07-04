@@ -6,7 +6,7 @@ export class troubleshooter_sheet extends ActorSheet {
 
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["boilerplate", "sheet", "actor", "troubleshooter"],
             width: 600,
             height: 800,
@@ -166,7 +166,7 @@ export class troubleshooter_sheet extends ActorSheet {
 
         const message_data = {
             user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER,
             content: html,
             speaker: {
                 actor: this.actor.id,
@@ -192,7 +192,7 @@ export class troubleshooter_sheet extends ActorSheet {
 
         const message_data = {
             user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER,
             content: html,
             speaker: {
                 actor: this.actor.id,
@@ -239,7 +239,7 @@ export class troubleshooter_sheet extends ActorSheet {
 
         const message_data = {
             user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER,
             content: html,
             speaker: {
                 actor: this.actor.id,
@@ -378,7 +378,7 @@ export async function losing_it(actor) {
 
     const message_data = {
         user: game.user.id,
-        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER,
         content: html,
         speaker: {
             actor: actor.id,
