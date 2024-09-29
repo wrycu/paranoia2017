@@ -1,3 +1,7 @@
+`1.12.0` - ?
+* Foundry v12 compatability (thanks [jduncombe](https://github.com/jduncombe)!)
+* Fix for reaction symbol not showing up when sending action cards to chat ([#77](https://github.com/wrycu/paranoia2017/issues/77))
+
 `1.11.0` - 2024-02-01
 * Fix for cards breaking actors due to the ability to use stats or skills added in 1.10.1 ([#73](https://github.com/wrycu/paranoia2017/issues/73))
 
