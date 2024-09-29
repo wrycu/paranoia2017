@@ -373,6 +373,9 @@ export class troubleshooter_sheet extends ActorSheet {
  * @returns {Promise<void>}
  */
 export async function losing_it(actor) {
+    if (!(game.users.find(i => i.isGM && i.active)?.id === game.user.id)) {
+        return;
+    }
     const template = "systems/paranoia2017/templates/chat/losing_it.html";
     const html = await renderTemplate(template);
 
