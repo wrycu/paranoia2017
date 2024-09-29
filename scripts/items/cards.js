@@ -448,10 +448,7 @@ export class card_draw extends FormApplication {
         let discard_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Discard`);
         let held_deck = game.cards.find(i => i.name === `${deck_map[card_type]} Held`);
         let drawn_cards = [];
-        console.log(draw_deck)
-        console.log(draw_deck.cards)
         let length = draw_deck.cards.filter(i => !i.drawn).length;
-        console.log(length)
         if (length === 0) {
             // the draw deck is empty, shuffle the discard into it
             for (const card of discard_deck.cards) {
@@ -467,7 +464,6 @@ export class card_draw extends FormApplication {
         }
         // ok, now draw
         let drawn_card = await held_deck.draw(draw_deck, 1, {chatNotification: false});
-        console.log(drawn_card)
         game.socket.emit("system.paranoia2017", {type: "card", subtype: "draw", actor_id: actor_id})
 
         for (let card of drawn_card) {
