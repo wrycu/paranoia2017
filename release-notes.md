@@ -1,4 +1,4 @@
-`1.12.0` - ?
+`1.12.0` - 2024-09-29
 * Foundry v12 compatability (thanks [jduncombe](https://github.com/jduncombe)!)
 * Fix for reaction symbol not showing up when sending action cards to chat ([#77](https://github.com/wrycu/paranoia2017/issues/77))
 * Fix for "losing it" sending once per connected user ([#75](https://github.com/wrycu/paranoia2017/issues/75))
