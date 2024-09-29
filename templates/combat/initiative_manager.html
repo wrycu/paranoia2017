@@ -36,14 +36,12 @@
             <td>
                 {{#if card.is_me }}
                 <select class="card_selection">
-                    {{#select card.selected_card.id }}
                     <option value="not_selected">{{ localize "paranoia.combat.manager.select" }}</option>
                     {{#each ../this.available_cards as |option|}}
                     <option value="{{ option.id }}" data-action-order="{{ option.system.action_order }}">
                         {{ option.name }} ({{ option.system.action_order }})
                     </option>
                     {{/each}}
-                    {{/select}}
                 </select>
                 {{ else }}
                 {{#if card.is_selected}}

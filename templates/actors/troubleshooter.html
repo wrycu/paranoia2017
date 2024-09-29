@@ -203,11 +203,7 @@
                             <label for="system.wounds.value" class="wb_information_details-label">{{ localize "paranoia.troubleshooter.field.wounds" }}:</label>
                             <div class="wb_information_details-content">
                                 <select name="system.wounds.value">
-                                    {{#select actor.system.wounds.value}}
-                                    {{#each config.wound_map as |state|}}
-                                    <option value="{{ @key }}">{{ state }}</option>
-                                    {{/each}}
-                                    {{/select}}
+                                    {{selectOptions config.wound_map selected=actor.system.wounds.value labelAttr="label"}}
                                 </select>
                             </div>
                         </div>

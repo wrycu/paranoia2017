@@ -17,7 +17,7 @@ export class roll_builder extends FormApplication {
     }
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: "systems/paranoia2017/templates/dice/roller.html"
         });
     }

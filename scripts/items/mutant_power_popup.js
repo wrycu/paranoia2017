@@ -8,7 +8,7 @@ export default class mutant_power_use extends FormApplication {
     }
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['form'],
             popOut: true,
             template: `systems/paranoia2017/templates/chat/mutant_power_popup.html`,
@@ -22,7 +22,7 @@ export default class mutant_power_use extends FormApplication {
 
         const message_data = {
             user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER,
             content: html,
             speaker: {
                 actor: this.actor.id,

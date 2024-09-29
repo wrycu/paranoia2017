@@ -17,7 +17,7 @@ export class initiative_manager extends FormApplication {
 
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: "systems/paranoia2017/templates/combat/initiative_manager.html"
         });
     }
@@ -209,7 +209,7 @@ export class initiative_manager extends FormApplication {
 
         const message_data = {
             user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER,
             content: html,
             speaker: {
                 actor: game.user.character.id,
@@ -275,7 +275,7 @@ export class initiative_manager extends FormApplication {
 
         const message_data = {
             user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER,
             content: html,
             speaker: {
                 actor: game.user.character.id,
@@ -345,7 +345,7 @@ export class initiative_manager extends FormApplication {
             );
             const message_data = {
                 user: game.user.id,
-                type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+                type: CONST.CHAT_MESSAGE_STYLES.OTHER,
                 content: html,
                 speaker: {
                     actor: game.user.character.id,

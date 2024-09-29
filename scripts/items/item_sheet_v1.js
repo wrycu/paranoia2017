@@ -4,7 +4,7 @@ export default class item_sheet_v1 extends ItemSheet {
 
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["boilerplate", "sheet", "item", "action_card"],
             width: 520,
             height: 700,
